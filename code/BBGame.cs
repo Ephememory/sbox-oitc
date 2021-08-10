@@ -9,11 +9,9 @@ using System.Collections.Generic;
 partial class BBGame : Game
 {
 
-	[ConVar.Replicated( "sas_self_damage", Help = "Whether weapons can hurt their owner." )]
-	public static bool sas_self_damage { get; set; } = true;
 
-	[ConVar.Replicated( "sas_debug" )]
-	public static bool sas_debug { get; set; } = false;
+	[ConVar.Replicated( "bb_debug" )]
+	public static bool bb_debug { get; set; } = false;
 
 	public BBGame()
 	{

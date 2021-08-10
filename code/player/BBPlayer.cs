@@ -4,7 +4,7 @@ using Sandbox;
 partial class BBPlayer : Player
 {
 
-
+	private DamageInfo lastDamage;
 	public BBPlayer()
 	{
 		Inventory = new Inventory( this );
@@ -13,7 +13,6 @@ partial class BBPlayer : Player
 	public override void Spawn()
 	{
 		base.Spawn();
-		Log.Info( "Spawning player!" );
 		FlashlightEntity = new SpotLightEntity
 		{
 			Enabled = false,
@@ -29,7 +28,7 @@ partial class BBPlayer : Player
 			Owner = this,
 			LightCookie = Texture.Load( "materials/effects/lightcookie.vtex" )
 		};
-		FlashlightPosOffset = 23f;
+		FlashlightPosOffset = 30f;
 	}
 
 	public override void ClientSpawn()
@@ -37,14 +36,7 @@ partial class BBPlayer : Player
 		base.ClientSpawn();
 		Host.AssertClient();
 
-		Log.Info( $"TEXTURE: {FlashlightEntity.LightCookie}" );
-		var texture_data = new byte[4096 * 4];
-		for ( int i = 0; i < texture_data.Length; i++ )
-		{
-			texture_data[i] = (byte)Rand.Int( 0, 255 );
-		}
 	}
-
 
 	public override void Respawn()
 	{
@@ -59,10 +51,10 @@ partial class BBPlayer : Player
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
+		Dress();
 
 		Inventory.Add( new WeaponFAL(), true );
 		FlashlightBatteryCharge = 100f;
-
 
 		base.Respawn();
 	}
@@ -76,10 +68,10 @@ partial class BBPlayer : Player
 		{
 			ActiveChild = Input.ActiveChild;
 		}
+
+
 		TickPlayerUse();
 		SimulateActiveChild( cl, ActiveChild );
-
-
 
 		if ( IsClient ) return;
 
@@ -97,54 +89,7 @@ partial class BBPlayer : Player
 
 		}
 
-		if ( Input.Released( InputButton.Flashlight ) && FlashlightBatteryCharge > 0 )
-		{
-			FlashlightEnabled = !FlashlightEnabled;
-			using ( Prediction.Off() )
-			{
-				PlayClientSound( FlashlightEntity.Enabled ? "flashlight-on" : "flashlight-off" );
-			}
-		}
-
-
-		if ( !FlashlightEntity.IsValid() )
-			return;
-
-		FlashlightEntity.Enabled = FlashlightEnabled && FlashlightBatteryCharge > 0f;
-
-		if ( FlashlightEnabled && FlashlightBatteryCharge > 0f && Time.Tick % 14 == 1 )
-		{
-			if ( FlashlightBatteryCharge - sas_flashlight_drain_amt < 0 )
-			{
-				FlashlightBatteryCharge = -1;
-			}
-			else
-			{
-				FlashlightBatteryCharge -= sas_flashlight_drain_amt;
-			}
-
-			if ( FlashlightBatteryCharge < 1 )
-			{
-				FlashlightEnabled = false;
-				FlashlightEntity.TurnOff();
-				using ( Prediction.Off() )
-				{
-					PlayClientSound( FlashlightEntity.Enabled ? "flashlight-on" : "flashlight-off" );
-				}
-			}
-		}
-
-		if ( !FlashlightEnabled && FlashlightBatteryCharge < 100 && Time.Tick % 7 == 1 )
-		{
-			FlashlightBatteryCharge++;
-		}
-
-		//Setting the position of the flashlight serverside
-		//basically, the position for other players the client is seeing.
-		FlashlightEntity.Position = EyePos + EyeRot.Forward * FlashlightPosOffset;
-		FlashlightEntity.Rotation = EyeRot;
-
-		FlashlightEntity.Flicker = FlashlightBatteryCharge <= 13f;
+		TickFlashLight();
 
 
 	}
@@ -167,10 +112,27 @@ partial class BBPlayer : Player
 	public override void OnKilled()
 	{
 		base.OnKilled();
-		Inventory.DeleteContents();
+
+		BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
+		Camera = new SpectateRagdollCamera();
 		EnableDrawing = false;
+		Controller = null;
+		Inventory.DeleteContents();
 	}
 
+	public override void TakeDamage( DamageInfo info )
+	{
+		if ( GetHitboxGroup( info.HitboxIndex ) == 1 )
+		{
+			info.Damage *= 10.0f;
+		}
+
+		lastDamage = info;
+
+		//TookDamage( lastDamage.Flags, lastDamage.Position, lastDamage.Force );
+
+		base.TakeDamage( info );
+	}
 
 	protected override void OnPhysicsCollision( CollisionEventData eventData )
 	{
@@ -190,20 +152,9 @@ partial class BBPlayer : Player
 	}
 
 	[ClientRpc]
-	public virtual void PlayFailSound()
-	{
-		Host.AssertClient();
-
-		PlaySound( "player_use_fail" );
-	}
-
-
-	[ClientRpc]
 	public void PlayClientSound( string snd )
 	{
 		PlaySound( snd );
 	}
-
-
 
 }
