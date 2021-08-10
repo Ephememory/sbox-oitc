@@ -1,0 +1,72 @@
+﻿CrossHairHUD {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: white;
+    border-radius: 10px;
+    width: 4px;
+    height: 4px;
+    transform: translate( -50% -50% );
+}
+
+HudHealth {
+    position: relative;
+    background-color: rgba( black, 0.5 );
+    left: 50px;
+    bottom: 48px;
+    top: 88%;
+    font-family: Roboto;
+    font-size: 64px;
+    font-weight: bolder;
+    color: yellow;
+    width: fit-content;
+    height: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 5px;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+HudFlashlight {
+    position: relative;
+    background-color: rgba( black, 0.5 );
+    left: 100px;
+    bottom: 48px;
+    top: 88%;
+	width:auto;
+    font-family: Roboto;
+    font-size: 64px;
+    font-weight: bolder;
+    color: yellow;
+    width: fit-content;
+    height: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 5px;
+    align-items: center;
+    border-radius: 10px;
+    transition: width 50ms ease-in;
+}
+
+DebugPanel {
+    position: absolute;
+    background-color: rgba( black, 0.5 );
+    left: 25px;
+    bottom: 48px;
+    top: 25px;
+    width: fit-content;
+    font-family: Poppins;
+    font-size: 32px;
+    font-weight: thin;
+    color: whitesmoke;
+    width: fit-content;
+    height: 50;
+    padding: 15px;
+    align-items: center;
+    border-radius: 32px;
+    transition: width 50ms ease-in;
+}

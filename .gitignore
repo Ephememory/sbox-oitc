@@ -1,0 +1,13 @@
+.codegen
+_bakeresourcecache
+.intermediate
+obj
+accesslist.txt
+*.csproj
+launchSettings.json
+tools_asset_info.bin
+tools_thumbnail_cache.bin
+*.xml
+*.dll
+*.pdb
+maps/editor/_bakeresourcecache/toolscene_default_baked/*
