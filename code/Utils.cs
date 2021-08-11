@@ -14,6 +14,11 @@ public static class Utils
 		return self >= min && self <= max;
 	}
 
+	public static bool InRange( this int self, int min, int max )
+	{
+		return self >= min && self <= max;
+	}
+
 	public static Rotation Random( this Rotation self )
 	{
 		return Rotation.From( Angles.Random );

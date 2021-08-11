@@ -33,21 +33,19 @@ partial class BBGame : Game
 
 		if ( killer == null ) return; //Watch out for suicides!
 		if ( pawn is not BBPlayer killed ) return;
-		var killedClient = killed.GetClientOwner();
 
-		killedClient.SetScore( "deaths", killedClient.GetScore<int>( "deaths" ) + 1 );
-
-		if ( killer.Inventory is BaseInventory inv )
+		if ( killer.Inventory is BaseInventory inv && killer is BBPlayer ply )
 		{
 			var bananGun = inv.List.Where( x => x.GetType() == typeof( WeaponBanana ) )
 			.FirstOrDefault() as WeaponBanana; //nasty linq
-			bananGun.AwardAmmo( 1 );
+			var amountToAward = weapon.GetType() == typeof( WeaponFists ) ? 2 : 1; //this does assume we only have 2 weapons :)
+			ply.AwardAmmo( amountToAward );
 		}
 
+		var killedClient = killed.GetClientOwner();
+		killedClient.SetScore( "deaths", killedClient.GetScore<int>( "deaths" ) + 1 );
 		var killerClient = killer.GetClientOwner();
 		killerClient.SetScore( "kills", killerClient.GetScore<int>( "kills" ) + 1 );
-
-
 
 		Log.Info( $"{client.Name} was killed by {killer.GetClientOwner().NetworkIdent} with {weapon}" );
 	}

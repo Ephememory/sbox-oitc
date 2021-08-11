@@ -16,9 +16,8 @@ public partial class Weapon : BaseWeapon, IUse
 	public TimeSince TimeSinceDeployed { get; set; }
 
 
+	public const float DefaultBulletRange = 64000f;
 
-	[ConVar.ClientData]
-	public static bool g_weapon_toggle_ads { get; set; } = false;
 
 	public override void Spawn()
 	{
@@ -151,7 +150,7 @@ public partial class Weapon : BaseWeapon, IUse
 	/// <summary>
 	/// Shoot a single bullet
 	/// </summary>
-	public virtual void ShootBullet( Vector3 pos, Vector3 dir, float spread, float force, float damage, float bulletSize )
+	public virtual void ShootBullet( Vector3 pos, Vector3 dir, float spread, float force, float damage, float bulletSize, float range = DefaultBulletRange )
 	{
 		var forward = dir;
 		forward += (Vector3.Random + Vector3.Random + Vector3.Random + Vector3.Random) * spread * 0.25f;
@@ -161,7 +160,7 @@ public partial class Weapon : BaseWeapon, IUse
 		// ShootBullet is coded in a way where we can have bullets pass through shit
 		// or bounce off shit, in which case it'll return multiple results
 		//
-		foreach ( var tr in TraceBullet( pos, pos + forward * 64000f, bulletSize ) )
+		foreach ( var tr in TraceBullet( pos, pos + forward * range, bulletSize ) )
 		{
 			tr.Surface.DoBulletImpact( tr );
 
@@ -186,9 +185,9 @@ public partial class Weapon : BaseWeapon, IUse
 	/// <summary>
 	/// Shoot a single bullet from owners view point
 	/// </summary>
-	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize )
+	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize, float range = DefaultBulletRange )
 	{
-		ShootBullet( Owner.EyePos, Owner.EyeRot.Forward, spread, force, damage, bulletSize );
+		ShootBullet( Owner.EyePos, Owner.EyeRot.Forward, spread, force, damage, bulletSize, range );
 	}
 
 	/// <summary>

@@ -4,6 +4,11 @@ using Sandbox;
 partial class BBPlayer : Player
 {
 
+	[ConVar.Replicated]
+	public static int bb_max_ammo_held { get; set; } = 7;
+
+	[Net]
+	public int BananaAmmo { get; set; } = 1;
 	private DamageInfo lastDamage;
 	public BBPlayer()
 	{
@@ -52,7 +57,7 @@ partial class BBPlayer : Player
 		EnableShadowInFirstPerson = true;
 
 		Dress();
-
+		Inventory.Add( new WeaponFists(), false );
 		Inventory.Add( new WeaponBanana(), true );
 		FlashlightBatteryCharge = 100f;
 
@@ -123,7 +128,8 @@ partial class BBPlayer : Player
 		Controller = null;
 		EnableAllCollisions = false;
 		EnableDrawing = false;
-		Inventory.DropActive();
+		var dropped = Inventory.DropActive();
+		dropped.DeleteAsync( 2f );
 		Inventory.DeleteContents();
 	}
 
@@ -155,6 +161,22 @@ partial class BBPlayer : Player
 		}
 
 		base.OnPhysicsCollision( eventData );
+
+	}
+
+	public void AwardAmmo( int amt )
+	{
+		Host.AssertServer();
+
+		if ( BananaAmmo > bb_max_ammo_held ) return;
+		if ( BananaAmmo + amt > bb_max_ammo_held )
+		{
+			BananaAmmo = bb_max_ammo_held;
+		}
+		else
+		{
+			BananaAmmo += amt;
+		}
 
 	}
 

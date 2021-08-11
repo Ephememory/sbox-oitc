@@ -5,8 +5,7 @@ public partial class WeaponBanana : Weapon
 {
 	public override string ViewModelPath => "models/weapons/banana/v_banana.vmdl";
 
-	[Net]
-	public int Ammo { get; private set; } = 1;
+
 
 	public override void Spawn()
 	{
@@ -27,18 +26,23 @@ public partial class WeaponBanana : Weapon
 
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
-		if ( Ammo <= 0 )
+		if ( Owner is not BBPlayer player ) return;
+		if ( player.BananaAmmo <= 0 )
 		{
 			PlaySound( "player_use_fail" );
 			return;
 		}
 
 		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
-		Ammo--;
+		player.BananaAmmo--;
 		ShootEffects();
 		PlaySound( "kersplat" );
 
 		ShootBullet( 0, 1, 1000, 1 );
+		if ( player.BananaAmmo <= 0 )
+		{
+			(Owner as BBPlayer)?.Inventory.SetActiveSlot( 0, false );
+		}
 
 
 	}
@@ -48,16 +52,7 @@ public partial class WeaponBanana : Weapon
 		base.AttackSecondary();
 		TimeSinceSecondaryAttack = 0;
 		if ( IsClient ) return;
-
-		AwardAmmo( 5 );
-	}
-
-	public void AwardAmmo( int amt )
-	{
-		Host.AssertServer();
-
-		if ( Ammo > 7 ) return;
-		Ammo += amt;
+		(Owner as BBPlayer)?.AwardAmmo( 4 );
 	}
 
 

@@ -25,6 +25,7 @@ public partial class BBHud : HudEntity<RootPanel>
 		RootPanel.AddChild<DebugPanel>();
 		RootPanel.AddChild<HudHealth>();
 		RootPanel.AddChild<HudFlashlight>();
+		RootPanel.AddChild<HudAmmo>();
 	}
 
 

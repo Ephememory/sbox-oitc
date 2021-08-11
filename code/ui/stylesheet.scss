@@ -10,8 +10,6 @@
   margin-top: -3px;
   transition: all 200ms ease-in-out;
   border: 1px dotted rgb(17, 17, 17);
-  mask-mode: alpha;
-  mask-image: url(https://i.stack.imgur.com/pHq2y.png);
 
   .center {
     position: absolute;
@@ -52,6 +50,29 @@ HudFlashlight {
   background-color: rgba(black, 0.5);
   backdrop-filter: blur(12px);
   left: 280px;
+  bottom: 48px;
+  top: 88%;
+  width: auto;
+  font-family: Roboto;
+  font-size: 64px;
+  font-weight: bolder;
+  color: yellow;
+  width: fit-content;
+  height: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 15px;
+  padding-left: 5px;
+  align-items: center;
+  border-radius: 10px;
+  transition: width 50ms ease-in;
+}
+
+HudAmmo {
+  position: absolute;
+  background-color: rgba(black, 0.5);
+  backdrop-filter: blur(12px);
+  right: 50px;
   bottom: 48px;
   top: 88%;
   width: auto;
