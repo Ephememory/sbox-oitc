@@ -40,6 +40,11 @@ partial class BBGame : Game
 			.FirstOrDefault() as WeaponBanana; //nasty linq
 			var amountToAward = weapon.GetType() == typeof( WeaponFists ) ? 2 : 1; //this does assume we only have 2 weapons :)
 			ply.AwardAmmo( amountToAward );
+
+			if ( killer.Inventory.Active is WeaponFists )
+			{
+				ply.Inventory.SetActiveSlot( 1, false );
+			}
 		}
 
 		var killedClient = killed.GetClientOwner();

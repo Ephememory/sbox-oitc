@@ -29,7 +29,6 @@ public partial class WeaponBanana : Weapon
 		if ( Owner is not BBPlayer player ) return;
 		if ( player.BananaAmmo <= 0 )
 		{
-			PlaySound( "player_use_fail" );
 			return;
 		}
 
@@ -52,7 +51,6 @@ public partial class WeaponBanana : Weapon
 		base.AttackSecondary();
 		TimeSinceSecondaryAttack = 0;
 		if ( IsClient ) return;
-		(Owner as BBPlayer)?.AwardAmmo( 4 );
 	}
 
 
@@ -61,8 +59,7 @@ public partial class WeaponBanana : Weapon
 	{
 		Host.AssertClient();
 
-		// Particles.Create( "particles/pistol_muzzleflash.vpcf", EffectEntity, "muzzle" );
-		// Particles.Create( "particles/pistol_ejectbrass.vpcf", EffectEntity, "ejection" );
+		//TODO: Banana peel particles :)
 
 		if ( Owner == Local.Pawn )
 		{

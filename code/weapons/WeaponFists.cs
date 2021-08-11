@@ -20,18 +20,10 @@ public partial class WeaponFists : Weapon
 	}
 	private async void AttackAsync( float delay )
 	{
-		Host.AssertServer();
 		//this is awesome
 		await GameTask.DelaySeconds( delay );
-		if ( Melee( 1000f, 80f ) )
-		{
-			PlaySound( "punch" );
-			(Owner as BBPlayer)?.Inventory.SetActiveSlot( 1, false );
-		}
-		else
-		{
-			PlaySound( "punch_miss" );
-		}
+		Melee( 1000f, 90f );
+
 
 	}
 	public override void AttackPrimary()
@@ -42,7 +34,6 @@ public partial class WeaponFists : Weapon
 
 		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
 		ShootEffects();
-		if ( IsClient ) return;
 		AttackAsync( 0.34f );
 	}
 
@@ -67,18 +58,18 @@ public partial class WeaponFists : Weapon
 		forward = forward.Normal;
 
 
-		foreach ( var tr in TraceBullet( pos, pos + forward * range, 0.1f ) )
+		foreach ( var tr in TraceBullet( pos, pos + forward * range, 15f ) )
 		{
 			if ( tr.Entity.IsValid() )
 			{
 				tr.Surface.DoBulletImpact( tr );
 			}
+			else
+			{
+				continue;
+			}
 
 			if ( !IsServer ) continue;
-			if ( !tr.Entity.IsValid() ) continue;
-			//
-			// We turn predictiuon off for this, so any exploding effects don't get culled etc
-			//
 			using ( Prediction.Off() )
 			{
 				var damageInfo = DamageInfo.FromBullet( tr.EndPos, forward * 100 * 1, damage )
@@ -87,9 +78,20 @@ public partial class WeaponFists : Weapon
 					.WithWeapon( this );
 
 				tr.Entity.TakeDamage( damageInfo );
+				PlaySound( "punch" );
 				return true;
+
+
 			}
+
+
 		}
+
+		if ( IsServer )
+		{
+			PlaySound( "punch_miss" );
+		}
+
 
 		return false;
 	}
@@ -115,7 +117,7 @@ public partial class WeaponFists : Weapon
 
 	public override void SimulateAnimator( PawnAnimator anim )
 	{
-		anim.SetParam( "holdtype", 3 ); // TODO this is shit
+		anim.SetParam( "holdtype", 4 ); // TODO this is shit
 		anim.SetParam( "aimat_weight", 1f );
 	}
 

@@ -61,6 +61,11 @@ partial class BBPlayer : Player
 		Inventory.Add( new WeaponBanana(), true );
 		FlashlightBatteryCharge = 100f;
 
+		if ( BananaAmmo <= 0 )
+		{
+			Inventory.SetActiveSlot( 0, false );
+		}
+
 		base.Respawn();
 	}
 
@@ -129,7 +134,11 @@ partial class BBPlayer : Player
 		EnableAllCollisions = false;
 		EnableDrawing = false;
 		var dropped = Inventory.DropActive();
-		dropped.DeleteAsync( 2f );
+		if ( dropped.IsValid() )
+		{
+			dropped.DeleteAsync( 2f );
+		}
+
 		Inventory.DeleteContents();
 	}
 
