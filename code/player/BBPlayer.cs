@@ -53,7 +53,7 @@ partial class BBPlayer : Player
 
 		Dress();
 
-		Inventory.Add( new WeaponFAL(), true );
+		Inventory.Add( new WeaponBanana(), true );
 		FlashlightBatteryCharge = 100f;
 
 		base.Respawn();
@@ -68,6 +68,10 @@ partial class BBPlayer : Player
 		{
 			ActiveChild = Input.ActiveChild;
 		}
+
+		if ( LifeState != LifeState.Alive )
+			return;
+
 
 
 		TickPlayerUse();
@@ -117,6 +121,9 @@ partial class BBPlayer : Player
 		Camera = new SpectateRagdollCamera();
 		EnableDrawing = false;
 		Controller = null;
+		EnableAllCollisions = false;
+		EnableDrawing = false;
+		Inventory.DropActive();
 		Inventory.DeleteContents();
 	}
 

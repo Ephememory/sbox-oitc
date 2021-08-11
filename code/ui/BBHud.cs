@@ -31,12 +31,28 @@ public partial class BBHud : HudEntity<RootPanel>
 	public class CrossHairHUD : Panel
 	{
 		public static CrossHairHUD Singleton;
+		Length? newWidth = 0;
 
 		public CrossHairHUD()
 		{
 			_class = new HashSet<string>() { "CrossHairHUD" };
-			Singleton = this;
-			//StyleSheet.Load( "/ui/crosshair/CrosshairCanvas.scss" );
+
+			Panel center = new Panel();
+			AddChild( center );
+			center.AddClass( "center" );
+
+
+		}
+
+
+		public override void Tick()
+		{
+			base.Tick();
+			if ( Time.Tick % 50 != 1 ) return;
+			// newWidth = Length.Pixels( Rand.Int( 2, 8 ) );
+			// Style.MarginLeft = Length.Pixels( -newWidth.Value.Value / 2 );
+			// Style.Width = newWidth;
+			Style.Dirty();
 		}
 
 

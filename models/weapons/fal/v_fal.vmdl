@@ -115,7 +115,7 @@
 					},
 					{
 						_class = "AnimFile"
-						name = "deploy"
+						name = "deploy2"
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
@@ -127,7 +127,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/fal/anims/v_fal@deploy.fbx"
+						source_filename = "models/weapons/fal/anims/v_fall@deploy2.fbx"
 						start_frame = -1
 						end_frame = -1
 						framerate = -1.0

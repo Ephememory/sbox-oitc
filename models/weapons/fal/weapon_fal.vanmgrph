@@ -330,7 +330,7 @@
 						{
 							m_id = 891720928
 						}
-						m_position = [ -86.0, -126.0 ]
+						m_position = [ -85.0, -127.0 ]
 						m_bIsStartState = false
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
@@ -369,13 +369,8 @@
 								m_bDisabled = false
 							},
 						]
-						m_tags = 
-						[
-							{
-								m_id = 1282670873
-							},
-						]
-						m_tagBehaviors = [ 0 ]
+						m_tags = [  ]
+						m_tagBehaviors = [  ]
 						m_name = "deploy"
 						m_childNodeID = 
 						{
@@ -385,7 +380,7 @@
 						{
 							m_id = 798376169
 						}
-						m_position = [ -87.0, -8.0 ]
+						m_position = [ -88.0, -10.0 ]
 						m_bIsStartState = false
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
@@ -613,7 +608,7 @@
 			{
 				_class = "CSequenceAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -404.0, -206.0 ]
+				m_vecPosition = [ -406.0, -207.0 ]
 				m_nNodeID = 
 				{
 					m_id = 1816742740
@@ -628,11 +623,11 @@
 						{
 							m_id = 1282670873
 						}
-						m_fStartCycle = 0.553214
-						m_fDuration = 0.446786
+						m_fStartCycle = 0.583772
+						m_fDuration = 0.416228
 					},
 				]
-				m_sequenceName = "deploy"
+				m_sequenceName = "deploy2"
 				m_playbackSpeed = 1.0
 				m_bLoop = false
 			}

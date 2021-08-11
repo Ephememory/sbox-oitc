@@ -24,10 +24,12 @@ public partial class WeaponFAL : Weapon
 	public override void ActiveStart( Entity ent )
 	{
 		base.ActiveStart( ent );
+		ViewModelEntity?.SetAnimBool( "deploy", true );
 		if ( IsClient )
 		{
 			ViewModelEntity.FieldOfView = 90;
 		}
+
 	}
 
 	public override void AttackPrimary()
@@ -55,6 +57,7 @@ public partial class WeaponFAL : Weapon
 	{
 		base.AttackSecondary();
 		TimeSinceSecondaryAttack = 0;
+		ViewModelEntity?.SetAnimBool( "deploy", true );
 		if ( IsServer ) return;
 
 	}

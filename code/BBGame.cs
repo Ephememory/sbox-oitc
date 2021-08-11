@@ -1,15 +1,9 @@
 using Sandbox;
-using Sandbox.UI.Construct;
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+using System.Linq;
 
 [Library( "banana-battle", Title = "Sticks & Stones" )]
 partial class BBGame : Game
 {
-
-
 	[ConVar.Replicated( "bb_debug" )]
 	public static bool bb_debug { get; set; } = false;
 
@@ -28,6 +22,34 @@ partial class BBGame : Game
 		var player = new BBPlayer();
 		player.Respawn();
 		cl.Pawn = player;
+	}
+
+
+	public override void OnKilled( Client client, Entity pawn )
+	{
+		base.OnKilled( client, pawn );
+		var killer = pawn.LastAttacker;
+		var weapon = pawn.LastAttackerWeapon;
+
+		if ( killer == null ) return; //Watch out for suicides!
+		if ( pawn is not BBPlayer killed ) return;
+		var killedClient = killed.GetClientOwner();
+
+		killedClient.SetScore( "deaths", killedClient.GetScore<int>( "deaths" ) + 1 );
+
+		if ( killer.Inventory is BaseInventory inv )
+		{
+			var bananGun = inv.List.Where( x => x.GetType() == typeof( WeaponBanana ) )
+			.FirstOrDefault() as WeaponBanana; //nasty linq
+			bananGun.AwardAmmo( 1 );
+		}
+
+		var killerClient = killer.GetClientOwner();
+		killerClient.SetScore( "kills", killerClient.GetScore<int>( "kills" ) + 1 );
+
+
+
+		Log.Info( $"{client.Name} was killed by {killer.GetClientOwner().NetworkIdent} with {weapon}" );
 	}
 
 
