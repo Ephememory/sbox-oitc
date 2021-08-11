@@ -22,7 +22,7 @@ public partial class BBHud : HudEntity<RootPanel>
 		RootPanel.AddChild<VoiceList>();
 		RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
 		RootPanel.AddChild<CrossHairHUD>();
-		RootPanel.AddChild<DebugPanel>();
+		//RootPanel.AddChild<DebugPanel>();
 		RootPanel.AddChild<HudHealth>();
 		RootPanel.AddChild<HudFlashlight>();
 		RootPanel.AddChild<HudAmmo>();

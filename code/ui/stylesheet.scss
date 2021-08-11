@@ -1,4 +1,10 @@
-﻿CrossHairHUD {
+﻿rootpanel {
+  &.devcamera {
+    display: none;
+  }
+}
+
+CrossHairHUD {
   position: fixed;
   left: 50%;
   top: 50%;
