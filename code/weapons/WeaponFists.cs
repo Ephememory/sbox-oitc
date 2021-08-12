@@ -23,8 +23,6 @@ public partial class WeaponFists : Weapon
 		//this is awesome
 		await GameTask.DelaySeconds( delay );
 		Melee( 1000f, 90f );
-
-
 	}
 	public override void AttackPrimary()
 	{
@@ -39,9 +37,7 @@ public partial class WeaponFists : Weapon
 
 	public override void AttackSecondary()
 	{
-		base.AttackSecondary();
-		TimeSincePrimaryAttack = 0;
-		TimeSinceSecondaryAttack = 0;
+		//Do absolutely nothing
 	}
 
 

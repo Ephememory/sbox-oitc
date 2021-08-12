@@ -14,7 +14,7 @@ public partial class HudHealth : Panel
 	{
 		var player = Local.Pawn as BBPlayer;
 		if ( player == null ) return;
-		label.SetText( $"♥️ {player.Health}" );
+		label.SetText( $"♥️ {player.Health.CeilToInt()}" );
 		if ( player.Health.InRange( 50, 100 ) )
 		{
 			label.Style.FontColor = Color.FromBytes( 184, 212, 59, 150 );

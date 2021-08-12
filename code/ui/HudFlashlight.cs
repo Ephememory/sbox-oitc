@@ -23,7 +23,7 @@ public partial class HudFlashlight : Panel
 	{
 		var player = Local.Pawn as BBPlayer;
 		if ( player == null ) return;
-		label.SetText( $"🔦 {player.FlashlightBatteryCharge}" );
+		label.SetText( $"🔦 {player.FlashlightBatteryCharge.CeilToInt()}" );
 		if ( player.FlashlightBatteryCharge.InRange( 50, 100 ) )
 		{
 			label.Style.FontColor = Color.FromBytes( 184, 212, 59, 150 );

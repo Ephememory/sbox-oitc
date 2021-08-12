@@ -1,15 +1,16 @@
 using Sandbox;
-using System.Linq;
+using System;
 
-[Library( "banana-battle", Title = "Sticks & Stones" )]
+[Library( "banana-battle", Title = "Banana Battle" )]
 partial class BBGame : Game
 {
-	[ConVar.Replicated( "bb_debug" )]
-	public static bool bb_debug { get; set; } = false;
+
+	public GameState CurrentGameState { get; private set; }
+
+	private RealTimeUntil timeLimit { get; set; }
 
 	public BBGame()
 	{
-
 		if ( IsServer )
 		{
 			_ = new BBHud();
@@ -19,9 +20,25 @@ partial class BBGame : Game
 	public override void ClientJoined( Client cl )
 	{
 		base.ClientJoined( cl );
+
 		var player = new BBPlayer();
-		player.Respawn();
 		cl.Pawn = player;
+		player.Respawn();
+		if ( IsClient ) return;
+
+		ReCalculateGameState();
+
+		//Only do this on join to avoid 3 - 1 causing a round restart.
+		if ( NumPlayers == 2 )
+			EndRound();
+	}
+
+	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+	{
+		base.ClientDisconnect( cl, reason );
+		if ( IsClient ) return;
+
+		ReCalculateGameState();
 	}
 
 
@@ -34,26 +51,56 @@ partial class BBGame : Game
 		if ( killer == null ) return; //Watch out for suicides!
 		if ( pawn is not BBPlayer killed ) return;
 
-		if ( killer.Inventory is BaseInventory inv && killer is BBPlayer ply )
+		if ( killer is BBPlayer ply )
 		{
-			var bananGun = inv.List.Where( x => x.GetType() == typeof( WeaponBanana ) )
-			.FirstOrDefault() as WeaponBanana; //nasty linq
-			var amountToAward = weapon.GetType() == typeof( WeaponFists ) ? 2 : 1; //this does assume we only have 2 weapons :)
+			var amountToAward = weapon.GetType() == typeof( WeaponFists ) ? 2 : 1;
 			ply.AwardAmmo( amountToAward );
 
+			//If the killer used their fists, switch them back to the banana gun
+			//because they earned ammo.
 			if ( killer.Inventory.Active is WeaponFists )
 			{
 				ply.Inventory.SetActiveSlot( 1, false );
 			}
 		}
 
+		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) return;
+
 		var killedClient = killed.GetClientOwner();
 		killedClient.SetScore( "deaths", killedClient.GetScore<int>( "deaths" ) + 1 );
+
 		var killerClient = killer.GetClientOwner();
-		killerClient.SetScore( "kills", killerClient.GetScore<int>( "kills" ) + 1 );
+		var killerKills = killerClient.GetScore<int>( "kills" );
+		killerClient.SetScore( "kills", killerKills + 1 );
+
+		if ( killerKills >= bb_score_limit - 1 )
+		{
+			SetGameState( new GameState
+			{
+				TopFragSteamId = CurrentGameState.TopFragSteamId,
+				TopFragName = CurrentGameState.TopFragName,
+				Tier = GameStateTier.RoundOver
+			} );
+
+			EndRound();
+		}
 
 		Log.Info( $"{client.Name} was killed by {killer.GetClientOwner().NetworkIdent} with {weapon}" );
 	}
 
+
+	private async void EndRound()
+	{
+		EndRoundClient();
+		await GameTask.DelayRealtimeSeconds( 5f );
+		Sandbox.ConsoleSystem.Run( "bb_restart" );
+	}
+
+	[ClientRpc]
+	private void EndRoundClient()
+	{
+		Host.AssertClient();
+		HudGameRestartTime.OnRoundOver.Invoke();
+	}
 
 }

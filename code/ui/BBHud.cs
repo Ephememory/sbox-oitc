@@ -21,51 +21,21 @@ public partial class BBHud : HudEntity<RootPanel>
 		RootPanel.AddChild<ChatBox>();
 		RootPanel.AddChild<VoiceList>();
 		RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
-		RootPanel.AddChild<CrossHairHUD>();
-		//RootPanel.AddChild<DebugPanel>();
+		RootPanel.AddChild<KillFeed>();
+		RootPanel.AddChild<HudGameState>();
+		RootPanel.AddChild<HudGameRestartTime>();
+		RootPanel.AddChild<HudCrosshair>();
 		RootPanel.AddChild<HudHealth>();
 		RootPanel.AddChild<HudFlashlight>();
 		RootPanel.AddChild<HudAmmo>();
+
+		//just a seperate HTML panel for hud iterations with less csharp
+		var htmlPanel = new Panel();
+		RootPanel.AddChild( htmlPanel );
+		htmlPanel.SetTemplate( "code/ui/HTMLPanel.html" );
+		htmlPanel.StyleSheet.Load( "code/ui/htmlpanel.scss" );
 	}
 
-
-	public class CrossHairHUD : Panel
-	{
-		public static CrossHairHUD Singleton;
-		Length? newWidth = 0;
-
-		public CrossHairHUD()
-		{
-			_class = new HashSet<string>() { "CrossHairHUD" };
-
-			Panel center = new Panel();
-			AddChild( center );
-			center.AddClass( "center" );
-
-
-		}
-
-
-		public override void Tick()
-		{
-			base.Tick();
-			if ( Time.Tick % 50 != 1 ) return;
-			// newWidth = Length.Pixels( Rand.Int( 2, 8 ) );
-			// Style.MarginLeft = Length.Pixels( -newWidth.Value.Value / 2 );
-			// Style.Width = newWidth;
-			Style.Dirty();
-		}
-
-
-		public static void SetCrosshair( Panel crosshairPanel )
-		{
-			if ( Singleton == null )
-				return;
-
-			Singleton.DeleteChildren();
-			crosshairPanel.Parent = Singleton;
-		}
-	}
 
 	public class DebugPanel : Panel
 	{

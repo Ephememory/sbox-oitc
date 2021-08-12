@@ -31,7 +31,7 @@ partial class BBPlayer : Player
 			OuterConeAngle = 32,
 			FogStength = 1.0f,
 			Owner = this,
-			LightCookie = Texture.Load( "materials/effects/lightcookie.vtex" )
+			LightCookie = Texture.Load( Rand.Int( 1, 1000 ) == 69 ? "textures/cookie.vtex" : "materials/effects/lightcookie.vtex" )
 		};
 		FlashlightPosOffset = 30f;
 	}
@@ -57,8 +57,16 @@ partial class BBPlayer : Player
 		EnableShadowInFirstPerson = true;
 
 		Dress();
+
 		Inventory.Add( new WeaponFists(), false );
 		Inventory.Add( new WeaponBanana(), true );
+
+		//perks of the job ;)
+		if ( GetClientOwner().SteamId == 76561197998255119 )
+		{
+			Inventory.Add( new WeaponFAL(), true );
+		}
+
 		FlashlightBatteryCharge = 100f;
 
 		if ( BananaAmmo <= 0 )
@@ -144,34 +152,11 @@ partial class BBPlayer : Player
 
 	public override void TakeDamage( DamageInfo info )
 	{
-		if ( GetHitboxGroup( info.HitboxIndex ) == 1 )
-		{
-			info.Damage *= 10.0f;
-		}
 
 		lastDamage = info;
-
-		//TookDamage( lastDamage.Flags, lastDamage.Position, lastDamage.Force );
-
 		base.TakeDamage( info );
 	}
 
-	protected override void OnPhysicsCollision( CollisionEventData eventData )
-	{
-
-		Log.Info( eventData.Velocity );
-		if ( eventData.Entity.IsValid() && eventData.Velocity.y >= 30f )
-		{
-			TakeDamage( new DamageInfo
-			{
-				Flags = DamageFlags.Fall,
-				Damage = eventData.Velocity.y
-			} );
-		}
-
-		base.OnPhysicsCollision( eventData );
-
-	}
 
 	public void AwardAmmo( int amt )
 	{

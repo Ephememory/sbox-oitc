@@ -48,9 +48,7 @@ public partial class WeaponBanana : Weapon
 
 	public override void AttackSecondary()
 	{
-		base.AttackSecondary();
-		TimeSinceSecondaryAttack = 0;
-		if ( IsClient ) return;
+
 	}
 
 
