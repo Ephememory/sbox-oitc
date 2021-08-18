@@ -61,12 +61,6 @@ partial class BBPlayer : Player
 		Inventory.Add( new WeaponFists(), false );
 		Inventory.Add( new WeaponBanana(), true );
 
-		//perks of the job ;)
-		if ( GetClientOwner().SteamId == 76561197998255119 )
-		{
-			Inventory.Add( new WeaponFAL(), true );
-		}
-
 		FlashlightBatteryCharge = 100f;
 
 		if ( BananaAmmo <= 0 )

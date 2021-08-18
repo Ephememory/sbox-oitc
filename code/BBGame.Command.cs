@@ -18,6 +18,7 @@ public partial class BBGame : Sandbox.Game
 	public static void RestartGame()
 	{
 		Host.AssertServer();
+		Log.Info( ConsoleSystem.Caller );
 		var game = (Game.Current as BBGame);
 		foreach ( var c in Client.All )
 		{
@@ -36,5 +37,18 @@ public partial class BBGame : Sandbox.Game
 		} );
 
 
+	}
+
+	[ServerCmd( "give_fal" )]
+	public static void GiveFAL()
+	{
+
+		Host.AssertServer();
+
+
+		//:)
+		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		
+		(ConsoleSystem.Caller.Pawn as BBPlayer).Inventory.Add( new WeaponFAL(), true );
 	}
 }
