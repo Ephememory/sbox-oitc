@@ -31,7 +31,11 @@ partial class BBGame : Game
 
 		//Only do this on join to avoid 3 - 1 causing a round restart.
 		if ( NumPlayers == 2 )
+		{
 			EndRound();
+			NumPlayerFulfilled();
+		}
+
 	}
 
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
@@ -96,7 +100,15 @@ partial class BBGame : Game
 	private void EndRoundClient()
 	{
 		Host.AssertClient();
+
 		HudGameRestartTime.OnRoundOver.Invoke();
+	}
+
+	[ClientRpc]
+	private void NumPlayerFulfilled()
+	{
+		Host.AssertClient();
+		HudGameState.OnNumPlayersFulfilled.Invoke();
 	}
 
 }

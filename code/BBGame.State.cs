@@ -87,7 +87,6 @@ public partial class BBGame : Game
 		}
 
 		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) return;
-		Log.Info( NumPlayers );
 		if ( NumPlayers < 2 )
 		{
 			SetGameState( new GameState

@@ -11,6 +11,7 @@ public partial class HudGameRestartTime : Panel
 	private static bool shouldCountDown = false;
 	private static float lastTime = 0;
 	public static Action OnRoundOver;
+
 	public HudGameRestartTime()
 	{
 		label = Add.Label( "5", "value" );

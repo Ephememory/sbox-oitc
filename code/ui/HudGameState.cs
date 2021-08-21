@@ -9,7 +9,9 @@ public class HudGameState : Panel
 	private BBGame.GameState CurrentState => (Game.Current as BBGame).CurrentGameState;
 
 	public static Action OnStateChanged;
+	public static Action OnNumPlayersFulfilled;
 	private Label label;
+
 	public HudGameState()
 	{
 		label = Add.Label( null, null );
@@ -17,6 +19,12 @@ public class HudGameState : Panel
 		{
 			SetClass( "toggled", CurrentState.Tier == BBGame.GameStateTier.MidGame );
 			label.SetText( CurrentState.TierText );
+		};
+
+		OnNumPlayersFulfilled += () =>
+		{
+			Utils.UtilLog( "fuck" );
+			SetClass( "toggled", true );
 		};
 	}
 
