@@ -42,7 +42,6 @@ partial class BBGame : Game
 	{
 		base.ClientDisconnect( cl, reason );
 		NumPlayers--;
-
 		if ( IsClient ) return;
 		ReCalculateGameState();
 	}

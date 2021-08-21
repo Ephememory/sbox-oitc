@@ -23,7 +23,6 @@ public class HudGameState : Panel
 
 		OnNumPlayersFulfilled += () =>
 		{
-			Utils.UtilLog( "fuck" );
 			SetClass( "toggled", true );
 		};
 	}
