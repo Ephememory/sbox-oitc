@@ -18,7 +18,7 @@ public partial class WeaponBanana : Weapon
 	{
 		base.ActiveStart( ent );
 		if ( !IsClient ) return;
-		ViewModelEntity.FieldOfView = 50;
+		ViewModelEntity.FieldOfView = 78;
 	}
 
 	public override void AttackPrimary()
@@ -33,15 +33,12 @@ public partial class WeaponBanana : Weapon
 		}
 
 		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
-		player.BananaAmmo--;
+		player.RemoveAmmo( 1 );
 		ShootEffects();
-		PlaySound( "kersplat" );
+		PlaySound( "squish" );
 
 		ShootBullet( 0, 1, 1000, 1 );
-		if ( player.BananaAmmo <= 0 )
-		{
-			(Owner as BBPlayer)?.Inventory.SetActiveSlot( 0, false );
-		}
+
 
 
 	}
@@ -58,7 +55,6 @@ public partial class WeaponBanana : Weapon
 		Host.AssertClient();
 
 		//TODO: Banana peel particles :)
-
 		if ( Owner == Local.Pawn )
 		{
 			new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );

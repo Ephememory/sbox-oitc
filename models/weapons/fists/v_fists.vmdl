@@ -14,8 +14,8 @@
 						remaps = 
 						[
 							{
-								from = "v_hands.vmat"
-								to = "materials/cstrike/v_css_hands.vmat"
+								from = "arms.vmat"
+								to = "models/weapons/fists/v_fists.vmat"
 							},
 						]
 						use_global_default = false
@@ -51,26 +51,6 @@
 				[
 					{
 						_class = "AnimFile"
-						name = "fire"
-						activity_name = ""
-						activity_weight = 1
-						weight_list_name = ""
-						fade_in_time = 0.0
-						fade_out_time = 0.0
-						looping = false
-						delta = false
-						worldSpace = false
-						hidden = false
-						anim_markup_ordered = false
-						disable_compression = false
-						source_filename = "models/weapons/fists/anims/v_fists@fire.fbx"
-						start_frame = -1
-						end_frame = -1
-						framerate = -1.0
-						reverse = false
-					},
-					{
-						_class = "AnimFile"
 						name = "idle"
 						activity_name = ""
 						activity_weight = 1
@@ -104,6 +84,26 @@
 						anim_markup_ordered = false
 						disable_compression = false
 						source_filename = "models/weapons/fists/anims/v_fists@deploy.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "fire"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/weapons/fists/anims/v_fists@fire.fbx"
 						start_frame = -1
 						end_frame = -1
 						framerate = -1.0

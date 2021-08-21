@@ -15,7 +15,7 @@
 						[
 							{
 								from = "ripe-banana_u1_v1.vmat"
-								to = "materials/weapons/banana/bb_banana.vmat"
+								to = "models/weapons/banana/banana.vmat"
 							},
 						]
 						use_global_default = false

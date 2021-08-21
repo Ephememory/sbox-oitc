@@ -11,7 +11,7 @@
 				m_name = "fire"
 				m_id = 
 				{
-					m_id = 694107176
+					m_id = 2075434876
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
 				m_bNetwork = false
@@ -25,7 +25,7 @@
 				m_name = "deploy"
 				m_id = 
 				{
-					m_id = 1529331842
+					m_id = 985600179
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
 				m_bNetwork = false
@@ -76,7 +76,7 @@
 	}
 	m_rootNodeID = 
 	{
-		m_id = 1434940232
+		m_id = 1183185815
 	}
 	m_previewModels = 
 	[
@@ -87,70 +87,16 @@
 		{
 			key = 
 			{
-				m_id = 126572996
-			}
-			value = 
-			{
-				_class = "CSequenceAnimNode"
-				m_sName = "Unnamed"
-				m_vecPosition = [ -355.0, 32.0 ]
-				m_nNodeID = 
-				{
-					m_id = 126572996
-				}
-				m_networkMode = "ClientSimulate"
-				m_sNote = ""
-				m_tagSpans = [  ]
-				m_sequenceName = "breathe"
-				m_playbackSpeed = 1.0
-				m_bLoop = true
-			}
-		},
-		{
-			key = 
-			{
-				m_id = 588368947
-			}
-			value = 
-			{
-				_class = "CSubtractAnimNode"
-				m_sName = "Unnamed"
-				m_vecPosition = [ -172.0, 34.0 ]
-				m_nNodeID = 
-				{
-					m_id = 588368947
-				}
-				m_networkMode = "ClientSimulate"
-				m_sNote = ""
-				m_baseChildID = 
-				{
-					m_id = 126572996
-				}
-				m_subtractChildID = 
-				{
-					m_id = 956953847
-				}
-				m_timingBehavior = "UseChild1"
-				m_flTimingBlend = 0.5
-				m_footMotionTiming = "Child1"
-				m_bResetBase = false
-				m_bResetSubtract = false
-				m_bApplyChannelsSeparately = true
-			}
-		},
-		{
-			key = 
-			{
-				m_id = 760270261
+				m_id = 265196773
 			}
 			value = 
 			{
 				_class = "CStateMachineAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ 24.0, -224.0 ]
+				m_vecPosition = [ -217.0, -96.0 ]
 				m_nNodeID = 
 				{
-					m_id = 760270261
+					m_id = 265196773
 				}
 				m_networkMode = "ClientSimulate"
 				m_sNote = ""
@@ -169,7 +115,7 @@
 										m_comparisonOp = 0
 										m_paramID = 
 										{
-											m_id = 694107176
+											m_id = 985600179
 										}
 										m_comparisonValue = 
 										{
@@ -178,18 +124,18 @@
 										}
 									},
 								]
-								m_blendDuration = 0.0
+								m_blendDuration = 0.2
 								m_destState = 
 								{
-									m_id = 1361882076
+									m_id = 944928856
 								}
 								m_bReset = true
 								m_resetCycleOption = "Beginning"
 								m_flFixedCycleValue = 0.0
 								m_blendCurve = 
 								{
-									m_vControlPoint1 = [ 0.44, 0.873333 ]
-									m_vControlPoint2 = [ 1.0, 1.0 ]
+									m_vControlPoint1 = [ 0.5, 0.0 ]
+									m_vControlPoint2 = [ 0.5, 1.0 ]
 								}
 								m_bForceFootPlant = false
 								m_bDisabled = false
@@ -203,7 +149,7 @@
 										m_comparisonOp = 0
 										m_paramID = 
 										{
-											m_id = 1529331842
+											m_id = 2075434876
 										}
 										m_comparisonValue = 
 										{
@@ -212,10 +158,10 @@
 										}
 									},
 								]
-								m_blendDuration = 0.2
+								m_blendDuration = 0.0
 								m_destState = 
 								{
-									m_id = 747447347
+									m_id = 1476202936
 								}
 								m_bReset = true
 								m_resetCycleOption = "Beginning"
@@ -238,35 +184,14 @@
 						}
 						m_stateID = 
 						{
-							m_id = 407144499
+							m_id = 281877459
 						}
-						m_position = [ -226.0, -96.0 ]
+						m_position = [ -192.0, -34.0 ]
 						m_bIsStartState = false
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
 						m_bIsRootMotionExclusive = false
 						m_bAlwaysEvaluate = true
-					},
-					{
-						_class = "CAnimState"
-						m_transitions = [  ]
-						m_tags = [  ]
-						m_tagBehaviors = [  ]
-						m_name = "idle"
-						m_childNodeID = 
-						{
-							m_id = 1867823069
-						}
-						m_stateID = 
-						{
-							m_id = 169471674
-						}
-						m_position = [ 81.0, -103.0 ]
-						m_bIsStartState = true
-						m_bIsEndtState = false
-						m_bIsPassthrough = false
-						m_bIsRootMotionExclusive = false
-						m_bAlwaysEvaluate = false
 					},
 					{
 						_class = "CAnimState"
@@ -279,22 +204,22 @@
 									{
 										_class = "CFinishedCondition"
 										m_comparisonOp = 0
-										m_option = "FinishedConditionOption_OnFinished"
+										m_option = "FinishedConditionOption_OnAlmostFinished"
 										m_bIsFinished = true
 									},
 								]
-								m_blendDuration = 0.0
+								m_blendDuration = 0.2
 								m_destState = 
 								{
-									m_id = 169471674
+									m_id = 2129223678
 								}
 								m_bReset = true
 								m_resetCycleOption = "Beginning"
 								m_flFixedCycleValue = 0.0
 								m_blendCurve = 
 								{
-									m_vControlPoint1 = [ 0.0, 0.0 ]
-									m_vControlPoint2 = [ 1.0, 1.0 ]
+									m_vControlPoint1 = [ 0.5, 0.0 ]
+									m_vControlPoint2 = [ 0.5, 1.0 ]
 								}
 								m_bForceFootPlant = false
 								m_bDisabled = false
@@ -302,16 +227,37 @@
 						]
 						m_tags = [  ]
 						m_tagBehaviors = [  ]
-						m_name = "fire"
+						m_name = "deploy"
 						m_childNodeID = 
 						{
-							m_id = 1409832564
+							m_id = 526715361
 						}
 						m_stateID = 
 						{
-							m_id = 1361882076
+							m_id = 944928856
 						}
-						m_position = [ -68.0, -104.0 ]
+						m_position = [ -69.0, -88.0 ]
+						m_bIsStartState = true
+						m_bIsEndtState = false
+						m_bIsPassthrough = false
+						m_bIsRootMotionExclusive = false
+						m_bAlwaysEvaluate = false
+					},
+					{
+						_class = "CAnimState"
+						m_transitions = [  ]
+						m_tags = [  ]
+						m_tagBehaviors = [  ]
+						m_name = "idle"
+						m_childNodeID = 
+						{
+							m_id = 1813711540
+						}
+						m_stateID = 
+						{
+							m_id = 2129223678
+						}
+						m_position = [ 54.0, -34.0 ]
 						m_bIsStartState = false
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
@@ -336,7 +282,7 @@
 								m_blendDuration = 0.2
 								m_destState = 
 								{
-									m_id = 169471674
+									m_id = 2129223678
 								}
 								m_bReset = true
 								m_resetCycleOption = "Beginning"
@@ -352,16 +298,16 @@
 						]
 						m_tags = [  ]
 						m_tagBehaviors = [  ]
-						m_name = "deploy"
+						m_name = "fire"
 						m_childNodeID = 
 						{
-							m_id = 1165322769
+							m_id = 330725723
 						}
 						m_stateID = 
 						{
-							m_id = 747447347
+							m_id = 1476202936
 						}
-						m_position = [ -60.0, -2.0 ]
+						m_position = [ -73.0, 38.0 ]
 						m_bIsStartState = false
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
@@ -376,58 +322,16 @@
 		{
 			key = 
 			{
-				m_id = 956953847
-			}
-			value = 
-			{
-				_class = "CSingleFrameAnimNode"
-				m_sName = "Unnamed"
-				m_vecPosition = [ -353.0, 93.0 ]
-				m_nNodeID = 
-				{
-					m_id = 956953847
-				}
-				m_networkMode = "ClientSimulate"
-				m_sNote = ""
-				m_sequenceName = "breathe"
-				m_nFrameIndex = 0
-			}
-		},
-		{
-			key = 
-			{
-				m_id = 1165322769
+				m_id = 330725723
 			}
 			value = 
 			{
 				_class = "CSequenceAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -349.0, -287.0 ]
+				m_vecPosition = [ -439.0, 2.0 ]
 				m_nNodeID = 
 				{
-					m_id = 1165322769
-				}
-				m_networkMode = "ClientSimulate"
-				m_sNote = ""
-				m_tagSpans = [  ]
-				m_sequenceName = "deploy"
-				m_playbackSpeed = 1.0
-				m_bLoop = false
-			}
-		},
-		{
-			key = 
-			{
-				m_id = 1338559452
-			}
-			value = 
-			{
-				_class = "CSequenceAnimNode"
-				m_sName = "Unnamed"
-				m_vecPosition = [ -349.0, -137.0 ]
-				m_nNodeID = 
-				{
-					m_id = 1338559452
+					m_id = 330725723
 				}
 				m_networkMode = "ClientSimulate"
 				m_sNote = ""
@@ -440,122 +344,21 @@
 		{
 			key = 
 			{
-				m_id = 1409832564
-			}
-			value = 
-			{
-				_class = "CChoiceAnimNode"
-				m_sName = "Unnamed"
-				m_vecPosition = [ -162.0, -118.0 ]
-				m_nNodeID = 
-				{
-					m_id = 1409832564
-				}
-				m_networkMode = "ClientSimulate"
-				m_sNote = ""
-				m_children = 
-				[
-					{
-						m_nodeID = 
-						{
-							m_id = 1338559452
-						}
-						m_name = "fire0"
-						m_weight = 0.0
-						m_blendTime = 0.0
-					},
-					{
-						m_nodeID = 
-						{
-							m_id = 1858974135
-						}
-						m_name = "fire1"
-						m_weight = 0.0
-						m_blendTime = 0.0
-					},
-				]
-				m_seed = 1490480588
-				m_choiceMethod = "WeightedRandom"
-				m_choiceChangeMethod = "OnReset"
-				m_blendMethod = "SingleBlendTime"
-				m_blendTime = 0.2
-				m_bCrossFade = false
-				m_bResetChosen = true
-				m_bDontResetSameSelection = false
-			}
-		},
-		{
-			key = 
-			{
-				m_id = 1434940232
-			}
-			value = 
-			{
-				_class = "CRootAnimNode"
-				m_sName = "Unnamed"
-				m_vecPosition = [ 379.0, -171.0 ]
-				m_nNodeID = 
-				{
-					m_id = 1434940232
-				}
-				m_networkMode = "ClientSimulate"
-				m_sNote = ""
-				m_childID = 
-				{
-					m_id = 1703466555
-				}
-			}
-		},
-		{
-			key = 
-			{
-				m_id = 1703466555
-			}
-			value = 
-			{
-				_class = "CAddAnimNode"
-				m_sName = "Unnamed"
-				m_vecPosition = [ 213.0, -177.0 ]
-				m_nNodeID = 
-				{
-					m_id = 1703466555
-				}
-				m_networkMode = "ClientSimulate"
-				m_sNote = ""
-				m_baseChildID = 
-				{
-					m_id = 760270261
-				}
-				m_additiveChildID = 
-				{
-					m_id = 588368947
-				}
-				m_timingBehavior = "UseChild2"
-				m_flTimingBlend = 0.5
-				m_footMotionTiming = "Child1"
-				m_bResetBase = false
-				m_bResetAdditive = false
-				m_bApplyChannelsSeparately = true
-			}
-		},
-		{
-			key = 
-			{
-				m_id = 1858974135
+				m_id = 526715361
 			}
 			value = 
 			{
 				_class = "CSequenceAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -358.0, -75.0 ]
+				m_vecPosition = [ -426.0, -54.0 ]
 				m_nNodeID = 
 				{
-					m_id = 1858974135
+					m_id = 526715361
 				}
 				m_networkMode = "ClientSimulate"
 				m_sNote = ""
 				m_tagSpans = [  ]
-				m_sequenceName = "fire1"
+				m_sequenceName = "deploy"
 				m_playbackSpeed = 1.0
 				m_bLoop = false
 			}
@@ -563,23 +366,43 @@
 		{
 			key = 
 			{
-				m_id = 1867823069
+				m_id = 1183185815
 			}
 			value = 
 			{
-				_class = "CSequenceAnimNode"
+				_class = "CRootAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -353.0, -200.0 ]
+				m_vecPosition = [ 10.0, -111.0 ]
 				m_nNodeID = 
 				{
-					m_id = 1867823069
+					m_id = 1183185815
 				}
 				m_networkMode = "ClientSimulate"
 				m_sNote = ""
-				m_tagSpans = [  ]
+				m_childID = 
+				{
+					m_id = 265196773
+				}
+			}
+		},
+		{
+			key = 
+			{
+				m_id = 1813711540
+			}
+			value = 
+			{
+				_class = "CSingleFrameAnimNode"
+				m_sName = "Unnamed"
+				m_vecPosition = [ -434.0, -122.0 ]
+				m_nNodeID = 
+				{
+					m_id = 1813711540
+				}
+				m_networkMode = "ClientSimulate"
+				m_sNote = ""
 				m_sequenceName = "idle"
-				m_playbackSpeed = 1.0
-				m_bLoop = true
+				m_nFrameIndex = 0
 			}
 		},
 	]

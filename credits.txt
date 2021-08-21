@@ -1,2 +1,11 @@
-sounds:
-	woosh - by Animadierer from freesound.org @ March 31st, 2020 (https://freesound.org/people/Animadierer/sounds/511439/)
+[sounds]
+	Plastic Woosh.wav - by 'Animadierer' from freesound.org @ March 31st, 2020 (https://freesound.org/people/Animadierer/sounds/511439/) (CC BY 3.0) LICENSE: https://creativecommons.org/licenses/by/3.0/
+	Cartoon_Punch_06.wav - by 'RSilveira_88' from freesound.org @ January 28th, 2014 (https://freesound.org/people/RSilveira_88/sounds/216201/) (CC BY 3.0) LICENSE:https://creativecommons.org/licenses/by/3.0/
+	squish.wav - by https://freesound.org/people/Bertsz/sounds/500912/ (Creative Commons)
+
+[models]
+	ViewModel arms - by 'DJMaesen' from sketchfab.com @ November 15th, 2020 (https://sketchfab.com/3d-models/first-person-arms-e3c42c05b22944e5839deb8e003f0987) (CC BY 4.0) LICENSE: https://creativecommons.org/licenses/by/4.0/
+	Banana - by 'matousekfoto' from sketchfab.com @ August 3rd, 2021 (https://sketchfab.com/3d-models/banana-4d4c8d85a09b476c8136f0c4cd24c45a) (CC BY 4.0) LICENSE: https://creativecommons.org/licenses/by/4.0/
+
+[textures]
+	Cookie - by 'contaowebsiteerstellen' from pixabay.com (https://pixabay.com/vectors/cookie-website-cookies-computer-5784367/) (Pixabay License) LICENSE: https://pixabay.com/service/terms/#license

@@ -16,14 +16,22 @@ public partial class WeaponFists : Weapon
 	{
 		base.ActiveStart( ent );
 		if ( !IsClient ) return;
-		ViewModelEntity.FieldOfView = 48;
+		ViewModelEntity.FieldOfView = 54;
 	}
+
 	private async void AttackAsync( float delay )
 	{
-		//this is awesome
+		//Async delay so we do attack logic at the right client-side anim frame
+		//this is more important than you might think.
 		await GameTask.DelaySeconds( delay );
 		Melee( 1000f, 90f );
+
+		if(IsClient && Owner == Local.Pawn )
+		{
+			new Sandbox.ScreenShake.Perlin( 1.2f, 1.2f, 1.4f, 1.9f );
+		}
 	}
+
 	public override void AttackPrimary()
 	{
 
@@ -49,6 +57,9 @@ public partial class WeaponFists : Weapon
 	/// <returns></returns>
 	public bool Melee( float damage, float range = DefaultBulletRange )
 	{
+		//Because this is async, players can die before this is actually executed and be dead while it is.
+		//nullcheck the owner!
+		if ( Owner == null ) return false;
 		var pos = Owner.EyePos;
 		var forward = Owner.EyeRot.Forward;
 		forward = forward.Normal;
@@ -99,13 +110,6 @@ public partial class WeaponFists : Weapon
 	protected override void ShootEffects()
 	{
 		Host.AssertClient();
-
-
-		if ( Owner == Local.Pawn )
-		{
-			new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );
-
-		}
 
 		ViewModelEntity?.SetAnimBool( "fire", true );
 		CrosshairPanel?.CreateEvent( "fire" );

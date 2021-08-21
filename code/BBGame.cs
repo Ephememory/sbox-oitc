@@ -56,12 +56,6 @@ partial class BBGame : Game
 			var amountToAward = weapon.GetType() == typeof( WeaponFists ) ? 2 : 1;
 			ply.AwardAmmo( amountToAward );
 
-			//If the killer used their fists, switch them back to the banana gun
-			//because they earned ammo.
-			if ( killer.Inventory.Active is WeaponFists )
-			{
-				ply.Inventory.SetActiveSlot( 1, false );
-			}
 		}
 
 		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) return;

@@ -23,7 +23,9 @@ public partial class BBGame : Sandbox.Game
 		foreach ( var c in Client.All )
 		{
 			var player = (c.Pawn as BBPlayer);
-			player.BananaAmmo = 1;
+			//this is chtupid tbh
+			player.RemoveAmmo( player.BananaAmmo );
+			player.AwardAmmo( 1 );
 			player.Respawn();
 			c.SetScore( "kills", 0 );
 			c.SetScore( "deaths", 0 );
@@ -45,10 +47,32 @@ public partial class BBGame : Sandbox.Game
 
 		Host.AssertServer();
 
-
 		//:)
 		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
 		
 		(ConsoleSystem.Caller.Pawn as BBPlayer).Inventory.Add( new WeaponFAL(), true );
+	}
+
+	[ServerCmd("give_ammo")]
+	public static void GiveAmmo()
+	{
+		Host.AssertServer();
+		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		(ConsoleSystem.Caller.Pawn as BBPlayer).AwardAmmo( 4 );
+		ConsoleSystem.Caller.Pawn.PlaySound( "squish" );
+	}
+
+	[ServerCmd( "give_ammo_all" )]
+	public static void GiveAmmoAll()
+	{
+		Host.AssertServer();
+		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		var game = (Game.Current as BBGame);
+		foreach ( var c in Client.All )
+		{
+			var player = (c.Pawn as BBPlayer);
+			player.AwardAmmo( 4 );
+		
+		}
 	}
 }

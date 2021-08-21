@@ -8,7 +8,8 @@ partial class BBPlayer : Player
 	public static int bb_max_ammo_held { get; set; } = 7;
 
 	[Net]
-	public int BananaAmmo { get; set; } = 1;
+	public int BananaAmmo { get; private set; } = 1;
+
 	private DamageInfo lastDamage;
 	public BBPlayer()
 	{
@@ -31,7 +32,7 @@ partial class BBPlayer : Player
 			OuterConeAngle = 32,
 			FogStength = 1.0f,
 			Owner = this,
-			LightCookie = Texture.Load( Rand.Int( 1, 1000 ) == 69 ? "textures/cookie.vtex" : "materials/effects/lightcookie.vtex" )
+			LightCookie = Texture.Load( Rand.Int( 1, 420 ) == 69 ? "textures/cookie.vtex" : "materials/effects/lightcookie.vtex" )
 		};
 		FlashlightPosOffset = 30f;
 	}
@@ -57,15 +58,17 @@ partial class BBPlayer : Player
 		EnableShadowInFirstPerson = true;
 
 		Dress();
+		Inventory = new Inventory(this);
 
 		Inventory.Add( new WeaponFists(), false );
 		Inventory.Add( new WeaponBanana(), true );
 
 		FlashlightBatteryCharge = 100f;
 
+		//Just to make sure no one gets stuck with an empty banana.
 		if ( BananaAmmo <= 0 )
 		{
-			Inventory.SetActiveSlot( 0, false );
+			SwitchToFists();
 		}
 
 		base.Respawn();
@@ -152,6 +155,8 @@ partial class BBPlayer : Player
 	}
 
 
+
+	//could use setter/getters but this seems more clear.
 	public void AwardAmmo( int amt )
 	{
 		Host.AssertServer();
@@ -166,6 +171,34 @@ partial class BBPlayer : Player
 			BananaAmmo += amt;
 		}
 
+		//If we are being rewarded ammo and we currently have out fists out
+		//by force, switch back to banana.
+		if ( Inventory.Active is WeaponFists )
+		{
+			SwitchToBanana();
+		}
+
+	}
+
+	public void RemoveAmmo(int amtToRemove)
+	{
+		BananaAmmo -= amtToRemove;
+		if ( BananaAmmo <= 0 )
+		{
+			SwitchToFists();
+		}
+
+	}
+
+	//more human readable functions, considering the scope of this mode, its fine.
+	public void SwitchToFists()
+	{
+		Inventory.SetActiveSlot( 0, false );
+	}
+	
+	public void SwitchToBanana()
+	{
+		Inventory.SetActiveSlot( 1, false );
 	}
 
 	[ClientRpc]
