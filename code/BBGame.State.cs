@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public partial class BBGame : Game
 {
 
-	public int NumPlayers => Client.All.Count;
+	public int NumPlayers = 0;
 	public enum GameStateTier : byte
 	{
 		WaitingForPlayers,
@@ -87,6 +87,7 @@ public partial class BBGame : Game
 		}
 
 		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) return;
+		Log.Info( NumPlayers );
 		if ( NumPlayers < 2 )
 		{
 			SetGameState( new GameState

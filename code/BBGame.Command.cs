@@ -75,4 +75,12 @@ public partial class BBGame : Sandbox.Game
 		
 		}
 	}
+
+	[ServerCmd( "gamestate" )]
+	public static void GetGameState()
+	{
+		Host.AssertServer();
+		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		Utils.UtilLog( (Game.Current as BBGame).CurrentGameState.Tier );
+	}
 }

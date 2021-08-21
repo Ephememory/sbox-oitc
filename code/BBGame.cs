@@ -20,6 +20,7 @@ partial class BBGame : Game
 	public override void ClientJoined( Client cl )
 	{
 		base.ClientJoined( cl );
+		NumPlayers++;
 
 		var player = new BBPlayer();
 		cl.Pawn = player;
@@ -36,8 +37,9 @@ partial class BBGame : Game
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 	{
 		base.ClientDisconnect( cl, reason );
-		if ( IsClient ) return;
+		NumPlayers--;
 
+		if ( IsClient ) return;
 		ReCalculateGameState();
 	}
 
