@@ -67,7 +67,8 @@ public partial class WeaponBanana : Weapon
 
 	public override void SimulateAnimator( PawnAnimator anim )
 	{
-		anim.SetParam( "holdtype", 1 ); // TODO this is shit
-		anim.SetParam( "aimat_weight", 1f );
+		anim.SetParam( "holdtype", 1 );
+		anim.SetParam( "aimat_weight", 1.0f );
+		anim.SetParam( "holdtype_handedness", 1 );
 	}
 }
