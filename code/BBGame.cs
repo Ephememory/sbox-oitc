@@ -22,7 +22,7 @@ partial class BBGame : Game
 		base.ClientJoined( cl );
 		NumPlayers++;
 
-		var player = new BBPlayer();
+		var player = new BBPlayer( cl );
 		cl.Pawn = player;
 		player.Respawn();
 		if ( IsClient ) return;

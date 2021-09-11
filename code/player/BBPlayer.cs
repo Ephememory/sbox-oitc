@@ -11,9 +11,23 @@ partial class BBPlayer : Player
 	public int BananaAmmo { get; private set; } = 1;
 
 	private DamageInfo lastDamage;
+
+	/// <summary>
+	/// The clothing container is what dresses the citizen
+	/// </summary>
+	public Clothing.Container Clothing = new();
 	public BBPlayer()
 	{
 		Inventory = new Inventory( this );
+	}
+
+	/// <summary>
+	/// Initialize using this client
+	/// </summary>
+	public BBPlayer( Client cl ) : this()
+	{
+		// Load clothing from client data
+		Clothing.LoadFromClient( cl );
 	}
 
 	public override void Spawn()
@@ -57,8 +71,8 @@ partial class BBPlayer : Player
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
-		Dress();
-		Inventory = new Inventory(this);
+		Clothing.DressEntity( this );
+		Inventory = new Inventory( this );
 
 		Inventory.Add( new WeaponFists(), false );
 		Inventory.Add( new WeaponBanana(), true );
@@ -180,7 +194,7 @@ partial class BBPlayer : Player
 
 	}
 
-	public void RemoveAmmo(int amtToRemove)
+	public void RemoveAmmo( int amtToRemove )
 	{
 		BananaAmmo -= amtToRemove;
 		if ( BananaAmmo <= 0 )
@@ -195,7 +209,7 @@ partial class BBPlayer : Player
 	{
 		Inventory.SetActiveSlot( 0, false );
 	}
-	
+
 	public void SwitchToBanana()
 	{
 		Inventory.SetActiveSlot( 1, false );
