@@ -21,7 +21,6 @@ partial class BBPlayer
 		ent.EnableHitboxes = true;
 		ent.EnableAllCollisions = true;
 		ent.SurroundingBoundsMode = SurroundingBoundsType.Physics;
-		ent.RenderColorAndAlpha = RenderColorAndAlpha;
 		ent.PhysicsGroup.Velocity = velocity;
 
 		if ( Local.Pawn == this )
@@ -44,7 +43,7 @@ partial class BBPlayer
 				var clothing = new ModelEntity();
 				clothing.SetModel( model );
 				clothing.SetParent( ent, true );
-				clothing.RenderColorAndAlpha = e.RenderColorAndAlpha;
+				// clothing.RenderColorAndAlpha = e.RenderColorAndAlpha;
 
 				if ( Local.Pawn == this )
 				{
