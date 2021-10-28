@@ -8,7 +8,7 @@ partial class BBPlayer : Player
 	public static int bb_max_ammo_held { get; set; } = 7;
 
 	[Net]
-	public int BananaAmmo { get; private set; } = 1;
+	public int PistolAmmo { get; private set; } = 1;
 
 	private DamageInfo lastDamage;
 
@@ -75,12 +75,12 @@ partial class BBPlayer : Player
 		Inventory = new Inventory( this );
 
 		Inventory.Add( new WeaponFists(), false );
-		Inventory.Add( new WeaponBanana(), true );
+		Inventory.Add( new WeaponOITCPistol(), true );
 
 		FlashlightBatteryCharge = 100f;
 
-		//Just to make sure no one gets stuck with an empty banana.
-		if ( BananaAmmo <= 0 )
+		//Just to make sure no one gets stuck with an empty pistol.
+		if ( PistolAmmo <= 0 )
 		{
 			SwitchToFists();
 		}
@@ -175,29 +175,29 @@ partial class BBPlayer : Player
 	{
 		Host.AssertServer();
 
-		if ( BananaAmmo > bb_max_ammo_held ) return;
-		if ( BananaAmmo + amt > bb_max_ammo_held )
+		if ( PistolAmmo > bb_max_ammo_held ) return;
+		if ( PistolAmmo + amt > bb_max_ammo_held )
 		{
-			BananaAmmo = bb_max_ammo_held;
+			PistolAmmo = bb_max_ammo_held;
 		}
 		else
 		{
-			BananaAmmo += amt;
+			PistolAmmo += amt;
 		}
 
 		//If we are being rewarded ammo and we currently have out fists out
-		//by force, switch back to banana.
+		//by force, switch back to pistol.
 		if ( Inventory.Active is WeaponFists )
 		{
-			SwitchToBanana();
+			SwitchToPistol();
 		}
 
 	}
 
 	public void RemoveAmmo( int amtToRemove )
 	{
-		BananaAmmo -= amtToRemove;
-		if ( BananaAmmo <= 0 )
+		PistolAmmo -= amtToRemove;
+		if ( PistolAmmo <= 0 )
 		{
 			SwitchToFists();
 		}
@@ -210,7 +210,7 @@ partial class BBPlayer : Player
 		Inventory.SetActiveSlot( 0, false );
 	}
 
-	public void SwitchToBanana()
+	public void SwitchToPistol()
 	{
 		Inventory.SetActiveSlot( 1, false );
 	}

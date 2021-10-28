@@ -5,7 +5,7 @@
 
 [models]
 	ViewModel arms - by 'DJMaesen' from sketchfab.com @ November 15th, 2020 (https://sketchfab.com/3d-models/first-person-arms-e3c42c05b22944e5839deb8e003f0987) (CC BY 4.0) LICENSE: https://creativecommons.org/licenses/by/4.0/
-	Banana - by 'matousekfoto' from sketchfab.com @ August 3rd, 2021 (https://sketchfab.com/3d-models/banana-4d4c8d85a09b476c8136f0c4cd24c45a) (CC BY 4.0) LICENSE: https://creativecommons.org/licenses/by/4.0/
+	"SciFi Pistol" (https://skfb.ly/6RYOq) by DJMaesen is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/)
 
 [textures]
 	Cookie - by 'contaowebsiteerstellen' from pixabay.com (https://pixabay.com/vectors/cookie-website-cookies-computer-5784367/) (Pixabay License) LICENSE: https://pixabay.com/service/terms/#license

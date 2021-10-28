@@ -1,7 +1,7 @@
 using Sandbox;
 
-[Library( "weapon_banana", Title = "Banana", Spawnable = true )]
-public partial class WeaponBanana : Weapon
+[Library( "weapon_oitcpistol", Title = "Pistol", Spawnable = true )]
+public partial class WeaponOITCPistol : Weapon
 {
 	public override string ViewModelPath => "models/weapons/banana/v_banana.vmdl";
 
@@ -27,7 +27,7 @@ public partial class WeaponBanana : Weapon
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
 		if ( Owner is not BBPlayer player ) return;
-		if ( player.BananaAmmo <= 0 )
+		if ( player.PistolAmmo <= 0 )
 		{
 			return;
 		}
@@ -35,7 +35,6 @@ public partial class WeaponBanana : Weapon
 		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
 		player.RemoveAmmo( 1 );
 		ShootEffects();
-		PlaySound( "squish" );
 
 		ShootBullet( 0, 1, 1000, 1 );
 
@@ -54,7 +53,6 @@ public partial class WeaponBanana : Weapon
 	{
 		Host.AssertClient();
 
-		//TODO: Banana peel particles :)
 		if ( Owner == Local.Pawn )
 		{
 			new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );

@@ -1,7 +1,7 @@
 using Sandbox;
 using System;
 
-[Library( "banana-battle", Title = "Banana Battle" )]
+[Library( "oitc", Title = "One In The Chamber" )]
 partial class BBGame : Game
 {
 
@@ -65,12 +65,12 @@ partial class BBGame : Game
 
 		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) return;
 
-		var killedClient = killed.GetClientOwner();
-		killedClient.SetScore( "deaths", killedClient.GetScore<int>( "deaths" ) + 1 );
+		var killedClient = killed.Client;
+		killedClient.SetValue( "deaths", killedClient.GetValue<int>( "deaths" ) + 1 );
 
-		var killerClient = killer.GetClientOwner();
-		var killerKills = killerClient.GetScore<int>( "kills" );
-		killerClient.SetScore( "kills", killerKills + 1 );
+		var killerClient = killer.Client;
+		var killerKills = killerClient.GetValue<int>( "kills" );
+		killerClient.SetValue( "kills", killerKills + 1 );
 
 		if ( killerKills >= bb_score_limit - 1 )
 		{
@@ -84,7 +84,7 @@ partial class BBGame : Game
 			EndRound();
 		}
 
-		Log.Info( $"{client.Name} was killed by {killer.GetClientOwner().NetworkIdent} with {weapon}" );
+		Log.Info( $"{client.Name} was killed by {killer.Client.NetworkIdent} with {weapon}" );
 	}
 
 

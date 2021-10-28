@@ -11,10 +11,10 @@ public partial class FPSCamera : Camera
 		var pawn = Local.Pawn;
 		if ( pawn == null ) return;
 
-		Pos = pawn.EyePos;
-		Rot = pawn.EyeRot;
+		Position = pawn.EyePos;
+		Rotation = pawn.EyeRot;
 
-		lastPos = Pos;
+		lastPos = Position;
 	}
 
 	public override void Update()
@@ -25,18 +25,18 @@ public partial class FPSCamera : Camera
 		var eyePos = pawn.EyePos;
 		if ( eyePos.Distance( lastPos ) < 300 ) // TODO: Tweak this, or add a way to invalidate lastpos when teleporting
 		{
-			Pos = Vector3.Lerp( eyePos.WithZ( lastPos.z ), eyePos, 20.0f * Time.Delta );
+			Position = Vector3.Lerp( eyePos.WithZ( lastPos.z ), eyePos, 20.0f * Time.Delta );
 		}
 		else
 		{
-			Pos = eyePos;
+			Position = eyePos;
 		}
 
-		Rot = pawn.EyeRot;
-		FieldOfView = 90;
+		Rotation = pawn.EyeRot;
+		FieldOfView = BBGame.PlayerFov;
 
 		Viewer = pawn;
-		lastPos = Pos;
+		lastPos = Position;
 	}
 
 

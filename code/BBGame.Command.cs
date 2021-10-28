@@ -24,11 +24,11 @@ public partial class BBGame : Sandbox.Game
 		{
 			var player = (c.Pawn as BBPlayer);
 			//this is chtupid tbh
-			player.RemoveAmmo( player.BananaAmmo );
+			player.RemoveAmmo( player.PistolAmmo );
 			player.AwardAmmo( 1 );
 			player.Respawn();
-			c.SetScore( "kills", 0 );
-			c.SetScore( "deaths", 0 );
+			c.SetValue( "kills", 0 );
+			c.SetValue( "deaths", 0 );
 		}
 
 		game.SetGameState( new GameState
@@ -49,11 +49,11 @@ public partial class BBGame : Sandbox.Game
 
 		//:)
 		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
-		
+
 		(ConsoleSystem.Caller.Pawn as BBPlayer).Inventory.Add( new WeaponFAL(), true );
 	}
 
-	[ServerCmd("give_ammo")]
+	[ServerCmd( "give_ammo" )]
 	public static void GiveAmmo()
 	{
 		Host.AssertServer();
@@ -72,7 +72,7 @@ public partial class BBGame : Sandbox.Game
 		{
 			var player = (c.Pawn as BBPlayer);
 			player.AwardAmmo( 4 );
-		
+
 		}
 	}
 
@@ -83,4 +83,8 @@ public partial class BBGame : Sandbox.Game
 		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
 		Utils.UtilLog( (Game.Current as BBGame).CurrentGameState.Tier );
 	}
+
+	[ClientVar( "fov" )]
+	public static float PlayerFov { get; set; } = 90;
+
 }

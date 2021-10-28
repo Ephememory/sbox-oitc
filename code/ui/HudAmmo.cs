@@ -22,19 +22,19 @@ public partial class HudAmmo : Panel
 	{
 		var player = Local.Pawn as BBPlayer;
 		if ( player == null ) return;
-		label.SetText( $"🍌 {player.BananaAmmo}" );
+		label.SetText( $"🍌 {player.PistolAmmo}" );
 
-		if ( player.BananaAmmo.InRange( 6, 7 ) )
+		if ( player.PistolAmmo.InRange( 6, 7 ) )
 		{
 			label.Style.FontColor = Color.FromBytes( 184, 212, 59, 150 );
 			label.Style.Dirty();
 		}
-		else if ( player.BananaAmmo.InRange( 4, 6 ) )
+		else if ( player.PistolAmmo.InRange( 4, 6 ) )
 		{
 			label.Style.FontColor = Color.FromBytes( 168, 140, 37, 200 );
 			label.Style.Dirty();
 		}
-		else if ( player.BananaAmmo.InRange( 0, 4 ) )
+		else if ( player.PistolAmmo.InRange( 0, 4 ) )
 		{
 			label.Style.FontColor = Color.Red;
 			label.Style.Dirty();
