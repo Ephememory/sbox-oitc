@@ -50,6 +50,7 @@ partial class BBGame : Game
 	public override void OnKilled( Client client, Entity pawn )
 	{
 		base.OnKilled( client, pawn );
+		if ( Host.IsClient ) return;
 		var killer = pawn.LastAttacker;
 		var weapon = pawn.LastAttackerWeapon;
 
@@ -70,7 +71,6 @@ partial class BBGame : Game
 
 		var killerClient = killer.Client;
 		var killerKills = killerClient.GetValue<int>( "kills" );
-		killerClient.SetValue( "kills", killerKills + 1 );
 
 		if ( killerKills >= bb_score_limit - 1 )
 		{
