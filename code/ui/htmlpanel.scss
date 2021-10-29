@@ -1,13 +1,13 @@
 .root {
-  background-color: rgba(73, 69, 69, 0.486);
+  background-color: rgba(73, 69, 69, 0.123);
   backdrop-filter: blur(25px);
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 3px;
+  padding-right: 3px;
   width: 180px;
   height: 30px;
   top: 18px;
   left: 14px;
-  border-radius: 24px;
+  border-radius: 6px;
   transition: all 250ms ease;
   align-items: center;
   justify-content: center;
@@ -24,7 +24,7 @@
 }
 
 .text {
-  color: rgba(238, 255, 0, 0.836);
+  color: rgba(235, 236, 219, 0.514);
   font-family: Poppins;
   font-size: large;
   font-weight: bold;

@@ -62,6 +62,7 @@
 		[
 			{
 				_class = "CAnimGraphGeneralSettings"
+				m_iGridSnap = 16
 			},
 			{
 				_class = "CAnimGraphNetworkSettings"
@@ -93,7 +94,7 @@
 			{
 				_class = "CSequenceAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -295.0, -13.0 ]
+				m_vecPosition = [ -288.0, -16.0 ]
 				m_nNodeID = 
 				{
 					m_id = 368893856
@@ -115,12 +116,12 @@
 			{
 				_class = "CSingleFrameAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -291.0, -62.0 ]
+				m_vecPosition = [ -288.0, -64.0 ]
 				m_nNodeID = 
 				{
 					m_id = 620172261
 				}
-				m_networkMode = "ServerAuthoritative"
+				m_networkMode = "ClientSimulate"
 				m_sNote = ""
 				m_sequenceName = "idle"
 				m_nFrameIndex = 0
@@ -135,7 +136,7 @@
 			{
 				_class = "CRootAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ 223.0, -78.0 ]
+				m_vecPosition = [ 144.0, -80.0 ]
 				m_nNodeID = 
 				{
 					m_id = 1216479578
@@ -157,7 +158,7 @@
 			{
 				_class = "CStateMachineAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -54.0, -90.0 ]
+				m_vecPosition = [ -64.0, -96.0 ]
 				m_nNodeID = 
 				{
 					m_id = 1400544700
@@ -250,7 +251,7 @@
 						{
 							m_id = 38691550
 						}
-						m_position = [ -170.0, -91.0 ]
+						m_position = [ -176.0, -96.0 ]
 						m_bIsStartState = false
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
@@ -300,7 +301,7 @@
 						{
 							m_id = 292340146
 						}
-						m_position = [ -32.0, -100.0 ]
+						m_position = [ -32.0, -112.0 ]
 						m_bIsStartState = false
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
@@ -321,7 +322,7 @@
 						{
 							m_id = 1641753828
 						}
-						m_position = [ 94.0, -102.0 ]
+						m_position = [ 80.0, -112.0 ]
 						m_bIsStartState = false
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
@@ -371,7 +372,7 @@
 						{
 							m_id = 4318844
 						}
-						m_position = [ -36.0, -9.0 ]
+						m_position = [ -32.0, -16.0 ]
 						m_bIsStartState = true
 						m_bIsEndtState = false
 						m_bIsPassthrough = false
@@ -392,7 +393,7 @@
 			{
 				_class = "CSequenceAnimNode"
 				m_sName = "Unnamed"
-				m_vecPosition = [ -292.0, -115.0 ]
+				m_vecPosition = [ -288.0, -112.0 ]
 				m_nNodeID = 
 				{
 					m_id = 1826262143
