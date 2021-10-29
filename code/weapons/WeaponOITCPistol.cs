@@ -3,14 +3,14 @@ using Sandbox;
 [Library( "weapon_oitcpistol", Title = "Pistol", Spawnable = true )]
 public partial class WeaponOITCPistol : Weapon
 {
-	public override string ViewModelPath => "models/weapons/banana/v_banana.vmdl";
+	public override string ViewModelPath => "models/weapons/pistol/v_oitc_pistol.vmdl";
 
 
 
 	public override void Spawn()
 	{
 		base.Spawn();
-		SetModel( "models/weapons/banana/banana.vmdl" );
+		SetModel( "models/weapons/pistol/oitc_pistol.vmdl" );
 
 	}
 
@@ -35,7 +35,7 @@ public partial class WeaponOITCPistol : Weapon
 		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
 		player.RemoveAmmo( 1 );
 		ShootEffects();
-
+		PlaySound( "oitc_pistolsound" );
 		ShootBullet( 0, 1, 1000, 1 );
 
 
@@ -61,6 +61,7 @@ public partial class WeaponOITCPistol : Weapon
 
 		ViewModelEntity?.SetAnimBool( "fire", true );
 		CrosshairPanel?.CreateEvent( "fire" );
+		base.ShootEffects();
 	}
 
 	public override void SimulateAnimator( PawnAnimator anim )

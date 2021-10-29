@@ -22,7 +22,7 @@ public partial class HudAmmo : Panel
 	{
 		var player = Local.Pawn as BBPlayer;
 		if ( player == null ) return;
-		label.SetText( $"🍌 {player.PistolAmmo}" );
+		label.SetText( $"🔫 {player.PistolAmmo}" );
 
 		if ( player.PistolAmmo.InRange( 6, 7 ) )
 		{
