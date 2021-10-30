@@ -67,8 +67,6 @@ partial class BBGame : Game
 		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) return;
 
 		var killedClient = killed.Client;
-		killedClient.SetValue( "deaths", killedClient.GetValue<int>( "deaths" ) + 1 );
-
 		var killerClient = killer.Client;
 		var killerKills = killerClient.GetValue<int>( "kills" );
 
