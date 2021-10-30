@@ -26,7 +26,7 @@ public partial class WeaponFists : Weapon
 		await GameTask.DelaySeconds( delay );
 		Melee( 1000f, 90f );
 
-		if(IsClient && Owner == Local.Pawn )
+		if ( IsClient && Owner == Local.Pawn )
 		{
 			new Sandbox.ScreenShake.Perlin( 1.2f, 1.2f, 1.4f, 1.9f );
 		}
@@ -105,7 +105,6 @@ public partial class WeaponFists : Weapon
 
 
 
-
 	[ClientRpc]
 	protected override void ShootEffects()
 	{
@@ -117,7 +116,7 @@ public partial class WeaponFists : Weapon
 
 	public override void SimulateAnimator( PawnAnimator anim )
 	{
-		anim.SetParam( "holdtype", 4 ); // TODO this is shit
+		anim.SetParam( "holdtype", 5 ); // TODO this is shit
 		anim.SetParam( "aimat_weight", 1f );
 	}
 
