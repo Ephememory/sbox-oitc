@@ -14,7 +14,7 @@
 						remaps = 
 						[
 							{
-								from = "sfpistol.vmat"
+								from = "pistol.vmat"
 								to = "models/weapons/pistol/oitc_pistol.vmat"
 							},
 						]

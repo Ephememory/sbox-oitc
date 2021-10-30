@@ -14,12 +14,12 @@
 						remaps = 
 						[
 							{
-								from = "sfpistol.vmat"
-								to = "models/weapons/pistol/oitc_pistol.vmat"
-							},
-							{
 								from = "arms.vmat"
 								to = "models/weapons/fists/v_fists.vmat"
+							},
+							{
+								from = "pistol.vmat"
+								to = "models/weapons/pistol/oitc_pistol.vmat"
 							},
 						]
 						use_global_default = false
