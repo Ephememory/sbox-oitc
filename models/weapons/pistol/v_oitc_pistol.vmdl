@@ -101,8 +101,8 @@
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
-						fade_in_time = 0.2
-						fade_out_time = 0.2
+						fade_in_time = 0.0
+						fade_out_time = 0.1
 						looping = false
 						delta = false
 						worldSpace = false
