@@ -61,6 +61,7 @@ public partial class WeaponOITCPistol : Weapon
 
 		ViewModelEntity?.SetAnimBool( "fire", true );
 		CrosshairPanel?.CreateEvent( "fire" );
+		Particles.Create( "particles/pistol_ejectbrass.vpcf", EffectEntity, "ejection" );
 		base.ShootEffects();
 	}
 

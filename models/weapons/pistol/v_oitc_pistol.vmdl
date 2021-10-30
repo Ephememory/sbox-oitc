@@ -132,6 +132,15 @@
 						weight = 1.0
 						ignore_rotation = false
 					},
+					{
+						_class = "Attachment"
+						name = "ejection"
+						parent_bone = "base"
+						relative_origin = [ -2.1, 13.5, 10.3795 ]
+						relative_angles = [ -180.0, -49.0, -28.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
 				]
 			},
 		]
