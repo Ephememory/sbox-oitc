@@ -64,7 +64,7 @@ partial class BBGame : Game
 
 		}
 
-		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) return;
+		if ( CurrentGameState.Tier != GameStateTier.MidGame ) return;
 
 		var killedClient = killed.Client;
 		var killerClient = killer.Client;

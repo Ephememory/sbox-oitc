@@ -8,7 +8,7 @@ public partial class BBGame : Sandbox.Game
 
 
 	[ConVar.Replicated]
-	public static int bb_score_limit { get; set; } = 30;
+	public static int bb_score_limit { get; set; } = 10;
 
 
 	[ConVar.Replicated]
