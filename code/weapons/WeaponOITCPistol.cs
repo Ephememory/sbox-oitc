@@ -21,6 +21,11 @@ public partial class WeaponOITCPistol : Weapon
 		ViewModelEntity.FieldOfView = 78;
 	}
 
+	public override bool CanReload()
+	{
+		return false;
+	}
+
 	public override void AttackPrimary()
 	{
 

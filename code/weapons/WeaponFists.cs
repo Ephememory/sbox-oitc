@@ -19,6 +19,11 @@ public partial class WeaponFists : Weapon
 		ViewModelEntity.FieldOfView = 54;
 	}
 
+	public override bool CanReload()
+	{
+		return false;
+	}
+
 	private async void AttackAsync( float delay )
 	{
 		//Async delay so we do attack logic at the right client-side anim frame
