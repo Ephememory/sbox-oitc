@@ -87,4 +87,11 @@ public partial class BBGame : Sandbox.Game
 	[ClientVar( "fov" )]
 	public static float PlayerFov { get; set; } = 90;
 
+	[ServerCmd( "bb_cookie" )]
+	public static void CookieFlashlight()
+	{
+		Host.AssertServer();
+		(Sandbox.ConsoleSystem.Caller.Pawn as BBPlayer).SetCookieFlashlightCookie();
+	}
+
 }

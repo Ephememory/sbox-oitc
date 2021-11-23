@@ -51,6 +51,27 @@ partial class BBPlayer : Player
 		FlashlightPosOffset = 30f;
 	}
 
+	public void SetCookieFlashlightCookie()
+	{
+		Host.AssertServer();
+		FlashlightEntity = new SpotLightEntity
+		{
+			Enabled = false,
+			DynamicShadows = true,
+			Range = 3200f,
+			Falloff = 0.3f,
+			LinearAttenuation = 0.3f,
+			Brightness = 25f,
+			Color = Color.FromBytes( 200, 200, 200, 230 ),
+			InnerConeAngle = 9,
+			OuterConeAngle = 32,
+			FogStength = 1.0f,
+			Owner = this,
+			LightCookie = Texture.Load( "textures/cookie.vtex" )
+		};
+		FlashlightPosOffset = 30f;
+	}
+
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
