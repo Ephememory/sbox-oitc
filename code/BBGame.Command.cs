@@ -48,7 +48,7 @@ public partial class BBGame : Sandbox.Game
 		Host.AssertServer();
 
 		//:)
-		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		if ( Sandbox.ConsoleSystem.Caller.PlayerId != 76561197998255119 ) return;
 
 		(ConsoleSystem.Caller.Pawn as BBPlayer).Inventory.Add( new WeaponFAL(), true );
 	}
@@ -57,7 +57,7 @@ public partial class BBGame : Sandbox.Game
 	public static void GiveAmmo()
 	{
 		Host.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		if ( Sandbox.ConsoleSystem.Caller.PlayerId != 76561197998255119 ) return;
 		(ConsoleSystem.Caller.Pawn as BBPlayer).AwardAmmo( 4 );
 		ConsoleSystem.Caller.Pawn.PlaySound( "squish" );
 	}
@@ -66,7 +66,7 @@ public partial class BBGame : Sandbox.Game
 	public static void GiveAmmoAll()
 	{
 		Host.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		if ( Sandbox.ConsoleSystem.Caller.PlayerId != 76561197998255119 ) return;
 		var game = (Game.Current as BBGame);
 		foreach ( var c in Client.All )
 		{
@@ -80,7 +80,7 @@ public partial class BBGame : Sandbox.Game
 	public static void GetGameState()
 	{
 		Host.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		if ( Sandbox.ConsoleSystem.Caller.PlayerId != 76561197998255119 ) return;
 		Utils.UtilLog( (Game.Current as BBGame).CurrentGameState.Tier );
 	}
 
