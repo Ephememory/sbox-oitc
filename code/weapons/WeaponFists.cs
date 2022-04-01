@@ -16,7 +16,7 @@ public partial class WeaponFists : Weapon
 	{
 		base.ActiveStart( ent );
 		if ( !IsClient ) return;
-		ViewModelEntity.FieldOfView = 54;
+		//ViewModelEntity.FieldOfView = 54;
 	}
 
 	public override bool CanReload()
@@ -43,7 +43,7 @@ public partial class WeaponFists : Weapon
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
 
-		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
+		(Owner as AnimEntity)?.SetAnimParameter( "b_attack", true );
 		ShootEffects();
 		AttackAsync( 0.34f );
 	}
@@ -65,8 +65,8 @@ public partial class WeaponFists : Weapon
 		//Because this is async, players can die before this is actually executed and be dead while it is.
 		//nullcheck the owner!
 		if ( Owner == null ) return false;
-		var pos = Owner.EyePos;
-		var forward = Owner.EyeRot.Forward;
+		var pos = Owner.EyePosition;
+		var forward = Owner.EyeRotation.Forward;
 		forward = forward.Normal;
 
 
@@ -84,7 +84,7 @@ public partial class WeaponFists : Weapon
 			if ( !IsServer ) continue;
 			using ( Prediction.Off() )
 			{
-				var damageInfo = DamageInfo.FromBullet( tr.EndPos, forward * 100 * 1, damage )
+				var damageInfo = DamageInfo.FromBullet( tr.EndPosition, forward * 100 * 1, damage )
 					.UsingTraceResult( tr )
 					.WithAttacker( Owner )
 					.WithWeapon( this );
@@ -115,14 +115,14 @@ public partial class WeaponFists : Weapon
 	{
 		Host.AssertClient();
 
-		ViewModelEntity?.SetAnimBool( "fire", true );
+		ViewModelEntity?.SetAnimParameter( "fire", true );
 		CrosshairPanel?.CreateEvent( "fire" );
 	}
 
 	public override void SimulateAnimator( PawnAnimator anim )
 	{
-		anim.SetParam( "holdtype", 5 ); // TODO this is shit
-		anim.SetParam( "aimat_weight", 1f );
+		anim.SetAnimParameter( "holdtype", 5 ); // TODO this is shit
+		//anim.SetAnimParameter( "aimat_weight", 1f );
 	}
 
 	public override void OnCarryDrop( Entity dropper )

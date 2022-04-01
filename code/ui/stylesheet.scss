@@ -1,169 +1,152 @@
 ﻿rootpanel {
-  &.devcamera {
-    display: none;
-  }
+    &.devcamera {
+        display: none;
+    }
 }
 
 HudCrosshair {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  background-color: rgba(255, 255, 255, 0);
-  backdrop-filter: invert(100%);
-  width: 4px;
-  height: 6px;
-  margin-left: -2px;
-  margin-top: -3px;
-  transition: all 20ms ease-in;
-  border: 1px dotted rgb(17, 17, 17);
-
-  .center {
     position: absolute;
     left: 50%;
     top: 50%;
-    background-color: rgb(255, 255, 255);
-    width: 2px;
-    height: 2px;
-    margin-left: -1px;
-    margin-top: -1px;
-  }
+    background-color: white;
+    width: 4px;
+    height: 4px;
+    margin-left: -2px;
+    margin-top: -2px;
+    border-width: 1 px;
+    border-color: black;
+    transition: all 20ms ease-in;
 }
 
 HudHealth {
-  position: absolute;
-  background-color: rgba(black, 0.5);
-  backdrop-filter: blur(12px);
-  left: 25px;
-  bottom: 48px;
-  top: 88%;
-  font-family: Roboto;
-  font-size: 64px;
-  font-weight: bolder;
-  color: yellow;
-  width: fit-content;
-  height: 100px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-right: 15px;
-  padding-left: 5px;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 10px;
+    position: absolute;
+    background-color: rgba(black, 0.5);
+    backdrop-filter: blur(12px);
+    left: 25px;
+    bottom: 48px;
+    top: 88%;
+    font-family: Roboto;
+    font-size: 64px;
+    font-weight: bolder;
+    color: yellow;
+    height: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 5px;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px;
 }
 
 HudFlashlight {
-  position: absolute;
-  background-color: rgba(black, 0.5);
-  backdrop-filter: blur(12px);
-  left: 280px;
-  bottom: 48px;
-  top: 88%;
-  width: auto;
-  font-family: Roboto;
-  font-size: 64px;
-  font-weight: bolder;
-  color: yellow;
-  width: fit-content;
-  height: 100px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-right: 15px;
-  padding-left: 5px;
-  align-items: center;
-  border-radius: 10px;
-  transition: width 50ms ease-in;
+    position: absolute;
+    background-color: rgba(black, 0.5);
+    backdrop-filter: blur(12px);
+    left: 280px;
+    bottom: 48px;
+    top: 88%;
+    width: auto;
+    font-family: Roboto;
+    font-size: 64px;
+    font-weight: bolder;
+    color: yellow;
+    height: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 5px;
+    align-items: center;
+    border-radius: 10px;
+    transition: width 50ms ease-in;
 }
 
 HudAmmo {
-  position: absolute;
-  background-color: rgba(black, 0.5);
-  backdrop-filter: blur(12px);
-  right: 50px;
-  bottom: 48px;
-  top: 88%;
-  width: auto;
-  font-family: Roboto;
-  font-size: 64px;
-  font-weight: bolder;
-  color: yellow;
-  width: fit-content;
-  height: 100px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-right: 15px;
-  padding-left: 5px;
-  align-items: center;
-  border-radius: 10px;
-  transition: width 50ms ease-in;
+    position: absolute;
+    background-color: rgba(black, 0.5);
+    backdrop-filter: blur(12px);
+    right: 50px;
+    bottom: 48px;
+    top: 88%;
+    width: auto;
+    font-family: Roboto;
+    font-size: 64px;
+    font-weight: bolder;
+    color: yellow;
+    height: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 5px;
+    align-items: center;
+    border-radius: 10px;
+    transition: width 50ms ease-in;
 }
 
 DebugPanel {
-  position: absolute;
-  background-color: rgba(black, 0.5);
-  backdrop-filter: blur(12px);
-  left: 25px;
-  bottom: 48px;
-  top: 25px;
-  width: fit-content;
-  font-family: Poppins;
-  font-size: 32px;
-  font-weight: thin;
-  color: whitesmoke;
-  height: 50;
-  padding: 15px;
-  align-items: center;
-  border-radius: 32px;
-  transition: width 50ms ease-in;
+    position: absolute;
+    background-color: rgba(black, 0.5);
+    backdrop-filter: blur(12px);
+    left: 25px;
+    bottom: 48px;
+    top: 25px;
+    font-family: Poppins;
+    font-size: 32px;
+    font-weight: thin;
+    color: whitesmoke;
+    height: 50;
+    padding: 15px;
+    align-items: center;
+    border-radius: 32px;
+    transition: width 50ms ease-in;
 }
 
 HudGameState {
-  position: absolute;
-  background-color: rgba(black, 0.5);
-  color: rgba(255, 255, 255, 0.89);
-  backdrop-filter: blur(42px);
-  left: 50%;
-  top: 25%;
-  width: 300px;
-  margin-left: -150px;
-  height: 4%;
-  padding: 6px;
-  font-family: Poppins;
-  font-size: 24px;
-  font-weight: normal;
+    position: absolute;
+    background-color: rgba(black, 0.5);
+    color: rgba(255, 255, 255, 0.89);
+    backdrop-filter: blur(42px);
+    left: 50%;
+    top: 25%;
+    width: 300px;
+    margin-left: -150px;
+    height: 4%;
+    padding: 6px;
+    font-family: Poppins;
+    font-size: 24px;
+    font-weight: normal;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 500ms ease-in;
 
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: all 500ms ease-in;
-
-  &.toggled {
-    opacity: 0;
-  }
+    &.toggled {
+        opacity: 0;
+    }
 }
 
 HudGameRestartTime {
-  opacity: 0;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0);
-  color: rgba(255, 255, 255, 0.966);
-  backdrop-filter: blur(42px);
-  left: 50%;
-  top: 35%;
-  width: 200px;
-  height: 100px;
-  padding: 6px;
-  margin-left: -100px;
-  font-family: Poppins;
-  font-size: 64px;
-  font-weight: normal;
+    opacity: 0;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(255, 255, 255, 0.966);
+    backdrop-filter: blur(42px);
+    left: 50%;
+    top: 35%;
+    width: 200px;
+    height: 100px;
+    padding: 6px;
+    margin-left: -100px;
+    font-family: Poppins;
+    font-size: 64px;
+    font-weight: normal;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 500ms ease-in;
 
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: all 500ms ease-in;
-
-  &.toggled {
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.562);
-  }
+    &.toggled {
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.562);
+    }
 }

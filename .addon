@@ -1,5 +1,19 @@
 {
-	"sharedassets": "*.*",
-	"type": "game",
-	"ident": "null.oitc"
+  "Title": "One In The Chamber",
+  "Type": "game",
+  "Org": "local",
+  "Ident": "oitc",
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "ResourcePaths": null,
+  "HasCode": true,
+  "CodePath": "code",
+  "RootNamespace": "Sandbox",
+  "Metadata": {
+    "MapList": [
+      "facepunch.construct"
+    ],
+    "MinPlayers": 2
+  }
 }

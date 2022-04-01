@@ -24,10 +24,10 @@ public partial class WeaponFAL : Weapon
 	public override void ActiveStart( Entity ent )
 	{
 		base.ActiveStart( ent );
-		ViewModelEntity?.SetAnimBool( "deploy", true );
+		ViewModelEntity?.SetAnimParameter( "deploy", true );
 		if ( IsClient )
 		{
-			ViewModelEntity.FieldOfView = 90;
+			//ViewModelEntity.FieldOfView = 90;
 		}
 
 	}
@@ -38,7 +38,7 @@ public partial class WeaponFAL : Weapon
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
 		//TimeSinceSecondaryAttack = 0;
-		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
+		(Owner as AnimEntity)?.SetAnimParameter( "b_attack", true );
 
 		//
 		// Tell the clients to play the shoot effects
@@ -57,7 +57,7 @@ public partial class WeaponFAL : Weapon
 	{
 		base.AttackSecondary();
 		TimeSinceSecondaryAttack = 0;
-		ViewModelEntity?.SetAnimBool( "deploy", true );
+		ViewModelEntity?.SetAnimParameter( "deploy", true );
 		if ( IsServer ) return;
 
 	}
@@ -78,13 +78,13 @@ public partial class WeaponFAL : Weapon
 		}
 
 
-		ViewModelEntity?.SetAnimBool( "fire", true );
+		ViewModelEntity?.SetAnimParameter( "fire", true );
 		CrosshairPanel?.CreateEvent( "fire" );
 	}
 
 	public override void SimulateAnimator( PawnAnimator anim )
 	{
-		anim.SetParam( "holdtype", 2 ); // TODO this is shit
-		anim.SetParam( "aimat_weight", 1f );
+		anim.SetAnimParameter( "holdtype", 2 ); // TODO this is shit
+		anim.SetAnimParameter( "aimat_weight", 1f );
 	}
 }

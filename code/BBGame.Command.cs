@@ -1,20 +1,19 @@
 using Sandbox;
 
-
 public partial class BBGame : Sandbox.Game
 {
-	[ConVar.Replicated( "bb_debug" )]
-	public static bool bb_debug { get; set; } = false;
+	[ConVar.Replicated( "oitc_debug" )]
+	public static bool oitc_debug { get; set; } = false;
 
 
 	[ConVar.Replicated]
-	public static int bb_score_limit { get; set; } = 10;
+	public static int oitc_score_limit { get; set; } = 10;
 
 
 	[ConVar.Replicated]
-	public static float bb_time_limit { get; set; }
+	public static float oitc_time_limit { get; set; }
 
-	[ServerCmd( "bb_restart" )]
+	[ServerCmd( "oitc_restart" )]
 	public static void RestartGame()
 	{
 		Host.AssertServer();
@@ -37,8 +36,6 @@ public partial class BBGame : Sandbox.Game
 			TopFragName = game.CurrentGameState.TopFragName,
 			Tier = GameStateTier.MidGame
 		} );
-
-
 	}
 
 	[ServerCmd( "give_fal" )]
@@ -87,7 +84,7 @@ public partial class BBGame : Sandbox.Game
 	[ClientVar( "fov" )]
 	public static float PlayerFov { get; set; } = 90;
 
-	[ServerCmd( "bb_cookie" )]
+	[ServerCmd( "oitc_cookie" )]
 	public static void CookieFlashlight()
 	{
 		Host.AssertServer();

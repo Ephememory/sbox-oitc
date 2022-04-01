@@ -14,10 +14,8 @@ public partial class BBPlayer : Player
 	[Net]
 	public float FlashlightBatteryCharge { get; private set; } = 100f;
 
-
 	[ConVar.Replicated]
-	public static float bb_flashlight_drain_amt { get; set; } = 1;
-
+	public static float oitc_flashlight_drain_amt { get; set; } = 1;
 
 	private void TickFlashLight()
 	{
@@ -30,7 +28,6 @@ public partial class BBPlayer : Player
 			}
 		}
 
-
 		if ( !FlashlightEntity.IsValid() )
 			return;
 
@@ -38,13 +35,13 @@ public partial class BBPlayer : Player
 
 		if ( FlashlightEnabled && FlashlightBatteryCharge > 0f && Time.Tick % 14 == 1 )
 		{
-			if ( FlashlightBatteryCharge - bb_flashlight_drain_amt < 0 )
+			if ( FlashlightBatteryCharge - oitc_flashlight_drain_amt < 0 )
 			{
 				FlashlightBatteryCharge = -1;
 			}
 			else
 			{
-				FlashlightBatteryCharge -= bb_flashlight_drain_amt;
+				FlashlightBatteryCharge -= oitc_flashlight_drain_amt;
 			}
 
 			if ( FlashlightBatteryCharge < 1 )
@@ -65,10 +62,11 @@ public partial class BBPlayer : Player
 
 		//Setting the position of the flashlight serverside
 		//basically, the position for other players the client is seeing.
-		FlashlightEntity.Position = EyePos + EyeRot.Forward * FlashlightPosOffset;
-		FlashlightEntity.Rotation = EyeRot;
+		FlashlightEntity.Position = EyePosition + EyeRotation.Forward * FlashlightPosOffset;
+		FlashlightEntity.Rotation = EyeRotation;
 
-		FlashlightEntity.Flicker = FlashlightBatteryCharge <= 13f;
+		//FlashlightEntity.Flicker = FlashlightBatteryCharge <= 13f; //jesus christ what was i thinking
+		FlashlightEntity.BrightnessMultiplier = FlashlightBatteryCharge <= 13f ? 0.1f : 0.9f; //this is weird
 	}
 }
 

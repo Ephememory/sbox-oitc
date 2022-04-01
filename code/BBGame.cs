@@ -4,7 +4,6 @@ using System;
 [Library( "oitc", Title = "One In The Chamber" )]
 partial class BBGame : Game
 {
-
 	public GameState CurrentGameState { get; private set; }
 
 	private RealTimeUntil timeLimit { get; set; }
@@ -19,12 +18,21 @@ partial class BBGame : Game
 
 	public override void ClientJoined( Client cl )
 	{
-		base.ClientJoined( cl );
 		NumPlayers++;
 
 		var player = new BBPlayer( cl );
 		cl.Pawn = player;
 		player.Respawn();
+
+		base.ClientJoined( cl );
+
+		var randomChance = Rand.Int( 1, 420 ) == 69;
+		if ( randomChance )
+		{
+			player.SetCookieFlashlightCookie();
+			Sandbox.UI.ChatBox.AddInformation( To.Everyone, $"{cl.Name} rolled a lucky number and got the cookie flashlight!" );
+		}
+
 		if ( IsClient ) return;
 
 		ReCalculateGameState();
@@ -45,7 +53,6 @@ partial class BBGame : Game
 		if ( IsClient ) return;
 		ReCalculateGameState();
 	}
-
 
 	public override void OnKilled( Client client, Entity pawn )
 	{
@@ -70,7 +77,7 @@ partial class BBGame : Game
 		var killerClient = killer.Client;
 		var killerKills = killerClient.GetValue<int>( "kills" );
 
-		if ( killerKills >= bb_score_limit - 1 )
+		if ( killerKills >= oitc_score_limit - 1 )
 		{
 			SetGameState( new GameState
 			{
@@ -85,12 +92,11 @@ partial class BBGame : Game
 		Log.Info( $"{client.Name} was killed by {killer.Client.NetworkIdent} with {weapon}" );
 	}
 
-
 	private async void EndRound()
 	{
 		EndRoundClient();
 		await GameTask.DelayRealtimeSeconds( 5f );
-		Sandbox.ConsoleSystem.Run( "bb_restart" );
+		Sandbox.ConsoleSystem.Run( "oitc_restart" );
 	}
 
 	[ClientRpc]

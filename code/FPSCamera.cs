@@ -1,7 +1,7 @@
 using Sandbox;
 
 
-public partial class FPSCamera : Camera
+public partial class FPSCamera : CameraMode
 {
 	Vector3 lastPos;
 	public Rotation ViewKick { get; private set; } = Rotation.From( 0f, 0f, 0f );
@@ -11,8 +11,8 @@ public partial class FPSCamera : Camera
 		var pawn = Local.Pawn;
 		if ( pawn == null ) return;
 
-		Position = pawn.EyePos;
-		Rotation = pawn.EyeRot;
+		Position = pawn.EyePosition;
+		Rotation = pawn.EyeRotation;
 
 		lastPos = Position;
 	}
@@ -22,17 +22,17 @@ public partial class FPSCamera : Camera
 		var pawn = Local.Pawn;
 		if ( pawn == null ) return;
 
-		var eyePos = pawn.EyePos;
-		if ( eyePos.Distance( lastPos ) < 300 ) // TODO: Tweak this, or add a way to invalidate lastpos when teleporting
+		var EyePosition = pawn.EyePosition;
+		if ( EyePosition.Distance( lastPos ) < 300 ) // TODO: Tweak this, or add a way to invalidate lastpos when teleporting
 		{
-			Position = Vector3.Lerp( eyePos.WithZ( lastPos.z ), eyePos, 20.0f * Time.Delta );
+			Position = Vector3.Lerp( EyePosition.WithZ( lastPos.z ), EyePosition, 20.0f * Time.Delta );
 		}
 		else
 		{
-			Position = eyePos;
+			Position = EyePosition;
 		}
 
-		Rotation = pawn.EyeRot;
+		Rotation = pawn.EyeRotation;
 		FieldOfView = BBGame.PlayerFov;
 
 		Viewer = pawn;

@@ -5,7 +5,7 @@ partial class BBPlayer : Player
 {
 
 	[ConVar.Replicated]
-	public static int bb_max_ammo_held { get; set; } = 7;
+	public static int oitc_max_ammo_held { get; set; } = 7;
 
 	[Net]
 	public int PistolAmmo { get; private set; } = 1;
@@ -46,7 +46,7 @@ partial class BBPlayer : Player
 			OuterConeAngle = 32,
 			FogStength = 1.0f,
 			Owner = this,
-			LightCookie = Texture.Load( Rand.Int( 1, 420 ) == 69 ? "textures/cookie.vtex" : "materials/effects/lightcookie.vtex" )
+			LightCookie = Texture.Load( "materials/effects/lightcookie.vtex" )
 		};
 		FlashlightPosOffset = 30f;
 	}
@@ -76,12 +76,11 @@ partial class BBPlayer : Player
 	{
 		base.ClientSpawn();
 		Host.AssertClient();
-
 	}
 
 	public override void Respawn()
 	{
-		Camera = new FPSCamera();
+		CameraMode = new FPSCamera();
 		SetModel( "models/citizen/citizen.vmdl" );
 
 		Controller = new WalkController();
@@ -109,7 +108,6 @@ partial class BBPlayer : Player
 		base.Respawn();
 	}
 
-
 	public override void Simulate( Client cl )
 	{
 		base.Simulate( cl );
@@ -122,32 +120,28 @@ partial class BBPlayer : Player
 		if ( LifeState != LifeState.Alive )
 			return;
 
-
-
 		TickPlayerUse();
 		SimulateActiveChild( cl, ActiveChild );
 
 		if ( IsClient ) return;
 
 
-		if ( Input.Released( InputButton.View ) )
-		{
-			if ( Camera is FPSCamera )
-			{
-				Camera = new ThirdPersonCamera();
-			}
-			else
-			{
-				Camera = new FPSCamera();
-			}
+		//if ( Input.Released( InputButton.View ) )
+		//{
+		//	if ( CameraMode is FPSCamera )
+		//	{
+		//		CameraMode = new ThirdPersonCamera();
+		//	}
+		//	else
+		//	{
+		//		CameraMode = new FPSCamera();
+		//	}
 
-		}
+		//}
 
 		TickFlashLight();
 
-
 	}
-
 
 	public override void FrameSimulate( Client cl )
 	{
@@ -157,8 +151,8 @@ partial class BBPlayer : Player
 		//so the movement is nice and smooth.
 		if ( FlashlightEntity != null && FlashlightEntity.IsValid() )
 		{
-			FlashlightEntity.Position = EyePos + EyeRot.Forward * FlashlightPosOffset;
-			FlashlightEntity.Rotation = EyeRot;
+			FlashlightEntity.Position = EyePosition + EyeRotation.Forward * FlashlightPosOffset;
+			FlashlightEntity.Rotation = EyeRotation;
 		}
 
 	}
@@ -168,7 +162,7 @@ partial class BBPlayer : Player
 		base.OnKilled();
 
 		BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
-		Camera = new SpectateRagdollCamera();
+		CameraMode = new SpectateRagdollCamera();
 		EnableDrawing = false;
 		Controller = null;
 		EnableAllCollisions = false;
@@ -189,17 +183,15 @@ partial class BBPlayer : Player
 		base.TakeDamage( info );
 	}
 
-
-
 	//could use setter/getters but this seems more clear.
 	public void AwardAmmo( int amt )
 	{
 		Host.AssertServer();
 
-		if ( PistolAmmo > bb_max_ammo_held ) return;
-		if ( PistolAmmo + amt > bb_max_ammo_held )
+		if ( PistolAmmo > oitc_max_ammo_held ) return;
+		if ( PistolAmmo + amt > oitc_max_ammo_held )
 		{
-			PistolAmmo = bb_max_ammo_held;
+			PistolAmmo = oitc_max_ammo_held;
 		}
 		else
 		{

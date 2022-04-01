@@ -18,7 +18,7 @@ public partial class WeaponOITCPistol : Weapon
 	{
 		base.ActiveStart( ent );
 		if ( !IsClient ) return;
-		ViewModelEntity.FieldOfView = 78;
+		//ViewModelEntity.FieldOfView = 78;
 	}
 
 	public override bool CanReload()
@@ -37,7 +37,7 @@ public partial class WeaponOITCPistol : Weapon
 			return;
 		}
 
-		(Owner as AnimEntity)?.SetAnimBool( "b_attack", true );
+		(Owner as AnimEntity)?.SetAnimParameter( "b_attack", true );
 		player.RemoveAmmo( 1 );
 		ShootEffects();
 		PlaySound( "oitc_pistolsound" );
@@ -64,7 +64,7 @@ public partial class WeaponOITCPistol : Weapon
 
 		}
 
-		ViewModelEntity?.SetAnimBool( "fire", true );
+		ViewModelEntity?.SetAnimParameter( "fire", true );
 		CrosshairPanel?.CreateEvent( "fire" );
 		Particles.Create( "particles/pistol_ejectbrass.vpcf", EffectEntity, "ejection" );
 		base.ShootEffects();
@@ -72,8 +72,8 @@ public partial class WeaponOITCPistol : Weapon
 
 	public override void SimulateAnimator( PawnAnimator anim )
 	{
-		anim.SetParam( "holdtype", 1 );
-		anim.SetParam( "aimat_weight", 1.0f );
-		anim.SetParam( "holdtype_handedness", 1 );
+		anim.SetAnimParameter( "holdtype", 1 );
+		//anim.SetAnimParameter( "aimat_weight", 1.0f );
+		anim.SetAnimParameter( "holdtype_handedness", 1 );
 	}
 }

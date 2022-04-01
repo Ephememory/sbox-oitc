@@ -1,9 +1,9 @@
 .root {
-  background-color: rgba(73, 69, 69, 0.123);
+  background-color: rgba(73, 69, 69, 0.323);
   backdrop-filter: blur(25px);
   padding-left: 3px;
   padding-right: 3px;
-  width: 180px;
+  width: 200px;
   height: 30px;
   top: 18px;
   left: 14px;
@@ -14,9 +14,7 @@
 }
 
 .container {
-  width: fit-content;
   padding: 15px;
-  height: fit-content;
   border-radius: 4px;
   padding: 12px;
   align-items: center;
@@ -24,9 +22,9 @@
 }
 
 .text {
-  color: rgba(235, 236, 219, 0.514);
+  color: rgba(235, 236, 219, 0.814);
   font-family: Poppins;
-  font-size: large;
+  font-size: 14px;
   font-weight: bold;
   border-radius: 3px;
 }
