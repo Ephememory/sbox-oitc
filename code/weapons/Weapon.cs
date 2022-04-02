@@ -18,6 +18,7 @@ public partial class Weapon : BaseWeapon, IUse
 
 	public const float DefaultBulletRange = 64000f;
 
+	public virtual string GetKilledByText() { return string.Empty; }
 
 	public override void Spawn()
 	{

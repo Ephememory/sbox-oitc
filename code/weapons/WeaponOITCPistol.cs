@@ -5,13 +5,16 @@ public partial class WeaponOITCPistol : Weapon
 {
 	public override string ViewModelPath => "models/weapons/pistol/v_oitc_pistol.vmdl";
 
-
+	public override string GetKilledByText()
+	{
+		var options = new string[5] { "smoked", "popped", "gunned down", "iced", "spun the block on" };
+		return Rand.FromArray<string>( options );
+	}
 
 	public override void Spawn()
 	{
 		base.Spawn();
 		SetModel( "models/weapons/pistol/oitc_pistol.vmdl" );
-
 	}
 
 	public override void ActiveStart( Entity ent )

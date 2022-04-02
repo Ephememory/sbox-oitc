@@ -56,7 +56,37 @@ partial class BBGame : Game
 
 	public override void OnKilled( Client client, Entity pawn )
 	{
-		base.OnKilled( client, pawn );
+		//manually overwriting the base.onkilled and tweaking it instead of calling it. its does some dumb shit.
+		Host.AssertServer();
+
+		Log.Info( $"{client.Name} was killed" );
+
+		if ( pawn.LastAttacker != null )
+		{
+			if ( pawn.LastAttacker.Client != null )
+			{
+				var killedByText = (pawn.LastAttackerWeapon as Weapon).GetKilledByText();
+
+				if ( string.IsNullOrEmpty( killedByText ) )
+				{
+					killedByText = pawn.LastAttackerWeapon?.ClassInfo?.Title;
+				}
+
+				OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name,
+					client.PlayerId,
+					client.Name,
+					killedByText );
+			}
+			else
+			{
+				OnKilledMessage( pawn.LastAttacker.NetworkIdent, pawn.LastAttacker.ToString(), client.PlayerId, client.Name, "killed" );
+			}
+		}
+		else
+		{
+			OnKilledMessage( 0, "", client.PlayerId, client.Name, "died" );
+		}
+
 		if ( Host.IsClient ) return;
 		var killer = pawn.LastAttacker;
 		var weapon = pawn.LastAttackerWeapon;

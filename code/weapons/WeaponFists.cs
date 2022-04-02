@@ -7,6 +7,12 @@ public partial class WeaponFists : Weapon
 	public override float PrimaryRate => 0.9f;
 	public override float ReloadTime => 0f;
 
+	public override string GetKilledByText()
+	{
+		var options = new string[4] { "beat down", "pummeled", "clocked", "clobbered" };
+		return Rand.FromArray<string>( options );
+	}
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -122,7 +128,7 @@ public partial class WeaponFists : Weapon
 	public override void SimulateAnimator( PawnAnimator anim )
 	{
 		anim.SetAnimParameter( "holdtype", 5 ); // TODO this is shit
-		//anim.SetAnimParameter( "aimat_weight", 1f );
+												//anim.SetAnimParameter( "aimat_weight", 1f );
 	}
 
 	public override void OnCarryDrop( Entity dropper )
