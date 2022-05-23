@@ -21,8 +21,8 @@ public partial class BBHud : HudEntity<RootPanel>
 		RootPanel.AddChild<ChatBox>();
 		RootPanel.AddChild<VoiceList>();
 		RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
-		RootPanel.AddChild<NameTags>();
-		RootPanel.AddChild<KillFeed>();
+		//RootPanel.AddChild<NameTags>();
+		//RootPanel.AddChild<KillFeed>();
 		RootPanel.AddChild<HudGameState>();
 		RootPanel.AddChild<HudGameRestartTime>();
 		RootPanel.AddChild<HudCrosshair>();

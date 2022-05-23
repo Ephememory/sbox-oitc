@@ -1,6 +1,5 @@
 using Sandbox;
 
-[Library( "weapon_fists", Title = "Fists", Spawnable = false )]
 public partial class WeaponFists : Weapon
 {
 	public override string ViewModelPath => "models/weapons/fists/v_fists.vmdl";
@@ -39,7 +38,7 @@ public partial class WeaponFists : Weapon
 
 		if ( IsClient && Owner == Local.Pawn )
 		{
-			new Sandbox.ScreenShake.Perlin( 1.2f, 1.2f, 1.4f, 1.9f );
+			//new Sandbox.ScreenShake.Perlin( 1.2f, 1.2f, 1.4f, 1.9f );
 		}
 	}
 
@@ -49,7 +48,7 @@ public partial class WeaponFists : Weapon
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
 
-		(Owner as AnimEntity)?.SetAnimParameter( "b_attack", true );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 		ShootEffects();
 		AttackAsync( 0.34f );
 	}
@@ -122,7 +121,7 @@ public partial class WeaponFists : Weapon
 		Host.AssertClient();
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
-		CrosshairPanel?.CreateEvent( "fire" );
+		//CrosshairPanel?.CreateEvent( "fire" );
 	}
 
 	public override void SimulateAnimator( PawnAnimator anim )

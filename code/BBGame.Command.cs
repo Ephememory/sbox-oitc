@@ -13,7 +13,7 @@ public partial class BBGame : Sandbox.Game
 	[ConVar.Replicated]
 	public static float oitc_time_limit { get; set; }
 
-	[ServerCmd( "oitc_restart" )]
+	[ConCmd.Server( "oitc_restart" )]
 	public static void RestartGame()
 	{
 		Host.AssertServer();
@@ -38,7 +38,7 @@ public partial class BBGame : Sandbox.Game
 		} );
 	}
 
-	[ServerCmd( "give_fal" )]
+	[ConCmd.Server( "give_fal" )]
 	public static void GiveFAL()
 	{
 
@@ -50,7 +50,7 @@ public partial class BBGame : Sandbox.Game
 		(ConsoleSystem.Caller.Pawn as BBPlayer).Inventory.Add( new WeaponFAL(), true );
 	}
 
-	[ServerCmd( "give_ammo" )]
+	[ConCmd.Server( "give_ammo" )]
 	public static void GiveAmmo()
 	{
 		Host.AssertServer();
@@ -59,7 +59,7 @@ public partial class BBGame : Sandbox.Game
 		ConsoleSystem.Caller.Pawn.PlaySound( "squish" );
 	}
 
-	[ServerCmd( "give_ammo_all" )]
+	[ConCmd.Server( "give_ammo_all" )]
 	public static void GiveAmmoAll()
 	{
 		Host.AssertServer();
@@ -73,7 +73,7 @@ public partial class BBGame : Sandbox.Game
 		}
 	}
 
-	[ServerCmd( "gamestate" )]
+	[ConCmd.Server( "gamestate" )]
 	public static void GetGameState()
 	{
 		Host.AssertServer();
@@ -81,10 +81,10 @@ public partial class BBGame : Sandbox.Game
 		Utils.UtilLog( (Game.Current as BBGame).CurrentGameState.Tier );
 	}
 
-	[ClientVar( "fov" )]
+	[ConVar.Client( "fov" )]
 	public static float PlayerFov { get; set; } = 90;
 
-	[ServerCmd( "oitc_cookie" )]
+	[ConCmd.Server( "oitc_cookie" )]
 	public static void CookieFlashlight()
 	{
 		Host.AssertServer();

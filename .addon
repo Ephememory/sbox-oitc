@@ -14,6 +14,12 @@
     "MapList": [
       "facepunch.construct"
     ],
-    "MinPlayers": 2
+    "MinPlayers": 2,
+    "PerMapRanking": false,
+    "LeaderboardType": 0,
+    "RankType": 0,
+    "MapSelect": 0,
+    "GameNetworkType": 0,
+    "MaxPlayers": 0
   }
 }

@@ -1,6 +1,5 @@
 using Sandbox;
 
-[Library( "weapon_oitcpistol", Title = "Pistol", Spawnable = true )]
 public partial class WeaponOITCPistol : Weapon
 {
 	public override string ViewModelPath => "models/weapons/pistol/v_oitc_pistol.vmdl";
@@ -40,14 +39,11 @@ public partial class WeaponOITCPistol : Weapon
 			return;
 		}
 
-		(Owner as AnimEntity)?.SetAnimParameter( "b_attack", true );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 		player.RemoveAmmo( 1 );
 		ShootEffects();
 		PlaySound( "oitc_pistolsound" );
 		ShootBullet( 0, 1, 1000, 1 );
-
-
-
 	}
 
 	public override void AttackSecondary()
@@ -63,12 +59,12 @@ public partial class WeaponOITCPistol : Weapon
 
 		if ( Owner == Local.Pawn )
 		{
-			new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );
+			//new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );
 
 		}
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
-		CrosshairPanel?.CreateEvent( "fire" );
+		//CrosshairPanel?.CreateEvent( "fire" );
 		Particles.Create( "particles/pistol_ejectbrass.vpcf", EffectEntity, "ejection" );
 		base.ShootEffects();
 	}

@@ -69,7 +69,7 @@ partial class BBGame : Game
 
 				if ( string.IsNullOrEmpty( killedByText ) )
 				{
-					killedByText = pawn.LastAttackerWeapon?.ClassInfo?.Title;
+					killedByText = pawn.LastAttackerWeapon?.ClassName;
 				}
 
 				OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name,

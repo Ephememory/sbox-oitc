@@ -15,7 +15,7 @@ partial class BBPlayer : Player
 	/// <summary>
 	/// The clothing container is what dresses the citizen
 	/// </summary>
-	public Clothing.Container Clothing = new();
+	public ClothingContainer Clothing = new();
 	public BBPlayer()
 	{
 		Inventory = new Inventory( this );

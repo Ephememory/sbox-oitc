@@ -1,7 +1,7 @@
 using Sandbox;
 
-
-[Library( "weapon_fal", Title = "FAL", Spawnable = true )]
+[ClassName( "weapon_fal" )]
+[Spawnable]
 public partial class WeaponFAL : Weapon
 {
 
@@ -12,13 +12,10 @@ public partial class WeaponFAL : Weapon
 	public override string ViewModelPath => "models/weapons/fal/v_fal.vmdl";
 	public override float ReloadTime => 1.34f;
 
-
-
 	public override void Spawn()
 	{
 		base.Spawn();
 		SetModel( "models/weapons/fal/weapon_fal.vmdl" );
-
 	}
 
 	public override void ActiveStart( Entity ent )
@@ -38,7 +35,7 @@ public partial class WeaponFAL : Weapon
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
 		//TimeSinceSecondaryAttack = 0;
-		(Owner as AnimEntity)?.SetAnimParameter( "b_attack", true );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 
 		//
 		// Tell the clients to play the shoot effects
@@ -73,13 +70,12 @@ public partial class WeaponFAL : Weapon
 
 		if ( Owner == Local.Pawn )
 		{
-			new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );
-
+			//new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );
 		}
 
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
-		CrosshairPanel?.CreateEvent( "fire" );
+		//CrosshairPanel?.CreateEvent( "fire" );
 	}
 
 	public override void SimulateAnimator( PawnAnimator anim )
