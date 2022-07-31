@@ -1,55 +1,42 @@
 using Sandbox;
 
-partial class BBPlayer
+partial class BBPlayer : Player
 {
 	[ClientRpc]
 	private void BecomeRagdollOnClient( Vector3 velocity, DamageFlags damageFlags, Vector3 forcePos, Vector3 force, int bone )
 	{
 		var ent = new ModelEntity();
+		ent.Tags.Add( "ragdoll", "solid" );
 		ent.Position = Position;
 		ent.Rotation = Rotation;
 		ent.Scale = Scale;
-		ent.MoveType = MoveType.Physics;
 		ent.UsePhysicsCollision = true;
 		ent.EnableAllCollisions = true;
-		ent.CollisionGroup = CollisionGroup.Debris;
 		ent.SetModel( GetModelName() );
 		ent.CopyBonesFrom( this );
 		ent.CopyBodyGroups( this );
 		ent.CopyMaterialGroup( this );
+		ent.CopyMaterialOverrides( this );
 		ent.TakeDecalsFrom( this );
-		ent.EnableHitboxes = true;
 		ent.EnableAllCollisions = true;
 		ent.SurroundingBoundsMode = SurroundingBoundsType.Physics;
+		ent.RenderColor = RenderColor;
 		ent.PhysicsGroup.Velocity = velocity;
-
-		if ( Local.Pawn == this )
-		{
-			//ent.EnableDrawing = false; wtf
-		}
-
-		ent.SetInteractsAs( CollisionLayer.Debris );
-		ent.SetInteractsWith( CollisionLayer.WORLD_GEOMETRY );
-		ent.SetInteractsExclude( CollisionLayer.Player | CollisionLayer.Debris );
+		ent.PhysicsEnabled = true;
 
 		foreach ( var child in Children )
 		{
-			if ( child is ModelEntity e )
-			{
-				var model = e.GetModelName();
-				if ( model != null && !model.Contains( "clothes" ) )
-					continue;
+			if ( !child.Tags.Has( "clothes" ) ) continue;
+			if ( child is not ModelEntity e ) continue;
 
-				var clothing = new ModelEntity();
-				clothing.SetModel( model );
-				clothing.SetParent( ent, true );
-				// clothing.RenderColorAndAlpha = e.RenderColorAndAlpha;
+			var model = e.GetModelName();
 
-				if ( Local.Pawn == this )
-				{
-					//	clothing.EnableDrawing = false; wtf
-				}
-			}
+			var clothing = new ModelEntity();
+			clothing.SetModel( model );
+			clothing.SetParent( ent, true );
+			clothing.RenderColor = e.RenderColor;
+			clothing.CopyBodyGroups( e );
+			clothing.CopyMaterialGroup( e );
 		}
 
 		if ( damageFlags.HasFlag( DamageFlags.Bullet ) ||
