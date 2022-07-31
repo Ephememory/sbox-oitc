@@ -3,14 +3,15 @@
 	data = 
 	{
 		UI = false
-		Volume = 1.0
-		VolumeRandom = 0.0
-		Pitch = 1.0
-		PitchRandom = 0.1
-		DistanceMax = 1000.0
+		Volume = 0.28
+		VolumeRandom = 0
+		Pitch = 1
+		PitchRandom = 0.05
+		DistanceMax = 550.72
 		Sounds = 
 		[
-			"sounds/punch/punch0.vsnd",
+			resource:"sounds/punch/punch0.vsnd",
 		]
+		SelectionMode = 3
 	}
 }
