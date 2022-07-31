@@ -162,11 +162,13 @@ partial class BBPlayer : Player
 		Controller = null;
 		EnableAllCollisions = false;
 		EnableDrawing = false;
-		var dropped = Inventory.DropActive();
-		if ( dropped.IsValid() )
-		{
-			dropped.DeleteAsync( 2f );
-		}
+
+		//var dropped = Inventory.DropActive();
+		//Log.Info( dropped );
+		//if ( dropped.IsValid() )
+		//{
+		//	dropped.DeleteAsync( 2f );
+		//}
 
 		Inventory.DeleteContents();
 	}
