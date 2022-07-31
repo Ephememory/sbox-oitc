@@ -44,8 +44,9 @@ partial class BBPlayer : Player
 			Color = Color.FromBytes( 200, 200, 200, 230 ),
 			InnerConeAngle = 9,
 			OuterConeAngle = 32,
-			FogStength = 1.0f,
+			FogStrength = 1.0f,
 			Owner = this,
+			EnableViewmodelRendering = true,
 			LightCookie = Texture.Load( "materials/effects/lightcookie.vtex" )
 		};
 		FlashlightPosOffset = 30f;
@@ -65,8 +66,9 @@ partial class BBPlayer : Player
 			Color = Color.FromBytes( 200, 200, 200, 230 ),
 			InnerConeAngle = 9,
 			OuterConeAngle = 32,
-			FogStength = 1.0f,
+			FogStrength = 1.0f,
 			Owner = this,
+			EnableViewmodelRendering = true,
 			LightCookie = Texture.Load( "textures/cookie.vtex" )
 		};
 		FlashlightPosOffset = 30f;
@@ -139,7 +141,7 @@ partial class BBPlayer : Player
 
 		//}
 
-		TickFlashLight();
+		FlashlightSimulate();
 
 	}
 
@@ -147,14 +149,7 @@ partial class BBPlayer : Player
 	{
 		base.FrameSimulate( cl );
 
-		//Update the flashlight position on the client in framesim
-		//so the movement is nice and smooth.
-		if ( FlashlightEntity != null && FlashlightEntity.IsValid() )
-		{
-			FlashlightEntity.Position = EyePosition + EyeRotation.Forward * FlashlightPosOffset;
-			FlashlightEntity.Rotation = EyeRotation;
-		}
-
+		FlashlightFrameSimulate();
 	}
 
 	public override void OnKilled()
