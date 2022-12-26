@@ -24,7 +24,7 @@ partial class BBPlayer : Player
 	/// <summary>
 	/// Initialize using this client
 	/// </summary>
-	public BBPlayer( Client cl ) : this()
+	public BBPlayer( IClient cl ) : this()
 	{
 		// Load clothing from client data
 		Clothing.LoadFromClient( cl );
@@ -54,7 +54,7 @@ partial class BBPlayer : Player
 
 	public void SetCookieFlashlightCookie()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 		FlashlightEntity = new SpotLightEntity
 		{
 			Enabled = false,
@@ -77,23 +77,31 @@ partial class BBPlayer : Player
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
-		Host.AssertClient();
+		Game.AssertClient();
 	}
 
 	public override void Respawn()
 	{
-		CameraMode = new FPSCamera();
-		SetModel( "models/citizen/citizen.vmdl" );
+		SetModel("models/humans/male.vmdl");
+
+		var useLightSkinTone = Game.Random.Int(0, 1) == 1;
+		if (useLightSkinTone)
+			SetMaterialGroup("skin1");
+
+		var head = new AnimatedEntity();
+		head.Model = Model.Load(useLightSkinTone ? "models/humans/heads/adam/adam.vmdl" : "models/humans/heads/frank/frank.vmdl");
+		head.EnableHideInFirstPerson = true;
+		head.EnableShadowInFirstPerson = true;
+		head.SetParent(this, true);
 
 		Controller = new WalkController();
-		Animator = new StandardPlayerAnimator();
 
 		EnableAllCollisions = true;
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
-		Clothing.DressEntity( this );
+		//Clothing.DressEntity( this );
 		Inventory = new Inventory( this );
 
 		Inventory.Add( new WeaponFists(), false );
@@ -110,72 +118,101 @@ partial class BBPlayer : Player
 		base.Respawn();
 	}
 
-	public override void Simulate( Client cl )
+	public override void Simulate( IClient cl )
 	{
 		base.Simulate( cl );
-
-		if ( Input.ActiveChild != null )
-		{
-			ActiveChild = Input.ActiveChild;
-		}
 
 		if ( LifeState != LifeState.Alive )
 			return;
 
 		TickPlayerUse();
 		SimulateActiveChild( cl, ActiveChild );
+		SimulateAnimation((WalkController)Controller);
 
-		if ( IsClient ) return;
-
-
-		//if ( Input.Released( InputButton.View ) )
-		//{
-		//	if ( CameraMode is FPSCamera )
-		//	{
-		//		CameraMode = new ThirdPersonCamera();
-		//	}
-		//	else
-		//	{
-		//		CameraMode = new FPSCamera();
-		//	}
-
-		//}
+		if ( Game.IsClient ) 
+			return;
 
 		FlashlightSimulate();
 
 	}
 
-	public override void FrameSimulate( Client cl )
+	public override void FrameSimulate( IClient cl )
 	{
 		base.FrameSimulate( cl );
 
+		Camera.Position = EyePosition;
+		Camera.Rotation = EyeRotation;
+		Camera.FieldOfView = 90f;
+		Camera.FirstPersonViewer = this;
+
 		FlashlightFrameSimulate();
+	}
+
+	private void SimulateAnimation(WalkController controller)
+	{
+		if (controller == null)
+			return;
+
+		// where should we be rotated to
+		var turnSpeed = 0.02f;
+
+		Rotation rotation;
+
+		// If we're a bot, spin us around 180 degrees.
+		if (Client.IsBot)
+			rotation = ViewAngles.WithYaw(ViewAngles.yaw + 180f).ToRotation();
+		else
+			rotation = ViewAngles.ToRotation();
+
+		var idealRotation = Rotation.LookAt(rotation.Forward.WithZ(0), Vector3.Up);
+		Rotation = Rotation.Slerp(Rotation, idealRotation, controller.WishVelocity.Length * Time.Delta * turnSpeed);
+		Rotation = Rotation.Clamp(idealRotation, 45.0f, out var shuffle); // lock facing to within 45 degrees of look direction
+
+		var animHelper = new CitizenAnimationHelper(this);
+
+		animHelper.WithWishVelocity(controller.WishVelocity);
+		animHelper.WithVelocity(Velocity);
+		animHelper.WithLookAt(EyePosition + EyeRotation.Forward * 100.0f, 1.0f, 1.0f, 0.5f);
+		animHelper.AimAngle = rotation;
+		animHelper.FootShuffle = shuffle;
+		animHelper.DuckLevel = MathX.Lerp(animHelper.DuckLevel, controller.HasTag("ducked") ? 1 : 0, Time.Delta * 10.0f);
+		animHelper.VoiceLevel = (Game.IsClient && Client.IsValid()) ? Client.Voice.LastHeard < 0.5f ? Client.Voice.CurrentLevel : 0.0f : 0.0f;
+		animHelper.IsGrounded = GroundEntity != null;
+		animHelper.IsSitting = controller.HasTag("sitting");
+		animHelper.IsNoclipping = controller.HasTag("noclip");
+		animHelper.IsClimbing = controller.HasTag("climbing");
+		animHelper.IsSwimming = this.GetWaterLevel() >= 0.5f;
+		animHelper.IsWeaponLowered = false;
+
+		if (controller.HasEvent("jump"))
+			animHelper.TriggerJump();
+
+		//if (ActiveCarriable != _lastActiveCarriable)
+		//	animHelper.TriggerDeploy();
+
+		//if (ActiveCarriable is not null)
+		//	ActiveCarriable.SimulateAnimator(animHelper);
+		//else
+		//{
+		//	animHelper.HoldType = CitizenAnimationHelper.HoldTypes.None;
+		//	animHelper.AimBodyWeight = 0.5f;
+		//}
 	}
 
 	public override void OnKilled()
 	{
 		base.OnKilled();
 
-		BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
-		CameraMode = new SpectateRagdollCamera();
 		EnableDrawing = false;
 		Controller = null;
 		EnableAllCollisions = false;
 		EnableDrawing = false;
-
-		//var dropped = Inventory.DropActive();
-		//Log.Info( dropped );
-		//if ( dropped.IsValid() )
-		//{
-		//	dropped.DeleteAsync( 2f );
-		//}
 
 		Inventory.DeleteContents();
 	}
 
 	public override void TakeDamage( DamageInfo info )
 	{
-
 		lastDamage = info;
 		base.TakeDamage( info );
 	}
@@ -183,7 +220,7 @@ partial class BBPlayer : Player
 	//could use setter/getters but this seems more clear.
 	public void AwardAmmo( int amt )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 
 		if ( PistolAmmo > oitc_max_ammo_held ) return;
 		if ( PistolAmmo + amt > oitc_max_ammo_held )
@@ -201,7 +238,6 @@ partial class BBPlayer : Player
 		{
 			SwitchToPistol();
 		}
-
 	}
 
 	public void RemoveAmmo( int amtToRemove )

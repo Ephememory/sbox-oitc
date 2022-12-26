@@ -55,7 +55,7 @@ public partial class Weapon : BaseWeapon, IUse
 		StartReloadEffects();
 	}
 
-	public override void Simulate( Client owner )
+	public override void Simulate( IClient owner )
 	{
 		if ( TimeSinceDeployed < 0.6f )
 			return;
@@ -86,7 +86,7 @@ public partial class Weapon : BaseWeapon, IUse
 
 	public override void CreateViewModel()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		if ( string.IsNullOrEmpty( ViewModelPath ) )
 			return;
@@ -138,7 +138,7 @@ public partial class Weapon : BaseWeapon, IUse
 	[ClientRpc]
 	protected virtual void ShootEffects()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
 		Particles.Create( "particles/pistol_muzzleflash.vpcf", EffectEntity, "muzzle" );
 
@@ -168,7 +168,7 @@ public partial class Weapon : BaseWeapon, IUse
 		{
 			tr.Surface.DoBulletImpact( tr );
 
-			if ( !IsServer ) continue;
+			if ( !Game.IsServer ) continue;
 			if ( !tr.Entity.IsValid() ) continue;
 
 			//
@@ -191,7 +191,10 @@ public partial class Weapon : BaseWeapon, IUse
 	/// </summary>
 	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize, float range = DefaultBulletRange )
 	{
-		ShootBullet( Owner.EyePosition, Owner.EyeRotation.Forward, spread, force, damage, bulletSize, range );
+		if (Owner is not Player ply)
+			return;
+
+		ShootBullet(ply.EyePosition, ply.EyeRotation.Forward, spread, force, damage, bulletSize, range );
 	}
 
 	/// <summary>
@@ -199,8 +202,11 @@ public partial class Weapon : BaseWeapon, IUse
 	/// </summary>
 	public virtual void ShootBullets( int numBullets, float spread, float force, float damage, float bulletSize )
 	{
-		var pos = Owner.EyePosition;
-		var dir = Owner.EyeRotation.Forward;
+		if (Owner is not Player ply)
+			return;
+
+		var pos = ply.EyePosition;
+		var dir = ply.EyeRotation.Forward;
 
 		for ( int i = 0; i < numBullets; i++ )
 		{

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
 public static class Utils
 {
-
-
 	public static bool InRange( this float self, float min, float max )
 	{
 		return self >= min && self <= max;
@@ -24,16 +17,15 @@ public static class Utils
 		return Rotation.From( Angles.Random );
 	}
 
-
 	public static void UtilLog(string text)
 	{
-		var side = Host.IsServer ? "[SERVER]" : "[CLIENT]";
+		var side = Game.IsServer ? "[SERVER]" : "[CLIENT]";
 		Log.Info( $"{side} : {text}" );
 	}
 
 	public static void UtilLog(object objectIn)
 	{
-		var side = Host.IsServer ? "[SERVER]" : "[CLIENT]";
+		var side = Game.IsServer ? "[SERVER]" : "[CLIENT]";
 		Log.Info( $"{side} : {objectIn}" );
 	}
 }

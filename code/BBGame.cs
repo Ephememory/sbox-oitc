@@ -1,8 +1,7 @@
 using Sandbox;
-using System;
 
 [Library( "oitc", Title = "One In The Chamber" )]
-partial class BBGame : Game
+partial class BBGame : GameManager
 {
 	public GameState CurrentGameState { get; private set; }
 
@@ -10,13 +9,13 @@ partial class BBGame : Game
 
 	public BBGame()
 	{
-		if ( IsServer )
+		if ( Game.IsClient )
 		{
 			_ = new BBHud();
 		}
 	}
 
-	public override void ClientJoined( Client cl )
+	public override void ClientJoined( IClient cl )
 	{
 		NumPlayers++;
 
@@ -26,14 +25,15 @@ partial class BBGame : Game
 
 		base.ClientJoined( cl );
 
-		var randomChance = Rand.Int( 1, 420 ) == 69;
+		var randomChance = Game.Random.Int( 1, 420 ) == 69;
 		if ( randomChance )
 		{
 			player.SetCookieFlashlightCookie();
-			Sandbox.UI.ChatBox.AddInformation( To.Everyone, $"{cl.Name} rolled a lucky number and got the cookie flashlight!" );
+			//Sandbox.UI.ChatBox.AddInformation( To.Everyone, $"{cl.Name} rolled a lucky number and got the cookie flashlight!" );
 		}
 
-		if ( IsClient ) return;
+		if ( Game.IsClient ) 
+			return;
 
 		ReCalculateGameState();
 
@@ -46,18 +46,20 @@ partial class BBGame : Game
 
 	}
 
-	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+	public override void ClientDisconnect( IClient cl, NetworkDisconnectionReason reason )
 	{
 		base.ClientDisconnect( cl, reason );
 		NumPlayers--;
-		if ( IsClient ) return;
+		if ( Game.IsClient ) 
+			return;
+
 		ReCalculateGameState();
 	}
 
-	public override void OnKilled( Client client, Entity pawn )
+	public override void OnKilled( IClient client, Entity pawn )
 	{
 		//manually overwriting the base.onkilled and tweaking it instead of calling it. its does some dumb shit.
-		Host.AssertServer();
+		Game.AssertServer();
 
 		Log.Info( $"{client.Name} was killed" );
 
@@ -72,22 +74,22 @@ partial class BBGame : Game
 					killedByText = pawn.LastAttackerWeapon?.ClassName;
 				}
 
-				OnKilledMessage( pawn.LastAttacker.Client.PlayerId, pawn.LastAttacker.Client.Name,
-					client.PlayerId,
+				OnKilledMessage( pawn.LastAttacker.Client.SteamId, pawn.LastAttacker.Client.Name,
+					client.SteamId,
 					client.Name,
 					killedByText );
 			}
 			else
 			{
-				OnKilledMessage( pawn.LastAttacker.NetworkIdent, pawn.LastAttacker.ToString(), client.PlayerId, client.Name, "killed" );
+				OnKilledMessage( pawn.LastAttacker.NetworkIdent, pawn.LastAttacker.ToString(), client.SteamId, client.Name, "killed" );
 			}
 		}
 		else
 		{
-			OnKilledMessage( 0, "", client.PlayerId, client.Name, "died" );
+			OnKilledMessage( 0, "", client.SteamId, client.Name, "died" );
 		}
 
-		if ( Host.IsClient ) return;
+		if ( Game.IsClient ) return;
 		var killer = pawn.LastAttacker;
 		var weapon = pawn.LastAttackerWeapon;
 
@@ -126,22 +128,22 @@ partial class BBGame : Game
 	{
 		EndRoundClient();
 		await GameTask.DelayRealtimeSeconds( 5f );
-		Sandbox.ConsoleSystem.Run( "oitc_restart" );
+		ConsoleSystem.Run( "oitc_restart" );
 	}
 
 	[ClientRpc]
 	private void EndRoundClient()
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 
-		HudGameRestartTime.OnRoundOver.Invoke();
+		//HudGameRestartTime.OnRoundOver.Invoke();
 	}
 
 	[ClientRpc]
 	private void NumPlayerFulfilled()
 	{
-		Host.AssertClient();
-		HudGameState.OnNumPlayersFulfilled.Invoke();
+		Game.AssertClient();
+		//HudGameState.OnNumPlayersFulfilled.Invoke();
 	}
 
 }

@@ -7,15 +7,16 @@ namespace Sandbox.UI
 	{
 		public static void PositionAtCrosshair( this Panel panel )
 		{
-			panel.PositionAtCrosshair( Local.Pawn );
+			panel.PositionAtCrosshair( Game.LocalPawn );
 		}
 
 		public static void PositionAtCrosshair( this Panel panel, Entity player )
 		{
-			if ( !player.IsValid() ) return;
+			if ( !player.IsValid() || player is not Player ply ) 
+				return;
 
-			var EyePosition = player.EyePosition;
-			var EyeRotation = player.EyeRotation;
+			var EyePosition = ply.EyePosition;
+			var EyeRotation = ply.EyeRotation;
 
 			var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 2000 )
 							.Size( 1.0f )
@@ -39,5 +40,4 @@ namespace Sandbox.UI
 			panel.Style.Dirty();
 		}
 	}
-
 }

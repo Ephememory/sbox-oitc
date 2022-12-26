@@ -1,7 +1,7 @@
 using Sandbox;
 using System.Collections.Generic;
 
-public partial class BBGame : Game
+partial class BBGame
 {
 
 	public int NumPlayers = 0;
@@ -52,7 +52,7 @@ public partial class BBGame : Game
 
 	private void SetGameState( GameState newState )
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 		CurrentGameState = new GameState
 		{
 			TopFragSteamId = newState.TopFragSteamId,
@@ -64,20 +64,19 @@ public partial class BBGame : Game
 	[ClientRpc]
 	private void SetGameStateClient( ulong topFragSteamId, GameStateTier newTier )
 	{
-		Host.AssertClient();
+		Game.AssertClient();
 		CurrentGameState = new GameState
 		{
 			TopFragSteamId = topFragSteamId,
 			Tier = newTier
 		};
 
-		HudGameState.OnStateChanged.Invoke();
+		//HudGameState.OnStateChanged.Invoke();
 	}
-
 
 	private void ReCalculateGameState()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 		if ( CurrentGameState == null )
 		{
 			CurrentGameState = new GameState
@@ -86,7 +85,9 @@ public partial class BBGame : Game
 			};
 		}
 
-		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) return;
+		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) 
+			return;
+
 		if ( NumPlayers < 2 )
 		{
 			SetGameState( new GameState
@@ -94,6 +95,5 @@ public partial class BBGame : Game
 				Tier = GameStateTier.WaitingForPlayers
 			} );
 		}
-
 	}
 }

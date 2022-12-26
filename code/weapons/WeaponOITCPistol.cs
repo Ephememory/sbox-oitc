@@ -7,7 +7,7 @@ public partial class WeaponOITCPistol : Weapon
 	public override string GetKilledByText()
 	{
 		var options = new string[5] { "smoked", "popped", "gunned down", "iced", "spun the block on" };
-		return Rand.FromArray<string>( options );
+		return Game.Random.FromArray<string>( options );
 	}
 
 	public override void Spawn()
@@ -19,7 +19,7 @@ public partial class WeaponOITCPistol : Weapon
 	public override void ActiveStart( Entity ent )
 	{
 		base.ActiveStart( ent );
-		if ( !IsClient ) return;
+		if ( !Game.IsClient ) return;
 		//ViewModelEntity.FieldOfView = 78;
 	}
 
@@ -30,7 +30,6 @@ public partial class WeaponOITCPistol : Weapon
 
 	public override void AttackPrimary()
 	{
-
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
 		if ( Owner is not BBPlayer player ) return;
@@ -51,17 +50,10 @@ public partial class WeaponOITCPistol : Weapon
 
 	}
 
-
 	[ClientRpc]
 	protected override void ShootEffects()
 	{
-		Host.AssertClient();
-
-		if ( Owner == Local.Pawn )
-		{
-			//new Sandbox.ScreenShake.Perlin( 0.5f, 4.0f, 1.0f, 0.5f );
-
-		}
+		Game.AssertClient();
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
 		//CrosshairPanel?.CreateEvent( "fire" );
@@ -69,10 +61,9 @@ public partial class WeaponOITCPistol : Weapon
 		base.ShootEffects();
 	}
 
-	public override void SimulateAnimator( PawnAnimator anim )
+	public override void SimulateAnimator( CitizenAnimationHelper anim )
 	{
-		anim.SetAnimParameter( "holdtype", 1 );
-		//anim.SetAnimParameter( "aimat_weight", 1.0f );
-		anim.SetAnimParameter( "holdtype_handedness", 1 );
+		anim.HoldType = CitizenAnimationHelper.HoldTypes.Pistol;
+		anim.Handedness = CitizenAnimationHelper.Hand.Right;
 	}
 }

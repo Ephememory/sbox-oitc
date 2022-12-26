@@ -1,6 +1,6 @@
 using Sandbox;
 
-public partial class BBGame : Sandbox.Game
+partial class BBGame
 {
 	[ConVar.Replicated( "oitc_debug" )]
 	public static bool oitc_debug { get; set; } = false;
@@ -16,10 +16,10 @@ public partial class BBGame : Sandbox.Game
 	[ConCmd.Server( "oitc_restart" )]
 	public static void RestartGame()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 		Log.Info( ConsoleSystem.Caller );
-		var game = (Game.Current as BBGame);
-		foreach ( var c in Client.All )
+		var game = (Current as BBGame);
+		foreach ( var c in Game.Clients )
 		{
 			var player = (c.Pawn as BBPlayer);
 			//this is chtupid tbh
@@ -41,31 +41,27 @@ public partial class BBGame : Sandbox.Game
 	[ConCmd.Server( "give_fal" )]
 	public static void GiveFAL()
 	{
+		Game.AssertServer();
 
-		Host.AssertServer();
-
-		//:)
-		if ( Sandbox.ConsoleSystem.Caller.PlayerId != 76561197998255119 ) return;
-
-		(ConsoleSystem.Caller.Pawn as BBPlayer).Inventory.Add( new WeaponFAL(), true );
+		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		//(ConsoleSystem.Caller.Pawn as BBPlayer).Inventory.Add( new WeaponFAL(), true );
 	}
 
 	[ConCmd.Server( "give_ammo" )]
 	public static void GiveAmmo()
 	{
-		Host.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.PlayerId != 76561197998255119 ) return;
+		Game.AssertServer();
+		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
 		(ConsoleSystem.Caller.Pawn as BBPlayer).AwardAmmo( 4 );
-		ConsoleSystem.Caller.Pawn.PlaySound( "squish" );
+		//ConsoleSystem.Caller.Pawn.PlaySound( "squish" );
 	}
 
 	[ConCmd.Server( "give_ammo_all" )]
 	public static void GiveAmmoAll()
 	{
-		Host.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.PlayerId != 76561197998255119 ) return;
-		var game = (Game.Current as BBGame);
-		foreach ( var c in Client.All )
+		Game.AssertServer();
+		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		foreach ( var c in Game.Clients )
 		{
 			var player = (c.Pawn as BBPlayer);
 			player.AwardAmmo( 4 );
@@ -76,9 +72,9 @@ public partial class BBGame : Sandbox.Game
 	[ConCmd.Server( "gamestate" )]
 	public static void GetGameState()
 	{
-		Host.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.PlayerId != 76561197998255119 ) return;
-		Utils.UtilLog( (Game.Current as BBGame).CurrentGameState.Tier );
+		Game.AssertServer();
+		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
+		//Utils.UtilLog( .CurrentGameState.Tier );
 	}
 
 	[ConVar.Client( "fov" )]
@@ -87,7 +83,7 @@ public partial class BBGame : Sandbox.Game
 	[ConCmd.Server( "oitc_cookie" )]
 	public static void CookieFlashlight()
 	{
-		Host.AssertServer();
+		Game.AssertServer();
 		(Sandbox.ConsoleSystem.Caller.Pawn as BBPlayer).SetCookieFlashlightCookie();
 	}
 
