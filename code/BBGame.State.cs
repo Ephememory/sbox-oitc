@@ -1,5 +1,4 @@
 using Sandbox;
-using System.Collections.Generic;
 
 partial class BBGame
 {
@@ -85,7 +84,7 @@ partial class BBGame
 			};
 		}
 
-		if ( CurrentGameState.Tier == GameStateTier.RoundOver ) 
+		if ( CurrentGameState.Tier == GameStateTier.RoundOver )
 			return;
 
 		if ( NumPlayers < 2 )

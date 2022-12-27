@@ -1,7 +1,6 @@
-﻿using System;
-using Sandbox;
+﻿using Sandbox;
 using Sandbox.UI;
-using Sandbox.UI.Construct;
+using System;
 
 public partial class HudGameState : Panel
 {
@@ -14,12 +13,12 @@ public partial class HudGameState : Panel
 	{
 		OnStateChanged += () =>
 		{
-			SetClass("toggled", CurrentState.Tier == BBGame.GameStateTier.MidGame);
+			SetClass( "toggled", CurrentState.Tier == BBGame.GameStateTier.MidGame );
 		};
 
 		OnNumPlayersFulfilled += () =>
 		{
-			SetClass("toggled", true);
+			SetClass( "toggled", true );
 		};
 	}
 }

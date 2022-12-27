@@ -3,18 +3,18 @@
   "Type": "game",
   "Org": "null",
   "Ident": "bananabattle",
+  "Tags": null,
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
   "ResourcePaths": null,
   "HasCode": true,
   "CodePath": "code",
-  "RootNamespace": "Sandbox",
   "Metadata": {
     "MapList": [
       "facepunch.construct"
     ],
-    "MinPlayers": 2,
+    "MinPlayers": 1,
     "PerMapRanking": false,
     "LeaderboardType": "None",
     "RankType": "None",

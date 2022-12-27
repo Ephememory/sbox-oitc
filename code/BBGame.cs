@@ -32,7 +32,7 @@ partial class BBGame : GameManager
 			//Sandbox.UI.ChatBox.AddInformation( To.Everyone, $"{cl.Name} rolled a lucky number and got the cookie flashlight!" );
 		}
 
-		if ( Game.IsClient ) 
+		if ( Game.IsClient )
 			return;
 
 		ReCalculateGameState();
@@ -50,7 +50,7 @@ partial class BBGame : GameManager
 	{
 		base.ClientDisconnect( cl, reason );
 		NumPlayers--;
-		if ( Game.IsClient ) 
+		if ( Game.IsClient )
 			return;
 
 		ReCalculateGameState();

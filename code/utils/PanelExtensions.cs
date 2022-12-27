@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-
 namespace Sandbox.UI
 {
 	public static class PanelExtension
@@ -12,7 +9,7 @@ namespace Sandbox.UI
 
 		public static void PositionAtCrosshair( this Panel panel, Entity player )
 		{
-			if ( !player.IsValid() || player is not Player ply ) 
+			if ( !player.IsValid() || player is not Player ply )
 				return;
 
 			var EyePosition = ply.EyePosition;

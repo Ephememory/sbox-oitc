@@ -17,13 +17,13 @@ public static class Utils
 		return Rotation.From( Angles.Random );
 	}
 
-	public static void UtilLog(string text)
+	public static void UtilLog( string text )
 	{
 		var side = Game.IsServer ? "[SERVER]" : "[CLIENT]";
 		Log.Info( $"{side} : {text}" );
 	}
 
-	public static void UtilLog(object objectIn)
+	public static void UtilLog( object objectIn )
 	{
 		var side = Game.IsServer ? "[SERVER]" : "[CLIENT]";
 		Log.Info( $"{side} : {objectIn}" );

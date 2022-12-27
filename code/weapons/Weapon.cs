@@ -191,10 +191,10 @@ public partial class Weapon : BaseWeapon, IUse
 	/// </summary>
 	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize, float range = DefaultBulletRange )
 	{
-		if (Owner is not Player ply)
+		if ( Owner is not Player ply )
 			return;
 
-		ShootBullet(ply.EyePosition, ply.EyeRotation.Forward, spread, force, damage, bulletSize, range );
+		ShootBullet( ply.EyePosition, ply.EyeRotation.Forward, spread, force, damage, bulletSize, range );
 	}
 
 	/// <summary>
@@ -202,7 +202,7 @@ public partial class Weapon : BaseWeapon, IUse
 	/// </summary>
 	public virtual void ShootBullets( int numBullets, float spread, float force, float damage, float bulletSize )
 	{
-		if (Owner is not Player ply)
+		if ( Owner is not Player ply )
 			return;
 
 		var pos = ply.EyePosition;

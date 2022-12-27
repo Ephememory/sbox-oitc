@@ -2,7 +2,7 @@ using Sandbox;
 
 public partial class WeaponOITCPistol : Weapon
 {
-	public override string ViewModelPath => "models/weapons/pistol/v_oitc_pistol.vmdl";
+	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl_c";
 
 	public override string GetKilledByText()
 	{
@@ -13,7 +13,7 @@ public partial class WeaponOITCPistol : Weapon
 	public override void Spawn()
 	{
 		base.Spawn();
-		SetModel( "models/weapons/pistol/oitc_pistol.vmdl" );
+		SetModel( "weapons/rust_pistol/rust_pistol.vmdl_c" );
 	}
 
 	public override void ActiveStart( Entity ent )

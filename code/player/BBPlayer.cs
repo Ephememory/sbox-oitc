@@ -16,33 +16,33 @@ partial class BBPlayer : Player
 	public ClothingContainer Clothing = new();
 	public BBPlayer()
 	{
-		Inventory = new Inventory(this);
+		Inventory = new Inventory( this );
 	}
 
 	/// <summary>
 	/// Initialize using this client
 	/// </summary>
-	public BBPlayer(IClient cl) : this()
+	public BBPlayer( IClient cl ) : this()
 	{
 		// Load clothing from client data
-		Clothing.LoadFromClient(cl);
+		Clothing.LoadFromClient( cl );
 	}
 
 	public override void Spawn()
 	{
 		base.Spawn();
 
-		SetModel("models/humans/male.vmdl");
+		SetModel( "models/humans/male.vmdl" );
 
-		var useLightSkinTone = Game.Random.Int(0, 1) == 1;
-		if (useLightSkinTone)
-			SetMaterialGroup("skin1");
+		var useLightSkinTone = Game.Random.Int( 0, 1 ) == 1;
+		if ( useLightSkinTone )
+			SetMaterialGroup( "skin1" );
 
 		var head = new AnimatedEntity();
-		head.Model = Model.Load(useLightSkinTone ? "models/humans/heads/frank/frank.vmdl" : "models/humans/heads/adam/adam.vmdl");
+		head.Model = Model.Load( useLightSkinTone ? "models/humans/heads/frank/frank.vmdl" : "models/humans/heads/adam/adam.vmdl" );
 		head.EnableHideInFirstPerson = true;
 		head.EnableShadowInFirstPerson = true;
-		head.SetParent(this, true);
+		head.SetParent( this, true );
 
 		FlashlightEntity = new SpotLightEntity
 		{
@@ -52,13 +52,13 @@ partial class BBPlayer : Player
 			Falloff = 0.3f,
 			LinearAttenuation = 0.3f,
 			Brightness = 5f,
-			Color = Color.FromBytes(200, 200, 200, 230),
+			Color = Color.FromBytes( 200, 200, 200, 230 ),
 			InnerConeAngle = 9,
 			OuterConeAngle = 32,
 			FogStrength = 1.0f,
 			Owner = this,
 			EnableViewmodelRendering = true,
-			LightCookie = Texture.Load("materials/effects/lightcookie.vtex")
+			LightCookie = Texture.Load( "materials/effects/lightcookie.vtex" )
 		};
 		FlashlightPosOffset = 30f;
 	}
@@ -74,13 +74,13 @@ partial class BBPlayer : Player
 			Falloff = 0.3f,
 			LinearAttenuation = 0.3f,
 			Brightness = 5f,
-			Color = Color.FromBytes(200, 200, 200, 230),
+			Color = Color.FromBytes( 200, 200, 200, 230 ),
 			InnerConeAngle = 9,
 			OuterConeAngle = 32,
 			FogStrength = 1.0f,
 			Owner = this,
 			EnableViewmodelRendering = true,
-			LightCookie = Texture.Load("textures/cookie.vtex")
+			LightCookie = Texture.Load( "textures/cookie.vtex" )
 		};
 		FlashlightPosOffset = 30f;
 	}
@@ -101,15 +101,15 @@ partial class BBPlayer : Player
 		EnableShadowInFirstPerson = true;
 
 		//Clothing.DressEntity( this );
-		Inventory = new Inventory(this);
+		Inventory = new Inventory( this );
 
-		Inventory.Add(new WeaponFists(), false);
-		Inventory.Add(new WeaponOITCPistol(), true);
+		Inventory.Add( new WeaponFists(), false );
+		Inventory.Add( new WeaponOITCPistol(), true );
 
 		FlashlightBatteryCharge = 100f;
 
 		//Just to make sure no one gets stuck with an empty pistol.
-		if (PistolAmmo <= 0)
+		if ( PistolAmmo <= 0 )
 		{
 			SwitchToFists();
 		}
@@ -117,33 +117,33 @@ partial class BBPlayer : Player
 		base.Respawn();
 	}
 
-	public override void Simulate(IClient cl)
+	public override void Simulate( IClient cl )
 	{
-		base.Simulate(cl);
+		base.Simulate( cl );
 
-		if (LifeState != LifeState.Alive)
+		if ( LifeState != LifeState.Alive )
 			return;
 
 		TickPlayerUse();
-		SimulateActiveChild(cl, ActiveChild);
-		SimulateAnimation((WalkController)Controller);
+		SimulateActiveChild( cl, ActiveChild );
+		SimulateAnimation( (WalkController)Controller );
 
-		if (Game.IsClient)
+		if ( Game.IsClient )
 			return;
 
 		FlashlightSimulate();
 
 	}
 
-	public override void FrameSimulate(IClient cl)
+	public override void FrameSimulate( IClient cl )
 	{
-		base.FrameSimulate(cl);
+		base.FrameSimulate( cl );
 		FlashlightFrameSimulate();
 	}
 
-	private void SimulateAnimation(WalkController controller)
+	private void SimulateAnimation( WalkController controller )
 	{
-		if (controller == null)
+		if ( controller == null )
 			return;
 
 		// where should we be rotated to
@@ -152,32 +152,32 @@ partial class BBPlayer : Player
 		Rotation rotation;
 
 		// If we're a bot, spin us around 180 degrees.
-		if (Client.IsBot)
-			rotation = ViewAngles.WithYaw(ViewAngles.yaw + 180f).ToRotation();
+		if ( Client.IsBot )
+			rotation = ViewAngles.WithYaw( ViewAngles.yaw + 180f ).ToRotation();
 		else
 			rotation = ViewAngles.ToRotation();
 
-		var idealRotation = Rotation.LookAt(rotation.Forward.WithZ(0), Vector3.Up);
-		Rotation = Rotation.Slerp(Rotation, idealRotation, controller.WishVelocity.Length * Time.Delta * turnSpeed);
-		Rotation = Rotation.Clamp(idealRotation, 45.0f, out var shuffle); // lock facing to within 45 degrees of look direction
+		var idealRotation = Rotation.LookAt( rotation.Forward.WithZ( 0 ), Vector3.Up );
+		Rotation = Rotation.Slerp( Rotation, idealRotation, controller.WishVelocity.Length * Time.Delta * turnSpeed );
+		Rotation = Rotation.Clamp( idealRotation, 45.0f, out var shuffle ); // lock facing to within 45 degrees of look direction
 
-		var animHelper = new CitizenAnimationHelper(this);
+		var animHelper = new CitizenAnimationHelper( this );
 
-		animHelper.WithWishVelocity(controller.WishVelocity);
-		animHelper.WithVelocity(Velocity);
-		animHelper.WithLookAt(EyePosition + EyeRotation.Forward * 100.0f, 1.0f, 1.0f, 0.5f);
+		animHelper.WithWishVelocity( controller.WishVelocity );
+		animHelper.WithVelocity( Velocity );
+		animHelper.WithLookAt( EyePosition + EyeRotation.Forward * 100.0f, 1.0f, 1.0f, 0.5f );
 		animHelper.AimAngle = rotation;
 		animHelper.FootShuffle = shuffle;
-		animHelper.DuckLevel = MathX.Lerp(animHelper.DuckLevel, controller.HasTag("ducked") ? 1 : 0, Time.Delta * 10.0f);
+		animHelper.DuckLevel = MathX.Lerp( animHelper.DuckLevel, controller.HasTag( "ducked" ) ? 1 : 0, Time.Delta * 10.0f );
 		animHelper.VoiceLevel = (Game.IsClient && Client.IsValid()) ? Client.Voice.LastHeard < 0.5f ? Client.Voice.CurrentLevel : 0.0f : 0.0f;
 		animHelper.IsGrounded = GroundEntity != null;
-		animHelper.IsSitting = controller.HasTag("sitting");
-		animHelper.IsNoclipping = controller.HasTag("noclip");
-		animHelper.IsClimbing = controller.HasTag("climbing");
+		animHelper.IsSitting = controller.HasTag( "sitting" );
+		animHelper.IsNoclipping = controller.HasTag( "noclip" );
+		animHelper.IsClimbing = controller.HasTag( "climbing" );
 		animHelper.IsSwimming = this.GetWaterLevel() >= 0.5f;
 		animHelper.IsWeaponLowered = false;
 
-		if (controller.HasEvent("jump"))
+		if ( controller.HasEvent( "jump" ) )
 			animHelper.TriggerJump();
 
 		//if (ActiveCarriable != _lastActiveCarriable)
@@ -204,19 +204,19 @@ partial class BBPlayer : Player
 		Inventory.DeleteContents();
 	}
 
-	public override void TakeDamage(DamageInfo info)
+	public override void TakeDamage( DamageInfo info )
 	{
 		lastDamage = info;
-		base.TakeDamage(info);
+		base.TakeDamage( info );
 	}
 
 	//could use setter/getters but this seems more clear.
-	public void AwardAmmo(int amt)
+	public void AwardAmmo( int amt )
 	{
 		Game.AssertServer();
 
-		if (PistolAmmo > oitc_max_ammo_held) return;
-		if (PistolAmmo + amt > oitc_max_ammo_held)
+		if ( PistolAmmo > oitc_max_ammo_held ) return;
+		if ( PistolAmmo + amt > oitc_max_ammo_held )
 		{
 			PistolAmmo = oitc_max_ammo_held;
 		}
@@ -227,16 +227,16 @@ partial class BBPlayer : Player
 
 		//If we are being rewarded ammo and we currently have out fists out
 		//by force, switch back to pistol.
-		if (Inventory.Active is WeaponFists)
+		if ( Inventory.Active is WeaponFists )
 		{
 			SwitchToPistol();
 		}
 	}
 
-	public void RemoveAmmo(int amtToRemove)
+	public void RemoveAmmo( int amtToRemove )
 	{
 		PistolAmmo -= amtToRemove;
-		if (PistolAmmo <= 0)
+		if ( PistolAmmo <= 0 )
 		{
 			SwitchToFists();
 		}
@@ -246,18 +246,18 @@ partial class BBPlayer : Player
 	//more human readable functions, considering the scope of this mode, its fine.
 	public void SwitchToFists()
 	{
-		Inventory.SetActiveSlot(0, false);
+		Inventory.SetActiveSlot( 0, false );
 	}
 
 	public void SwitchToPistol()
 	{
-		Inventory.SetActiveSlot(1, false);
+		Inventory.SetActiveSlot( 1, false );
 	}
 
 	[ClientRpc]
-	public void PlayClientSound(string snd)
+	public void PlayClientSound( string snd )
 	{
-		PlaySound(snd);
+		PlaySound( snd );
 	}
 
 }
