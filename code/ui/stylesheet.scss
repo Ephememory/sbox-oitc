@@ -4,7 +4,7 @@
     }
 }
 
-HudCrosshair {
+Crosshair {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -18,7 +18,7 @@ HudCrosshair {
     transition: all 20ms ease-in;
 }
 
-HudHealth {
+Health {
     position: absolute;
     background-color: rgba(black, 0.5);
     backdrop-filter: blur(12px);
@@ -28,7 +28,7 @@ HudHealth {
     font-family: Roboto;
     font-size: 64px;
     font-weight: bolder;
-    color: yellow;
+    color: white;
     height: 100px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -39,11 +39,11 @@ HudHealth {
     border-radius: 10px;
 }
 
-HudFlashlight {
+Flashlight {
     position: absolute;
     background-color: rgba(black, 0.5);
     backdrop-filter: blur(12px);
-    left: 280px;
+    left: 300px;
     bottom: 48px;
     top: 88%;
     width: auto;
@@ -61,7 +61,7 @@ HudFlashlight {
     transition: width 50ms ease-in;
 }
 
-HudAmmo {
+Ammo {
     position: absolute;
     background-color: rgba(black, 0.5);
     backdrop-filter: blur(12px);
@@ -72,7 +72,7 @@ HudAmmo {
     font-family: Roboto;
     font-size: 64px;
     font-weight: bolder;
-    color: yellow;
+    color: white;
     height: 100px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -101,7 +101,7 @@ DebugPanel {
     transition: width 50ms ease-in;
 }
 
-HudGameState {
+GameState {
     position: absolute;
     background-color: rgba(black, 0.5);
     color: rgba(255, 255, 255, 0.89);
@@ -125,7 +125,7 @@ HudGameState {
     }
 }
 
-HudGameRestartTime {
+GameRestartTime {
     opacity: 0;
     position: absolute;
     background-color: rgba(0, 0, 0, 0);

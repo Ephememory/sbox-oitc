@@ -1,10 +1,7 @@
 using Sandbox;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 
 public class ViewModel : BaseViewModel
 {
-
 	protected float SwingInfluence => 0.05f;
 	protected float ReturnSpeed => 5.0f;
 	protected float MaxOffsetLength => 10.0f;
@@ -78,7 +75,7 @@ public class ViewModel : BaseViewModel
 			var offset = CalcSwingOffset(pitchDelta, yawDelta);
 			offset += CalcBobbingOffset(playerVelocity);
 
-			Position += Rotation * offset;
+			Position += (Rotation * offset) + Rotation.Forward * 35f;
 		}
 		else
 		{

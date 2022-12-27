@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 partial class BBGame
 {
-
 	public int NumPlayers = 0;
+
 	public enum GameStateTier : byte
 	{
 		WaitingForPlayers,
@@ -71,7 +71,7 @@ partial class BBGame
 			Tier = newTier
 		};
 
-		//HudGameState.OnStateChanged.Invoke();
+		HudGameState.OnStateChanged.Invoke();
 	}
 
 	private void ReCalculateGameState()

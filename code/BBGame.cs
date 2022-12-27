@@ -143,7 +143,7 @@ partial class BBGame : GameManager
 	private void NumPlayerFulfilled()
 	{
 		Game.AssertClient();
-		//HudGameState.OnNumPlayersFulfilled.Invoke();
+		HudGameState.OnNumPlayersFulfilled.Invoke();
 	}
 
 }

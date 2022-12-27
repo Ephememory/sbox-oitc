@@ -1,9 +1,7 @@
 using Sandbox;
 
-
 partial class BBPlayer : Player
 {
-
 	[ConVar.Replicated]
 	public static int oitc_max_ammo_held { get; set; } = 7;
 
@@ -18,21 +16,34 @@ partial class BBPlayer : Player
 	public ClothingContainer Clothing = new();
 	public BBPlayer()
 	{
-		Inventory = new Inventory( this );
+		Inventory = new Inventory(this);
 	}
 
 	/// <summary>
 	/// Initialize using this client
 	/// </summary>
-	public BBPlayer( IClient cl ) : this()
+	public BBPlayer(IClient cl) : this()
 	{
 		// Load clothing from client data
-		Clothing.LoadFromClient( cl );
+		Clothing.LoadFromClient(cl);
 	}
 
 	public override void Spawn()
 	{
 		base.Spawn();
+
+		SetModel("models/humans/male.vmdl");
+
+		var useLightSkinTone = Game.Random.Int(0, 1) == 1;
+		if (useLightSkinTone)
+			SetMaterialGroup("skin1");
+
+		var head = new AnimatedEntity();
+		head.Model = Model.Load(useLightSkinTone ? "models/humans/heads/frank/frank.vmdl" : "models/humans/heads/adam/adam.vmdl");
+		head.EnableHideInFirstPerson = true;
+		head.EnableShadowInFirstPerson = true;
+		head.SetParent(this, true);
+
 		FlashlightEntity = new SpotLightEntity
 		{
 			Enabled = false,
@@ -41,13 +52,13 @@ partial class BBPlayer : Player
 			Falloff = 0.3f,
 			LinearAttenuation = 0.3f,
 			Brightness = 5f,
-			Color = Color.FromBytes( 200, 200, 200, 230 ),
+			Color = Color.FromBytes(200, 200, 200, 230),
 			InnerConeAngle = 9,
 			OuterConeAngle = 32,
 			FogStrength = 1.0f,
 			Owner = this,
 			EnableViewmodelRendering = true,
-			LightCookie = Texture.Load( "materials/effects/lightcookie.vtex" )
+			LightCookie = Texture.Load("materials/effects/lightcookie.vtex")
 		};
 		FlashlightPosOffset = 30f;
 	}
@@ -63,13 +74,13 @@ partial class BBPlayer : Player
 			Falloff = 0.3f,
 			LinearAttenuation = 0.3f,
 			Brightness = 5f,
-			Color = Color.FromBytes( 200, 200, 200, 230 ),
+			Color = Color.FromBytes(200, 200, 200, 230),
 			InnerConeAngle = 9,
 			OuterConeAngle = 32,
 			FogStrength = 1.0f,
 			Owner = this,
 			EnableViewmodelRendering = true,
-			LightCookie = Texture.Load( "textures/cookie.vtex" )
+			LightCookie = Texture.Load("textures/cookie.vtex")
 		};
 		FlashlightPosOffset = 30f;
 	}
@@ -82,18 +93,6 @@ partial class BBPlayer : Player
 
 	public override void Respawn()
 	{
-		SetModel("models/humans/male.vmdl");
-
-		var useLightSkinTone = Game.Random.Int(0, 1) == 1;
-		if (useLightSkinTone)
-			SetMaterialGroup("skin1");
-
-		var head = new AnimatedEntity();
-		head.Model = Model.Load(useLightSkinTone ? "models/humans/heads/adam/adam.vmdl" : "models/humans/heads/frank/frank.vmdl");
-		head.EnableHideInFirstPerson = true;
-		head.EnableShadowInFirstPerson = true;
-		head.SetParent(this, true);
-
 		Controller = new WalkController();
 
 		EnableAllCollisions = true;
@@ -102,15 +101,15 @@ partial class BBPlayer : Player
 		EnableShadowInFirstPerson = true;
 
 		//Clothing.DressEntity( this );
-		Inventory = new Inventory( this );
+		Inventory = new Inventory(this);
 
-		Inventory.Add( new WeaponFists(), false );
-		Inventory.Add( new WeaponOITCPistol(), true );
+		Inventory.Add(new WeaponFists(), false);
+		Inventory.Add(new WeaponOITCPistol(), true);
 
 		FlashlightBatteryCharge = 100f;
 
 		//Just to make sure no one gets stuck with an empty pistol.
-		if ( PistolAmmo <= 0 )
+		if (PistolAmmo <= 0)
 		{
 			SwitchToFists();
 		}
@@ -118,33 +117,27 @@ partial class BBPlayer : Player
 		base.Respawn();
 	}
 
-	public override void Simulate( IClient cl )
+	public override void Simulate(IClient cl)
 	{
-		base.Simulate( cl );
+		base.Simulate(cl);
 
-		if ( LifeState != LifeState.Alive )
+		if (LifeState != LifeState.Alive)
 			return;
 
 		TickPlayerUse();
-		SimulateActiveChild( cl, ActiveChild );
+		SimulateActiveChild(cl, ActiveChild);
 		SimulateAnimation((WalkController)Controller);
 
-		if ( Game.IsClient ) 
+		if (Game.IsClient)
 			return;
 
 		FlashlightSimulate();
 
 	}
 
-	public override void FrameSimulate( IClient cl )
+	public override void FrameSimulate(IClient cl)
 	{
-		base.FrameSimulate( cl );
-
-		Camera.Position = EyePosition;
-		Camera.Rotation = EyeRotation;
-		Camera.FieldOfView = 90f;
-		Camera.FirstPersonViewer = this;
-
+		base.FrameSimulate(cl);
 		FlashlightFrameSimulate();
 	}
 
@@ -211,19 +204,19 @@ partial class BBPlayer : Player
 		Inventory.DeleteContents();
 	}
 
-	public override void TakeDamage( DamageInfo info )
+	public override void TakeDamage(DamageInfo info)
 	{
 		lastDamage = info;
-		base.TakeDamage( info );
+		base.TakeDamage(info);
 	}
 
 	//could use setter/getters but this seems more clear.
-	public void AwardAmmo( int amt )
+	public void AwardAmmo(int amt)
 	{
 		Game.AssertServer();
 
-		if ( PistolAmmo > oitc_max_ammo_held ) return;
-		if ( PistolAmmo + amt > oitc_max_ammo_held )
+		if (PistolAmmo > oitc_max_ammo_held) return;
+		if (PistolAmmo + amt > oitc_max_ammo_held)
 		{
 			PistolAmmo = oitc_max_ammo_held;
 		}
@@ -234,16 +227,16 @@ partial class BBPlayer : Player
 
 		//If we are being rewarded ammo and we currently have out fists out
 		//by force, switch back to pistol.
-		if ( Inventory.Active is WeaponFists )
+		if (Inventory.Active is WeaponFists)
 		{
 			SwitchToPistol();
 		}
 	}
 
-	public void RemoveAmmo( int amtToRemove )
+	public void RemoveAmmo(int amtToRemove)
 	{
 		PistolAmmo -= amtToRemove;
-		if ( PistolAmmo <= 0 )
+		if (PistolAmmo <= 0)
 		{
 			SwitchToFists();
 		}
@@ -253,18 +246,18 @@ partial class BBPlayer : Player
 	//more human readable functions, considering the scope of this mode, its fine.
 	public void SwitchToFists()
 	{
-		Inventory.SetActiveSlot( 0, false );
+		Inventory.SetActiveSlot(0, false);
 	}
 
 	public void SwitchToPistol()
 	{
-		Inventory.SetActiveSlot( 1, false );
+		Inventory.SetActiveSlot(1, false);
 	}
 
 	[ClientRpc]
-	public void PlayClientSound( string snd )
+	public void PlayClientSound(string snd)
 	{
-		PlaySound( snd );
+		PlaySound(snd);
 	}
 
 }

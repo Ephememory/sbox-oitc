@@ -77,9 +77,6 @@ partial class BBGame
 		//Utils.UtilLog( .CurrentGameState.Tier );
 	}
 
-	[ConVar.Client( "fov" )]
-	public static float PlayerFov { get; set; } = 90;
-
 	[ConCmd.Server( "oitc_cookie" )]
 	public static void CookieFlashlight()
 	{

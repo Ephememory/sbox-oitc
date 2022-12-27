@@ -1,0 +1,18 @@
+﻿@using Sandbox
+@using Sandbox.UI
+
+@inherits Panel
+
+@code
+{
+	protected override int BuildHash()
+	{
+		return System.HashCode.Combine(CurrentState);
+	}
+}
+
+<root>
+	<label>
+		@CurrentState.TierText
+	</label>
+</root>

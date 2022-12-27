@@ -1,0 +1,26 @@
+﻿@using Sandbox
+@using Sandbox.UI
+
+@inherits Panel
+
+@code
+{
+	protected override int BuildHash()
+	{
+		if (Game.LocalPawn is not BBPlayer player)
+			return 0;
+
+		return System.HashCode.Combine(player.FlashlightBatteryCharge.CeilToInt());
+	}
+}
+
+<root>
+	<label>
+		@{
+			if (Game.LocalPawn is not BBPlayer player)
+				return;
+
+			@($"🔦 {player.FlashlightBatteryCharge.CeilToInt()}")
+		}
+	</label>
+</root>
