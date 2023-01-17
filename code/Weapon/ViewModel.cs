@@ -1,6 +1,6 @@
-using Sandbox;
+namespace OITC;
 
-public class ViewModel : BaseViewModel
+public class ViewModel : AnimatedEntity
 {
 	protected float SwingInfluence => 0.05f;
 	protected float ReturnSpeed => 5.0f;
@@ -20,10 +20,19 @@ public class ViewModel : BaseViewModel
 	public float YawInertia { get; private set; }
 	public float PitchInertia { get; private set; }
 
-	public override void PlaceViewmodel()
-	{
-		base.PlaceViewmodel();
+	public float FieldOfView { get; set; } = 54;
+	public string ViewModelPath => string.Empty;
 
+	public override void Spawn()
+	{
+		base.Spawn();
+		SetModel( ViewModelPath );
+		EnableViewmodelRendering = true;
+	}
+
+	[Event.Client.PostCamera]
+	private void PlaceViewmodel()
+	{
 		if ( !Game.LocalPawn.IsValid() )
 			return;
 
@@ -60,10 +69,11 @@ public class ViewModel : BaseViewModel
 		{
 			var playerVelocity = Game.LocalPawn.Velocity;
 
-			if ( Game.LocalPawn is Player ply
+			if ( Game.LocalPawn is BBPlayer ply
 				&& ply.Controller.HasTag( "noclip" ) )
 			{
 				playerVelocity = Vector3.Zero;
+				Log.Info( playerVelocity );
 			}
 
 			var verticalDelta = playerVelocity.z * Time.Delta;
@@ -75,7 +85,7 @@ public class ViewModel : BaseViewModel
 			var offset = CalcSwingOffset( pitchDelta, yawDelta );
 			offset += CalcBobbingOffset( playerVelocity );
 
-			Position += (Rotation * offset) + Rotation.Forward * 35f;
+			Position += (Rotation * offset) + Rotation.Forward * FieldOfView;
 		}
 		else
 		{
@@ -119,5 +129,13 @@ public class ViewModel : BaseViewModel
 		offset = offset.WithZ( -System.MathF.Abs( offset.z ) );
 
 		return offset;
+	}
+
+	public override Sound PlaySound( string soundName, string attachment )
+	{
+		if ( Owner.IsValid() )
+			return Owner.PlaySound( soundName, attachment );
+
+		return base.PlaySound( soundName, attachment );
 	}
 }

@@ -1,6 +1,6 @@
-﻿using Sandbox;
+﻿namespace OITC;
 
-public partial class BBPlayer : Player
+partial class BBPlayer : BasePlayer
 {
 	[Net]
 	[Predicted]

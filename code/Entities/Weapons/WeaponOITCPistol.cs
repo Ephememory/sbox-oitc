@@ -1,26 +1,13 @@
-using Sandbox;
+namespace OITC;
 
 public partial class WeaponOITCPistol : Weapon
 {
-	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl_c";
+	public string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl_c";
 
 	public override string GetKilledByText()
 	{
 		var options = new string[5] { "smoked", "popped", "gunned down", "iced", "spun the block on" };
 		return Game.Random.FromArray<string>( options );
-	}
-
-	public override void Spawn()
-	{
-		base.Spawn();
-		SetModel( "weapons/rust_pistol/rust_pistol.vmdl_c" );
-	}
-
-	public override void ActiveStart( Entity ent )
-	{
-		base.ActiveStart( ent );
-		if ( !Game.IsClient ) return;
-		//ViewModelEntity.FieldOfView = 78;
 	}
 
 	public override bool CanReload()
@@ -56,7 +43,6 @@ public partial class WeaponOITCPistol : Weapon
 		Game.AssertClient();
 
 		ViewModelEntity?.SetAnimParameter( "fire", true );
-		//CrosshairPanel?.CreateEvent( "fire" );
 		Particles.Create( "particles/pistol_ejectbrass.vpcf", EffectEntity, "ejection" );
 		base.ShootEffects();
 	}

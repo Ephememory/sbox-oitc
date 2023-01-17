@@ -1,4 +1,4 @@
-using Sandbox;
+namespace OITC;
 
 partial class BBGame
 {
@@ -70,12 +70,13 @@ partial class BBGame
 			Tier = newTier
 		};
 
-		HudGameState.OnStateChanged.Invoke();
+		HudGameState.OnStateChanged?.Invoke();
 	}
 
 	private void ReCalculateGameState()
 	{
 		Game.AssertServer();
+
 		if ( CurrentGameState == null )
 		{
 			CurrentGameState = new GameState

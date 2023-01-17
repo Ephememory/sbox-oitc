@@ -1,8 +1,8 @@
-using Sandbox;
+namespace OITC;
 
 public partial class WeaponFists : Weapon
 {
-	public override string ViewModelPath => "models/first_person/first_person_arms.vmdl";
+	public string ViewModelPath => "models/first_person/first_person_arms.vmdl";
 	public override float PrimaryRate => 0.9f;
 	public override float ReloadTime => 0f;
 
@@ -12,16 +12,10 @@ public partial class WeaponFists : Weapon
 		return Game.Random.FromArray<string>( options );
 	}
 
-	public override void Spawn()
-	{
-		base.Spawn();
-	}
-
 	public override void ActiveStart( Entity ent )
 	{
 		base.ActiveStart( ent );
 		if ( !Game.IsClient ) return;
-		//ViewModelEntity.FieldOfView = 54;
 	}
 
 	public override bool CanReload()
@@ -67,7 +61,7 @@ public partial class WeaponFists : Weapon
 		if ( Owner == null )
 			return false;
 
-		if ( Owner is not Player ply )
+		if ( Owner is not BBPlayer ply )
 			return false;
 
 		var pos = ply.EyePosition;

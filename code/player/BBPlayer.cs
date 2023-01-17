@@ -1,6 +1,6 @@
-using Sandbox;
+namespace OITC;
 
-partial class BBPlayer : Player
+public partial class BBPlayer : BasePlayer
 {
 	[ConVar.Replicated]
 	public static int oitc_max_ammo_held { get; set; } = 7;
@@ -14,6 +14,7 @@ partial class BBPlayer : Player
 	/// The clothing container is what dresses the citizen
 	/// </summary>
 	public ClothingContainer Clothing = new();
+
 	public BBPlayer()
 	{
 		Inventory = new Inventory( this );

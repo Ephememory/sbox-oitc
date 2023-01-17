@@ -1,48 +1,22 @@
-using Sandbox;
+namespace OITC;
 
-public partial class Weapon : BaseWeapon, IUse
+public partial class Weapon : ModelEntity, IUse
 {
-	public virtual float ReloadTime => 3.0f;
 
-	public PickupTrigger PickupTrigger { get; protected set; }
-
-	[Net, Predicted]
-	public TimeSince TimeSinceReload { get; set; }
-
-	[Net, Predicted]
-	public bool IsReloading { get; set; }
-
-	[Net, Predicted]
-	public TimeSince TimeSinceDeployed { get; set; }
-
+	public ViewModel ViewModelEntity { get; protected set; }
 
 	public const float DefaultBulletRange = 64000f;
 
 	public virtual string GetKilledByText() { return string.Empty; }
 
-	public override void Spawn()
+	public virtual bool CanReload()
 	{
-		base.Spawn();
+		if ( !Owner.IsValid() || !Input.Down( InputButton.Reload ) ) return false;
 
-		PickupTrigger = new PickupTrigger
-		{
-			Parent = this,
-			Position = Position,
-			EnableTouch = true,
-			EnableSelfCollisions = false
-		};
-
-		PickupTrigger.PhysicsBody.AutoSleep = false;
+		return true;
 	}
 
-	public override void ActiveStart( Entity ent )
-	{
-		base.ActiveStart( ent );
-
-		TimeSinceDeployed = 0;
-	}
-
-	public override void Reload()
+	public virtual void Reload()
 	{
 		if ( IsReloading )
 			return;
@@ -53,6 +27,36 @@ public partial class Weapon : BaseWeapon, IUse
 		(Owner as AnimatedEntity)?.SetAnimParameter( "b_reload", true );
 
 		StartReloadEffects();
+	}
+
+	public virtual bool CanPrimaryAttack()
+	{
+		if ( !Owner.IsValid() || !Input.Down( InputButton.PrimaryAttack ) ) return false;
+
+		var rate = PrimaryRate;
+		if ( rate <= 0 ) return true;
+
+		return TimeSincePrimaryAttack > (1 / rate);
+	}
+
+	public virtual void AttackPrimary()
+	{
+
+	}
+
+	public virtual bool CanSecondaryAttack()
+	{
+		if ( !Owner.IsValid() || !Input.Down( InputButton.SecondaryAttack ) ) return false;
+
+		var rate = SecondaryRate;
+		if ( rate <= 0 ) return true;
+
+		return TimeSinceSecondaryAttack > (1 / rate);
+	}
+
+	public virtual void AttackSecondary()
+	{
+
 	}
 
 	public override void Simulate( IClient owner )
@@ -71,6 +75,13 @@ public partial class Weapon : BaseWeapon, IUse
 		}
 	}
 
+	public virtual void SimulateAnimator( CitizenAnimationHelper anim )
+	{
+		anim.HoldType = CitizenAnimationHelper.HoldTypes.Pistol;
+		anim.Handedness = CitizenAnimationHelper.Hand.Both;
+		anim.AimBodyWeight = 1.0f;
+	}
+
 	public virtual void OnReloadFinish()
 	{
 		IsReloading = false;
@@ -82,23 +93,6 @@ public partial class Weapon : BaseWeapon, IUse
 		ViewModelEntity?.SetAnimParameter( "reload", true );
 
 		// TODO - player third person model reload
-	}
-
-	public override void CreateViewModel()
-	{
-		Game.AssertClient();
-
-		if ( string.IsNullOrEmpty( ViewModelPath ) )
-			return;
-
-		ViewModelEntity = new ViewModel
-		{
-			Position = Position,
-			Owner = Owner,
-			EnableViewmodelRendering = true
-		};
-
-		ViewModelEntity.SetModel( ViewModelPath );
 	}
 
 	public bool OnUse( Entity user )
@@ -118,7 +112,7 @@ public partial class Weapon : BaseWeapon, IUse
 	{
 		if ( Owner != null ) return false;
 
-		var player = user as Player;
+		var player = user as BBPlayer;
 		if ( Owner != null ) return false;
 
 		if ( player.Inventory is Inventory inventory )
@@ -191,7 +185,7 @@ public partial class Weapon : BaseWeapon, IUse
 	/// </summary>
 	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize, float range = DefaultBulletRange )
 	{
-		if ( Owner is not Player ply )
+		if ( Owner is not BBPlayer ply )
 			return;
 
 		ShootBullet( ply.EyePosition, ply.EyeRotation.Forward, spread, force, damage, bulletSize, range );
@@ -202,7 +196,7 @@ public partial class Weapon : BaseWeapon, IUse
 	/// </summary>
 	public virtual void ShootBullets( int numBullets, float spread, float force, float damage, float bulletSize )
 	{
-		if ( Owner is not Player ply )
+		if ( Owner is not BBPlayer ply )
 			return;
 
 		var pos = ply.EyePosition;

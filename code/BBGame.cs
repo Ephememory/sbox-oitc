@@ -1,4 +1,6 @@
-using Sandbox;
+global using Sandbox;
+
+namespace OITC;
 
 [Library( "oitc", Title = "One In The Chamber" )]
 partial class BBGame : GameManager
@@ -143,7 +145,7 @@ partial class BBGame : GameManager
 	private void NumPlayerFulfilled()
 	{
 		Game.AssertClient();
-		HudGameState.OnNumPlayersFulfilled.Invoke();
+		HudGameState.OnNumPlayersFulfilled?.Invoke();
 	}
 
 }
