@@ -22,7 +22,9 @@
 			if (Game.LocalPawn is not BBPlayer player)
 				return;
 
-			@($"🔫{player.PistolAmmo}")
+			var frac = MathX.Remap(player.PistolAmmo, 0, BBPlayer.oitc_max_ammo_held, 0.0f, 1f);
+			Style.FontColor = new Color(1, frac, frac, 1);
+			@($"🔫 {player.PistolAmmo}")
 		}
 	</label>
 </root>

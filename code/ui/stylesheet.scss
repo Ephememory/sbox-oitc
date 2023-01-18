@@ -20,7 +20,7 @@ Crosshair {
 
 .hudbox {
     position: absolute;
-    top: 90%;
+    bottom: 2%;
 
     background-color: rgba(black, 0.5);
     backdrop-filter: blur(12px);
@@ -41,20 +41,9 @@ Crosshair {
     border-radius: 4px;
 }
 
-Health {
-    left: 12px;
-    align-items: center;
-}
-
-Flashlight {
-    opacity: 0.2;
-    left: 16px;
-    transition: width 50ms ease-in;
-}
-
 Ammo {
-    right: 16px;
-    transition: width 50ms ease-in;
+    left: 1%;
+    opacity: 0.8;
 }
 
 DebugPanel {
