@@ -32,16 +32,14 @@ partial class BBGame
 		Current.State.Tier = GameState.MidGame;
 	}
 
-	[ConCmd.Server( "give_ammo" )]
+	[ConCmd.Admin( "give_ammo" )]
 	public static void GiveAmmo()
 	{
 		Game.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
 		(ConsoleSystem.Caller.Pawn as BBPlayer).AwardAmmo( 4 );
-		//ConsoleSystem.Caller.Pawn.PlaySound( "squish" );
 	}
 
-	[ConCmd.Server( "give_ammo_all" )]
+	[ConCmd.Admin( "give_ammo_all" )]
 	public static void GiveAmmoAll()
 	{
 		Game.AssertServer();
@@ -49,11 +47,10 @@ partial class BBGame
 		{
 			var player = (c.Pawn as BBPlayer);
 			player.AwardAmmo( 4 );
-
 		}
 	}
 
-	[ConCmd.Server( "oitc_cookie" )]
+	[ConCmd.Admin( "oitc_cookie" )]
 	public static void CookieFlashlight()
 	{
 		Game.AssertServer();
