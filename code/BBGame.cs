@@ -38,7 +38,7 @@ partial class BBGame : GameManager
 
 		ReCalculateGameState();
 
-		//Only do this on join to avoid 3 - 1 causing a round restart.
+		// Only do this on join to avoid 3 - 1 causing a round restart.
 		if ( NumPlayers == 2 )
 		{
 			EndRound();
@@ -59,7 +59,7 @@ partial class BBGame : GameManager
 
 	public override void OnKilled( IClient client, Entity pawn )
 	{
-		//manually overwriting the base.onkilled and tweaking it instead of calling it. its does some dumb shit.
+		// Override the base OnKilled but do not invoke it.
 		Game.AssertServer();
 
 		Log.Info( $"{client.Name} was killed" );
@@ -125,7 +125,7 @@ partial class BBGame : GameManager
 	{
 		EndRoundClient();
 		await GameTask.DelayRealtimeSeconds( 5f );
-		ConsoleSystem.Run( "oitc_restart" );
+		RestartGame();
 	}
 
 	[ClientRpc]
