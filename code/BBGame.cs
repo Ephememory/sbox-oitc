@@ -75,39 +75,37 @@ partial class BBGame : GameManager
 					killedByText = pawn.LastAttackerWeapon?.ClassName;
 				}
 
-				OnKilledMessage( pawn.LastAttacker.Client.SteamId, pawn.LastAttacker.Client.Name,
-					client.SteamId,
-					client.Name,
-					killedByText );
+				OnKilledClient( pawn.LastAttacker.Client, client, killedByText );
 			}
 			else
 			{
-				OnKilledMessage( pawn.LastAttacker.NetworkIdent, pawn.LastAttacker.ToString(), client.SteamId, client.Name, "killed" );
+				OnKilledClient( client, client, "killed" );
 			}
 		}
 		else
 		{
-			OnKilledMessage( 0, "", client.SteamId, client.Name, "died" );
+			OnKilledClient( client, null, "died" );
 		}
 
 		if ( Game.IsClient ) return;
 		var killer = pawn.LastAttacker;
 		var weapon = pawn.LastAttackerWeapon;
 
-		if ( killer == null ) return; //Watch out for suicides!
-		if ( pawn is not BBPlayer killed ) return;
+		if ( killer == null ) 
+			return; //Watch out for suicides!
+
+		if ( pawn is not BBPlayer killed ) 
+			return;
 
 		if ( killer is BBPlayer ply )
 		{
 			var amountToAward = weapon.GetType() == typeof( Fists ) ? 2 : 1;
 			ply.AwardAmmo( amountToAward );
-
 		}
 
-		if ( State.Tier != GameState.MidGame ) 
+		if ( State.Tier != GameState.MidGame )
 			return;
 
-		var killedClient = killed.Client;
 		var killerClient = killer.Client;
 		var killerKills = killerClient.GetValue<int>( "kills" );
 
@@ -119,6 +117,12 @@ partial class BBGame : GameManager
 		}
 
 		Log.Info( $"{client.Name} was killed by {killer.Client.NetworkIdent} with {weapon}" );
+	}
+
+	[ClientRpc]
+	public void OnKilledClient( IClient killer, IClient victim, string method )
+	{
+		Killfeed.Current.AddEntry( killer, victim, method );
 	}
 
 	private async void EndRound()
