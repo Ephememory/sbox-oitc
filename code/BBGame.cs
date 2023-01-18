@@ -26,11 +26,11 @@ partial class BBGame : GameManager
 
 		base.ClientJoined( cl );
 
-		var randomChance = Game.Random.Int( 1, 420 ) == 69;
-		if ( randomChance )
+		// Randomly gives you the cookie cookie.
+		if ( Game.Random.Int( 1, 420 ) == 69 )
 		{
 			player.SetCookieFlashlightCookie();
-			//Sandbox.UI.ChatBox.AddInformation( To.Everyone, $"{cl.Name} rolled a lucky number and got the cookie flashlight!" );
+			Chat.AddChatEntry( To.Single(cl), "OITC", "Enjoy your cookie.", 0 );
 		}
 
 		if ( Game.IsClient )
