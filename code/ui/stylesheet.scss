@@ -18,68 +18,42 @@ Crosshair {
     transition: all 20ms ease-in;
 }
 
-Health {
+.hudbox {
     position: absolute;
+    top: 90%;
+
     background-color: rgba(black, 0.5);
     backdrop-filter: blur(12px);
-    left: 25px;
-    bottom: 48px;
-    top: 88%;
+
+    color: white;
     font-family: Roboto;
     font-size: 64px;
     font-weight: bolder;
-    color: white;
-    height: 100px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-right: 15px;
-    padding-left: 5px;
+
+    display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 11px;
+
+    width: auto;
+    height: 85px;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 4px;
+}
+
+Health {
+    left: 12px;
+    align-items: center;
 }
 
 Flashlight {
-    position: absolute;
-    background-color: rgba(black, 0.5);
-    backdrop-filter: blur(12px);
-    left: 300px;
-    bottom: 48px;
-    top: 88%;
-    width: auto;
-    font-family: Roboto;
-    font-size: 64px;
-    font-weight: bolder;
-    color: yellow;
-    height: 100px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-right: 15px;
-    padding-left: 5px;
-    align-items: center;
-    border-radius: 10px;
+    opacity: 0.2;
+    left: 16px;
     transition: width 50ms ease-in;
 }
 
 Ammo {
-    position: absolute;
-    background-color: rgba(black, 0.5);
-    backdrop-filter: blur(12px);
-    right: 50px;
-    bottom: 48px;
-    top: 88%;
-    width: auto;
-    font-family: Roboto;
-    font-size: 64px;
-    font-weight: bolder;
-    color: white;
-    height: 100px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-right: 15px;
-    padding-left: 5px;
-    align-items: center;
-    border-radius: 10px;
+    right: 16px;
     transition: width 50ms ease-in;
 }
 

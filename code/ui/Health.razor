@@ -16,13 +16,13 @@
 	}
 }
 
-<root>
+<root class="hudbox">
 	<label>
 		@{
 			if (Game.LocalPawn is not BBPlayer player)
 				return;
 
-			@($"♥️ {player.Health}")
+			@($"♥️{player.Health}")
 		}
 	</label>
 </root>
