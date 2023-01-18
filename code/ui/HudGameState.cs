@@ -10,19 +10,9 @@ public partial class HudGameState : Panel
 
 	public HudGameState()
 	{
-		OnStateChanged += () =>
-		{
-			SetClass( "toggled", BBGame.Current.CurrentGameState.Tier == GameState.MidGame );
-		};
-
 		OnNumPlayersFulfilled += () =>
 		{
 			SetClass( "toggled", true );
 		};
-	}
-
-	public override void Tick()
-	{
-		base.Tick();
 	}
 }

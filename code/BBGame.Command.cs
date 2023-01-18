@@ -17,7 +17,6 @@ partial class BBGame
 	{
 		Game.AssertServer();
 		Log.Info( ConsoleSystem.Caller );
-		var game = (Current as BBGame);
 		foreach ( var c in Game.Clients )
 		{
 			var player = (c.Pawn as BBPlayer);
@@ -29,8 +28,8 @@ partial class BBGame
 			c.SetValue( "deaths", 0 );
 		}
 
-		game.CurrentGameState.Text = "Fight!";
-		game.CurrentGameState.Tier = GameState.MidGame;
+		Current.CurrentGameState.Text = "Fight!";
+		Current.CurrentGameState.Tier = GameState.MidGame;
 	}
 
 	[ConCmd.Server( "give_ammo" )]
