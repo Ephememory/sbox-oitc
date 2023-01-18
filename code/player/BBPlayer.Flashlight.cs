@@ -35,6 +35,7 @@ partial class BBPlayer : BasePlayer
 		if ( !FlashlightEntity.IsValid() )
 			return;
 
+		FlashlightEntity.Enabled = FlashlightEnabled;
 		//Setting the position of the flashlight serverside
 		//basically, the position for other players the client is seeing.
 		FlashlightEntity.Position = EyePosition + EyeRotation.Forward * FlashlightPosOffset;
