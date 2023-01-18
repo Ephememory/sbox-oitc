@@ -5,9 +5,7 @@ namespace OITC;
 partial class BBGame : GameManager
 {
 	[Net]
-	public GameStateInfo CurrentGameState { get; private set; }
-
-	private RealTimeUntil timeLimit { get; set; }
+	public GameStateInfo State { get; private set; }
 
 	public static new BBGame Current => GameManager.Current as BBGame;
 
@@ -15,7 +13,7 @@ partial class BBGame : GameManager
 	{
 		if ( Game.IsClient )
 		{
-			_ = new BBHud();
+			_ = new Hud();
 		}
 	}
 
@@ -106,7 +104,7 @@ partial class BBGame : GameManager
 
 		}
 
-		if ( CurrentGameState.Tier != GameState.MidGame ) 
+		if ( State.Tier != GameState.MidGame ) 
 			return;
 
 		var killedClient = killed.Client;
@@ -115,8 +113,8 @@ partial class BBGame : GameManager
 
 		if ( killerKills >= oitc_score_limit - 1 )
 		{
-			CurrentGameState.Tier = GameState.RoundOver;
-			CurrentGameState.Text = "Game over!";
+			State.Tier = GameState.RoundOver;
+			State.Text = "Game over!";
 			EndRound();
 		}
 
@@ -135,7 +133,7 @@ partial class BBGame : GameManager
 	{
 		Game.AssertClient();
 
-		//HudGameRestartTime.OnRoundOver.Invoke();
+		RestartTimer.UntilRestart = 5;
 	}
 
 	[ClientRpc]

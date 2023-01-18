@@ -1,0 +1,23 @@
+﻿@using Sandbox.UI
+
+@namespace OITC
+
+@inherits Panel
+
+@code
+{
+	public static RealTimeUntil UntilRestart { get; set; }
+
+	protected override int BuildHash()
+	{
+		return System.HashCode.Combine(Time.Delta);
+	}
+}
+
+@{
+	SetClass("active", UntilRestart > 0.5f);
+}
+
+<root>
+	<label id="countdown">@UntilRestart.Relative.ToString("0.#")</label>
+</root>

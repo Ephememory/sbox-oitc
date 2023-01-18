@@ -28,8 +28,8 @@ partial class BBGame
 			c.SetValue( "deaths", 0 );
 		}
 
-		Current.CurrentGameState.Text = "Fight!";
-		Current.CurrentGameState.Tier = GameState.MidGame;
+		Current.State.Text = "Fight!";
+		Current.State.Tier = GameState.MidGame;
 	}
 
 	[ConCmd.Server( "give_ammo" )]

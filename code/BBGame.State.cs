@@ -25,15 +25,15 @@ partial class BBGame
 	{
 		Game.AssertServer();
 			
-		CurrentGameState ??= new();
+		State ??= new();
 
-		if ( CurrentGameState.Tier == GameState.RoundOver )
+		if ( State.Tier == GameState.RoundOver )
 			return;
 
 		if ( NumPlayers < 2 )
 		{
-			CurrentGameState.Tier = GameState.WaitingForPlayers;
-			CurrentGameState.Text = "Waiting for players...";
+			State.Tier = GameState.WaitingForPlayers;
+			State.Text = "Waiting for players...";
 		}
 	}
 }
