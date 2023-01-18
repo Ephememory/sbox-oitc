@@ -4,7 +4,6 @@ using System;
 
 public partial class HudGameState : Panel
 {
-	private BBGame.GameState CurrentState => (GameManager.Current as BBGame).CurrentGameState;
 
 	public static Action OnStateChanged;
 	public static Action OnNumPlayersFulfilled;
@@ -13,12 +12,17 @@ public partial class HudGameState : Panel
 	{
 		OnStateChanged += () =>
 		{
-			SetClass( "toggled", CurrentState.Tier == BBGame.GameStateTier.MidGame );
+			SetClass( "toggled", BBGame.Current.CurrentGameState.Tier == GameState.MidGame );
 		};
 
 		OnNumPlayersFulfilled += () =>
 		{
 			SetClass( "toggled", true );
 		};
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
 	}
 }

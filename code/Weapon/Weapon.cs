@@ -2,9 +2,6 @@ namespace OITC;
 
 public partial class Weapon : ModelEntity, IUse
 {
-
-	public ViewModel ViewModelEntity { get; protected set; }
-
 	public const float DefaultBulletRange = 64000f;
 
 	public virtual string GetKilledByText() { return string.Empty; }
@@ -66,7 +63,40 @@ public partial class Weapon : ModelEntity, IUse
 
 		if ( !IsReloading )
 		{
-			base.Simulate( owner );
+			if ( CanReload() )
+			{
+				Reload();
+			}
+
+			//
+			// Reload could have changed our owner
+			//
+			if ( !Owner.IsValid() )
+				return;
+
+			if ( CanPrimaryAttack() )
+			{
+				using ( LagCompensation() )
+				{
+					TimeSincePrimaryAttack = 0;
+					AttackPrimary();
+				}
+			}
+
+			//
+			// AttackPrimary could have changed our owner
+			//
+			if ( !Owner.IsValid() )
+				return;
+
+			if ( CanSecondaryAttack() )
+			{
+				using ( LagCompensation() )
+				{
+					TimeSinceSecondaryAttack = 0;
+					AttackSecondary();
+				}
+			}
 		}
 
 		if ( IsReloading && TimeSinceReload > ReloadTime )

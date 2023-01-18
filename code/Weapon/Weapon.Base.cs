@@ -22,6 +22,9 @@ partial class Weapon
 	public virtual float ReloadTime => 3.0f;
 	public PickupTrigger PickupTrigger { get; protected set; }
 
+	public ViewModel ViewModelEntity { get; protected set; }
+	public virtual string ViewModelPath => string.Empty;
+
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -49,6 +52,7 @@ partial class Weapon
 	/// </summary>
 	public virtual void ActiveStart( Entity ent )
 	{
+		TimeSinceDeployed = 0;
 		EnableDrawing = true;
 
 		//
@@ -102,11 +106,14 @@ partial class Weapon
 	{
 		Game.AssertClient();
 
-		ViewModelEntity = new ViewModel();
+		if ( string.IsNullOrEmpty( ViewModelPath ) )
+			return;
 
+		ViewModelEntity = new ViewModel();
 		ViewModelEntity.Position = Position;
 		ViewModelEntity.Owner = Owner;
 		ViewModelEntity.EnableViewmodelRendering = true;
+		ViewModelEntity.SetModel( ViewModelPath );
 	}
 
 	/// <summary>

@@ -85,6 +85,7 @@ public partial class BasePlayer : AnimatedEntity
 		Camera.Position = EyePosition;
 		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
 		Camera.FirstPersonViewer = this;
+		Camera.Main.SetViewModelCamera( 90 );
 	}
 
 	/// <summary>

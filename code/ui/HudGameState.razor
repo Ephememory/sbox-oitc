@@ -9,12 +9,14 @@
 {
 	protected override int BuildHash()
 	{
-		return System.HashCode.Combine(CurrentState);
+		return System.HashCode.Combine(BBGame.Current.CurrentGameState.Tier);
 	}
 }
-
+@{
+	SetClass( "toggled", BBGame.Current.CurrentGameState.Tier == GameState.MidGame );
+}
 <root>
 	<label>
-		@CurrentState.TierText
+		@BBGame.Current.CurrentGameState.Text
 	</label>
 </root>

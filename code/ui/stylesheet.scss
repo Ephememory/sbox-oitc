@@ -101,7 +101,7 @@ DebugPanel {
     transition: width 50ms ease-in;
 }
 
-GameState {
+HudGameState {
     position: absolute;
     background-color: rgba(black, 0.5);
     color: rgba(255, 255, 255, 0.89);

@@ -1,8 +1,8 @@
 namespace OITC;
 
-public partial class WeaponFists : Weapon
+public partial class Fists : Weapon
 {
-	public string ViewModelPath => "models/first_person/first_person_arms.vmdl";
+	public override string ViewModelPath => "models/weapons/fists/v_fists.vmdl";
 	public override float PrimaryRate => 0.9f;
 	public override float ReloadTime => 0f;
 
@@ -10,12 +10,6 @@ public partial class WeaponFists : Weapon
 	{
 		var options = new string[4] { "beat down", "pummeled", "clocked", "clobbered" };
 		return Game.Random.FromArray<string>( options );
-	}
-
-	public override void ActiveStart( Entity ent )
-	{
-		base.ActiveStart( ent );
-		if ( !Game.IsClient ) return;
 	}
 
 	public override bool CanReload()

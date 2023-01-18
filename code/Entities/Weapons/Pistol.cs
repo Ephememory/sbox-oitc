@@ -1,8 +1,8 @@
 namespace OITC;
 
-public partial class WeaponOITCPistol : Weapon
+public partial class Pistol : Weapon
 {
-	public string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl_c";
+	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl_c";
 
 	public override string GetKilledByText()
 	{
@@ -19,11 +19,13 @@ public partial class WeaponOITCPistol : Weapon
 	{
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
-		if ( Owner is not BBPlayer player ) return;
-		if ( player.PistolAmmo <= 0 )
-		{
+
+		if ( Owner is not BBPlayer player )
 			return;
-		}
+
+		if ( player.PistolAmmo <= 0 )
+			return;
+
 
 		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 		player.RemoveAmmo( 1 );

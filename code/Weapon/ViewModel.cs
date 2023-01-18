@@ -20,18 +20,8 @@ public class ViewModel : AnimatedEntity
 	public float YawInertia { get; private set; }
 	public float PitchInertia { get; private set; }
 
-	public float FieldOfView { get; set; } = 54;
-	public string ViewModelPath => string.Empty;
-
-	public override void Spawn()
-	{
-		base.Spawn();
-		SetModel( ViewModelPath );
-		EnableViewmodelRendering = true;
-	}
-
 	[Event.Client.PostCamera]
-	private void PlaceViewmodel()
+	public void PlaceViewmodel()
 	{
 		if ( !Game.LocalPawn.IsValid() )
 			return;
@@ -69,11 +59,13 @@ public class ViewModel : AnimatedEntity
 		{
 			var playerVelocity = Game.LocalPawn.Velocity;
 
-			if ( Game.LocalPawn is BBPlayer ply
-				&& ply.Controller.HasTag( "noclip" ) )
+			if ( Game.LocalPawn is BasePlayer player )
 			{
-				playerVelocity = Vector3.Zero;
-				Log.Info( playerVelocity );
+				var controller = player.GetActiveController();
+				if ( controller != null && controller.HasTag( "noclip" ) )
+				{
+					playerVelocity = Vector3.Zero;
+				}
 			}
 
 			var verticalDelta = playerVelocity.z * Time.Delta;
@@ -85,7 +77,7 @@ public class ViewModel : AnimatedEntity
 			var offset = CalcSwingOffset( pitchDelta, yawDelta );
 			offset += CalcBobbingOffset( playerVelocity );
 
-			Position += (Rotation * offset) + Rotation.Forward * FieldOfView;
+			Position += Rotation * offset;
 		}
 		else
 		{
@@ -129,13 +121,5 @@ public class ViewModel : AnimatedEntity
 		offset = offset.WithZ( -System.MathF.Abs( offset.z ) );
 
 		return offset;
-	}
-
-	public override Sound PlaySound( string soundName, string attachment )
-	{
-		if ( Owner.IsValid() )
-			return Owner.PlaySound( soundName, attachment );
-
-		return base.PlaySound( soundName, attachment );
 	}
 }

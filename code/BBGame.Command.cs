@@ -6,10 +6,8 @@ partial class BBGame
 	[ConVar.Replicated( "oitc_debug" )]
 	public static bool oitc_debug { get; set; } = false;
 
-
 	[ConVar.Replicated]
 	public static int oitc_score_limit { get; set; } = 10;
-
 
 	[ConVar.Replicated]
 	public static float oitc_time_limit { get; set; }
@@ -31,21 +29,8 @@ partial class BBGame
 			c.SetValue( "deaths", 0 );
 		}
 
-		game.SetGameState( new GameState
-		{
-			TopFragSteamId = game.CurrentGameState.TopFragSteamId,
-			TopFragName = game.CurrentGameState.TopFragName,
-			Tier = GameStateTier.MidGame
-		} );
-	}
-
-	[ConCmd.Server( "give_fal" )]
-	public static void GiveFAL()
-	{
-		Game.AssertServer();
-
-		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
-		//(ConsoleSystem.Caller.Pawn as BBPlayer).Inventory.Add( new WeaponFAL(), true );
+		game.CurrentGameState.Text = "Fight!";
+		game.CurrentGameState.Tier = GameState.MidGame;
 	}
 
 	[ConCmd.Server( "give_ammo" )]
@@ -61,7 +46,6 @@ partial class BBGame
 	public static void GiveAmmoAll()
 	{
 		Game.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
 		foreach ( var c in Game.Clients )
 		{
 			var player = (c.Pawn as BBPlayer);
@@ -70,19 +54,20 @@ partial class BBGame
 		}
 	}
 
-	[ConCmd.Server( "gamestate" )]
-	public static void GetGameState()
-	{
-		Game.AssertServer();
-		if ( Sandbox.ConsoleSystem.Caller.SteamId != 76561197998255119 ) return;
-		//Utils.UtilLog( .CurrentGameState.Tier );
-	}
-
 	[ConCmd.Server( "oitc_cookie" )]
 	public static void CookieFlashlight()
 	{
 		Game.AssertServer();
 		(Sandbox.ConsoleSystem.Caller.Pawn as BBPlayer).SetCookieFlashlightCookie();
+	}
+
+	[ConCmd.Admin( "kill" )]
+	public static void Kill()
+	{
+		if ( ConsoleSystem.Caller.Pawn is not BBPlayer ply )
+			return;
+
+		ply.TakeDamage( DamageInfo.Generic( 10000 ) );
 	}
 
 }

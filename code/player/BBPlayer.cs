@@ -104,8 +104,8 @@ public partial class BBPlayer : BasePlayer
 		//Clothing.DressEntity( this );
 		Inventory = new Inventory( this );
 
-		Inventory.Add( new WeaponFists(), false );
-		Inventory.Add( new WeaponOITCPistol(), true );
+		Inventory.Add( new Fists(), false );
+		Inventory.Add( new Pistol(), true );
 
 		FlashlightBatteryCharge = 100f;
 
@@ -181,16 +181,16 @@ public partial class BBPlayer : BasePlayer
 		if ( controller.HasEvent( "jump" ) )
 			animHelper.TriggerJump();
 
-		//if (ActiveCarriable != _lastActiveCarriable)
+		//if ( ActiveChild != LastActiveChild )
 		//	animHelper.TriggerDeploy();
 
-		//if (ActiveCarriable is not null)
-		//	ActiveCarriable.SimulateAnimator(animHelper);
-		//else
-		//{
-		//	animHelper.HoldType = CitizenAnimationHelper.HoldTypes.None;
-		//	animHelper.AimBodyWeight = 0.5f;
-		//}
+		if ( ActiveChild is not null && ActiveChild is Weapon wpn )
+			wpn.SimulateAnimator( animHelper );
+		else
+		{
+			animHelper.HoldType = CitizenAnimationHelper.HoldTypes.None;
+			animHelper.AimBodyWeight = 0.5f;
+		}
 	}
 
 	public override void OnKilled()
@@ -198,7 +198,6 @@ public partial class BBPlayer : BasePlayer
 		base.OnKilled();
 
 		EnableDrawing = false;
-		Controller = null;
 		EnableAllCollisions = false;
 		EnableDrawing = false;
 
@@ -228,7 +227,7 @@ public partial class BBPlayer : BasePlayer
 
 		//If we are being rewarded ammo and we currently have out fists out
 		//by force, switch back to pistol.
-		if ( Inventory.Active is WeaponFists )
+		if ( Inventory.Active is Fists )
 		{
 			SwitchToPistol();
 		}

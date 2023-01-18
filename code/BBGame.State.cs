@@ -1,99 +1,39 @@
+
 namespace OITC;
+
+public enum GameState : byte
+{
+	WaitingForPlayers,
+	Warmup,
+	MidGame,
+	RoundOver
+}
 
 partial class BBGame
 {
 	public int NumPlayers = 0;
 
-	public enum GameStateTier : byte
+	public partial class GameStateInfo : BaseNetworkable
 	{
-		WaitingForPlayers,
-		Warmup,
-		MidGame,
-		RoundOver
-	}
-
-	public class GameState
-	{
-		public ulong TopFragSteamId;
-		public string TopFragName;
-		public GameStateTier Tier;
-
-		public string TierText
-		{
-			get
-			{
-				string returnText = "you shouldnt be seeing this";
-				switch ( Tier )
-				{
-					case GameStateTier.WaitingForPlayers:
-						returnText = "WAITING FOR PLAYERS...";
-						break;
-
-					case GameStateTier.RoundOver:
-						returnText = "GAME OVER!";
-						break;
-
-
-					case GameStateTier.MidGame:
-						returnText = "FIGHT!";
-						break;
-
-					default:
-						returnText = "";
-						break;
-				}
-
-				return returnText;
-			}
-		}
-
-	}
-
-	private void SetGameState( GameState newState )
-	{
-		Game.AssertServer();
-		CurrentGameState = new GameState
-		{
-			TopFragSteamId = newState.TopFragSteamId,
-			Tier = newState.Tier
-		};
-		SetGameStateClient( newState.TopFragSteamId, newState.Tier );
-	}
-
-	[ClientRpc]
-	private void SetGameStateClient( ulong topFragSteamId, GameStateTier newTier )
-	{
-		Game.AssertClient();
-		CurrentGameState = new GameState
-		{
-			TopFragSteamId = topFragSteamId,
-			Tier = newTier
-		};
-
-		HudGameState.OnStateChanged?.Invoke();
+		[Net] public ulong TopFragSteamId { get; set; }
+		[Net] public string TopFragName { get; set; }
+		[Net] public GameState Tier { get; set; }
+		[Net] public string Text { get; set; }
 	}
 
 	private void ReCalculateGameState()
 	{
 		Game.AssertServer();
+			
+		CurrentGameState ??= new();
 
-		if ( CurrentGameState == null )
-		{
-			CurrentGameState = new GameState
-			{
-
-			};
-		}
-
-		if ( CurrentGameState.Tier == GameStateTier.RoundOver )
+		if ( CurrentGameState.Tier == GameState.RoundOver )
 			return;
 
 		if ( NumPlayers < 2 )
 		{
-			SetGameState( new GameState
-			{
-				Tier = GameStateTier.WaitingForPlayers
-			} );
+			CurrentGameState.Tier = GameState.WaitingForPlayers;
+			CurrentGameState.Text = "Waiting for players...";
 		}
 	}
 }

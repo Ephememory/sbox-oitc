@@ -2,12 +2,14 @@ global using Sandbox;
 
 namespace OITC;
 
-[Library( "oitc", Title = "One In The Chamber" )]
 partial class BBGame : GameManager
 {
-	public GameState CurrentGameState { get; private set; }
+	[Net]
+	public GameStateInfo CurrentGameState { get; private set; }
 
 	private RealTimeUntil timeLimit { get; set; }
+
+	public static new BBGame Current => GameManager.Current as BBGame;
 
 	public BBGame()
 	{
@@ -20,7 +22,6 @@ partial class BBGame : GameManager
 	public override void ClientJoined( IClient cl )
 	{
 		NumPlayers++;
-
 		var player = new BBPlayer( cl );
 		cl.Pawn = player;
 		player.Respawn();
@@ -100,12 +101,13 @@ partial class BBGame : GameManager
 
 		if ( killer is BBPlayer ply )
 		{
-			var amountToAward = weapon.GetType() == typeof( WeaponFists ) ? 2 : 1;
+			var amountToAward = weapon.GetType() == typeof( Fists ) ? 2 : 1;
 			ply.AwardAmmo( amountToAward );
 
 		}
 
-		if ( CurrentGameState.Tier != GameStateTier.MidGame ) return;
+		if ( CurrentGameState.Tier != GameState.MidGame ) 
+			return;
 
 		var killedClient = killed.Client;
 		var killerClient = killer.Client;
@@ -113,13 +115,8 @@ partial class BBGame : GameManager
 
 		if ( killerKills >= oitc_score_limit - 1 )
 		{
-			SetGameState( new GameState
-			{
-				TopFragSteamId = CurrentGameState.TopFragSteamId,
-				TopFragName = CurrentGameState.TopFragName,
-				Tier = GameStateTier.RoundOver
-			} );
-
+			CurrentGameState.Tier = GameState.RoundOver;
+			CurrentGameState.Text = "Game over!";
 			EndRound();
 		}
 
