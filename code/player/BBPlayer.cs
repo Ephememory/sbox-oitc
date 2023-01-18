@@ -107,8 +107,6 @@ public partial class BBPlayer : BasePlayer
 		Inventory.Add( new Fists(), false );
 		Inventory.Add( new Pistol(), true );
 
-		FlashlightBatteryCharge = 100f;
-
 		//Just to make sure no one gets stuck with an empty pistol.
 		if ( PistolAmmo <= 0 )
 		{
@@ -139,7 +137,6 @@ public partial class BBPlayer : BasePlayer
 	public override void FrameSimulate( IClient cl )
 	{
 		base.FrameSimulate( cl );
-		FlashlightFrameSimulate();
 	}
 
 	private void SimulateAnimation( WalkController controller )
