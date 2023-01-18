@@ -8,7 +8,7 @@ public partial class Fists : Weapon
 
 	public override string GetKilledByText()
 	{
-		var options = new string[4] { "beat down", "pummeled", "clocked", "clobbered" };
+		var options = new string[5] { "beat down", "pummeled", "clocked", "clobbered", "milly rocked" };
 		return Game.Random.FromArray<string>( options );
 	}
 

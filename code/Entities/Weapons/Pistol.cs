@@ -2,7 +2,7 @@ namespace OITC;
 
 public partial class Pistol : Weapon
 {
-	public override string ViewModelPath => "weapons/rust_pistol/v_rust_pistol.vmdl_c";
+	public override string ViewModelPath => "models/weapons/v_pistol.vmdl";
 
 	public override string GetKilledByText()
 	{
