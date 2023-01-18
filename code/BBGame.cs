@@ -30,8 +30,10 @@ partial class BBGame : GameManager
 		if ( Game.Random.Int( 1, 420 ) == 69 )
 		{
 			player.SetCookieFlashlightCookie();
-			Chat.AddChatEntry( To.Single(cl), "OITC", "Enjoy your cookie.", 0 );
+			Chat.AddChatEntry( To.Single( cl ), "OITC", "Enjoy your cookie.", 0 );
 		}
+
+		Chat.AddChatEntry(To.Everyone, "", $"{cl.Name} joined the game.", cl.SteamId.ToString() );
 
 		if ( Game.IsClient )
 			return;
@@ -44,7 +46,6 @@ partial class BBGame : GameManager
 			EndRound();
 			NumPlayerFulfilled();
 		}
-
 	}
 
 	public override void ClientDisconnect( IClient cl, NetworkDisconnectionReason reason )
@@ -91,10 +92,10 @@ partial class BBGame : GameManager
 		var killer = pawn.LastAttacker;
 		var weapon = pawn.LastAttackerWeapon;
 
-		if ( killer == null ) 
+		if ( killer == null )
 			return; //Watch out for suicides!
 
-		if ( pawn is not BBPlayer killed ) 
+		if ( pawn is not BBPlayer killed )
 			return;
 
 		if ( killer is BBPlayer ply )
