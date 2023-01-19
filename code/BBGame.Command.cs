@@ -16,7 +16,7 @@ partial class BBGame
 	public static void RestartGame()
 	{
 		Game.AssertServer();
-		Log.Info( ConsoleSystem.Caller );
+
 		foreach ( var c in Game.Clients )
 		{
 			var player = (c.Pawn as BBPlayer);
