@@ -16,3 +16,14 @@
 	<RestartTimer/>
 </root>
 
+
+@code
+{
+	public Hud()
+	{
+		if (!Game.IsClient)
+			return;
+
+		Game.RootPanel = this;
+	}
+}
