@@ -70,12 +70,6 @@ public partial class BBPlayer : BasePlayer
 		FlashlightEntity.LightCookie = Texture.Load( "textures/cookie.vtex" );
 	}
 
-	public override void ClientSpawn()
-	{
-		base.ClientSpawn();
-		Game.AssertClient();
-	}
-
 	public override void Respawn()
 	{
 		Controller = new WalkController();
