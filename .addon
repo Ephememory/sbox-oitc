@@ -3,7 +3,7 @@
   "Type": "game",
   "Org": "null",
   "Ident": "bananabattle",
-  "Tags": null,
+  "Tags": "",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
@@ -12,7 +12,7 @@
   "CodePath": "code",
   "Metadata": {
     "MapList": [
-      "facepunch.construct"
+      "facepunch.prelude"
     ],
     "MinPlayers": 1,
     "PerMapRanking": false,
@@ -24,6 +24,9 @@
     "GameCategory": "Shooter",
     "ControlModes": {
       "Keyboard": true
-    }
+    },
+    "Summary": "",
+    "Description": "",
+    "Public": true
   }
 }
