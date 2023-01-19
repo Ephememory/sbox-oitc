@@ -10,6 +10,12 @@ public partial class Pistol : Weapon
 		return Game.Random.FromArray<string>( options );
 	}
 
+	public override void Spawn()
+	{
+		base.Spawn();
+		SetModel( "models/weapons/pistol/pistol.vmdl" );
+	}
+
 	public override bool CanReload()
 	{
 		return false;
