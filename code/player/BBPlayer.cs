@@ -45,6 +45,7 @@ public partial class BBPlayer : BasePlayer
 		head.EnableShadowInFirstPerson = true;
 		head.SetParent( this, true );
 
+		FlashlightPosOffset = 30f;
 		FlashlightEntity = new SpotLightEntity
 		{
 			Enabled = false,
@@ -61,29 +62,12 @@ public partial class BBPlayer : BasePlayer
 			EnableViewmodelRendering = true,
 			LightCookie = Texture.Load( "materials/effects/lightcookie.vtex" )
 		};
-		FlashlightPosOffset = 30f;
 	}
 
 	public void SetCookieFlashlightCookie()
 	{
 		Game.AssertServer();
-		FlashlightEntity = new SpotLightEntity
-		{
-			Enabled = false,
-			DynamicShadows = true,
-			Range = 3200f,
-			Falloff = 0.3f,
-			LinearAttenuation = 0.3f,
-			Brightness = 5f,
-			Color = Color.FromBytes( 200, 200, 200, 230 ),
-			InnerConeAngle = 9,
-			OuterConeAngle = 32,
-			FogStrength = 1.0f,
-			Owner = this,
-			EnableViewmodelRendering = true,
-			LightCookie = Texture.Load( "textures/cookie.vtex" )
-		};
-		FlashlightPosOffset = 30f;
+		FlashlightEntity.LightCookie = Texture.Load( "textures/cookie.vtex" );
 	}
 
 	public override void ClientSpawn()
@@ -126,9 +110,6 @@ public partial class BBPlayer : BasePlayer
 		TickPlayerUse();
 		SimulateActiveChild( cl, ActiveChild );
 		SimulateAnimation( (WalkController)Controller );
-
-		if ( Game.IsClient )
-			return;
 
 		FlashlightSimulate();
 

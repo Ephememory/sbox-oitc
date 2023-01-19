@@ -6,31 +6,32 @@ partial class BBPlayer : BasePlayer
 	[Predicted]
 	public SpotLightEntity FlashlightEntity { get; private set; }
 
-	[Net]
+	[Net, Predicted]
 	public bool FlashlightEnabled { get; private set; }
 
-	[Net]
-	[Predicted]
+	// Offset for server-side (world) rendering.
 	public float FlashlightPosOffset { get; private set; }
 
 	private static bool debug { get; set; }
 
-	// [ConCmd.Client( "bf_debug_flashlight" )]
-	// public static void DebugFlashlight()
-	// {
-	// 	debug = !debug;
-	// }
+#if DEBUG
+	[ConCmd.Client( "debug_flashlight" )]
+	public static void DebugFlashlight()
+	{
+		debug = !debug;
+	}
+#endif
 
 	private void FlashlightSimulate()
 	{
-		if ( Input.Released( InputButton.Flashlight )  )
+		if ( Input.Released( InputButton.Flashlight ) )
 		{
 			FlashlightEnabled = !FlashlightEnabled;
-			using ( Prediction.Off() )
-			{
-				PlayClientSound( FlashlightEntity.Enabled ? "flashlight-on" : "flashlight-off" );
-			}
+			PlayClientSound( FlashlightEntity.Enabled ? "flashlight-on" : "flashlight-off" );
 		}
+
+		if ( Game.IsClient )
+			return;
 
 		if ( !FlashlightEntity.IsValid() )
 			return;
@@ -58,8 +59,8 @@ partial class BBPlayer : BasePlayer
 			float pullbackCutoff = 128f; // the distance when we start pulling the flashlight behind player
 			float far = FlashlightEntity.Range; //the overall max range of the trace and spotlight
 
-			Vector3 origin = EyePosition + (Vector3.Up * -14); // offset to chest height-ish;
-			Vector3 dest = origin + EyeRotation.Forward * far;
+			Vector3 origin = Camera.Position + (Vector3.Up * -14); // offset to chest height-ish;
+			Vector3 dest = origin + Camera.Rotation.Forward * far;
 			Vector3 dir = dest - origin;
 
 			// check for intersections in front
@@ -99,7 +100,7 @@ partial class BBPlayer : BasePlayer
 
 			origin -= dir * pullAmtModifier;
 			FlashlightEntity.Position = origin;
-			FlashlightEntity.Rotation = EyeRotation;
+			FlashlightEntity.Rotation = Camera.Rotation;
 
 			// debug draw the same way Source does
 			if ( debug )
