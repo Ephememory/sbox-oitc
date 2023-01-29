@@ -17,7 +17,6 @@
 }
 
 @{
-
 	var color = Color.Random;
 	var lightColor = color.WithAlpha(0.25f);
 }
@@ -27,12 +26,12 @@
 	<label class="name" style="color:@(lightColor.Rgb)">@(Client.Name)</label>
 	<div class="score">
 		<div style="display: flex; flex-direction: column;">
-			<label style="font-size: 16px; align-self: center;">💀</label>
+			<label style="color: white; font-size: 24px; align-self: center;">K</label>
 			<label class="name" style="color:white; font-size: 32px;">@Client.GetInt("kills")</label>
 		</div>
 		<div style="width: 10px;"></div>
 		<div style="display: flex; flex-direction: column;">
-			<label style="font-size: 16px; align-self: center;">⚰</label>
+			<label style="color:white; font-size: 24px; align-self: center;">D</label>
 			<label class="name" style="color:white; font-size: 32px;">@Client.GetInt("deaths")</label>
 		</div>
 	</div>

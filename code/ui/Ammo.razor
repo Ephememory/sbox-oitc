@@ -17,6 +17,7 @@
 }
 
 <root class="hudbox">
+	<img src="textures/bullet.png" width="512" height="512" style="width: 64px; height: 64px; filter: invert(80%);"/>
 	<label>
 		@{
 			if (Game.LocalPawn is not BBPlayer player)
@@ -24,7 +25,7 @@
 
 			var frac = MathX.Remap(player.PistolAmmo, 0, BBPlayer.oitc_max_ammo_held, 0.0f, 1f);
 			Style.FontColor = new Color(1, frac, frac, 1);
-			@($"🔫 {player.PistolAmmo}")
+			@(player.PistolAmmo)
 		}
 	</label>
 </root>

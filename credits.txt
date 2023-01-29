@@ -9,3 +9,4 @@
 
 [textures]
 	Cookie - by 'contaowebsiteerstellen' from pixabay.com (https://pixabay.com/vectors/cookie-website-cookies-computer-5784367/) (Pixabay License) LICENSE: https://pixabay.com/service/terms/#license
+	<a href="https://www.flaticon.com/free-icons/bullet" title="bullet icons">Bullet icons created by Smashicons - Flaticon</a>

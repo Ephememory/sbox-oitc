@@ -117,6 +117,9 @@ public partial class BBPlayer : BasePlayer
 	{
 		if ( LifeState == LifeState.Dead )
 		{
+			if ( !LastPlayerAttacker.IsValid() )
+				return;
+
 			var tr = Trace.Ray( EyePosition, LastPlayerAttacker.EyePosition )
 				.WithoutTags( "player" )
 				.WithAnyTags( "solid" )
