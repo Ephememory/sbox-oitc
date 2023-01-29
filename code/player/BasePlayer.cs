@@ -28,7 +28,7 @@ public partial class BasePlayer : AnimatedEntity
 	public PawnController DevController { get; set; }
 
 	[Net, Predicted] public Entity ActiveChild { get; set; }
-	[ClientInput] public Vector3 InputDirection { get; protected set; }
+	[ClientInput] public Vector3 InputDirection { get; set; }
 	[ClientInput] public Entity ActiveChildInput { get; set; }
 	[ClientInput] public Angles ViewAngles { get; set; }
 	public Angles OriginalViewAngles { get; private set; }
