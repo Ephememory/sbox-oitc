@@ -10,6 +10,9 @@ public partial class BBPlayer : BasePlayer
 
 	private DamageInfo lastDamage;
 
+	[Net]
+	public BBPlayer LastPlayerAttacker { get; private set; }
+
 	/// <summary>
 	/// The clothing container is what dresses the citizen
 	/// </summary>
@@ -107,6 +110,15 @@ public partial class BBPlayer : BasePlayer
 
 	public override void FrameSimulate( IClient cl )
 	{
+		if ( LifeState == LifeState.Dead )
+		{
+			Camera.Position = EyePosition;
+			Camera.Rotation = Rotation.Slerp( Camera.Rotation, Rotation.LookAt( LastPlayerAttacker.EyePosition - Camera.Position ), Time.Delta * 5 );
+			Camera.FieldOfView = MathX.Lerp( Camera.FieldOfView, Screen.CreateVerticalFieldOfView( 32 ), Time.Delta * 2 );
+
+			return;
+		}
+
 		base.FrameSimulate( cl );
 	}
 
@@ -173,6 +185,10 @@ public partial class BBPlayer : BasePlayer
 	public override void TakeDamage( DamageInfo info )
 	{
 		lastDamage = info;
+
+		if ( info.Attacker is BBPlayer player )
+			LastPlayerAttacker = player;
+
 		base.TakeDamage( info );
 	}
 
