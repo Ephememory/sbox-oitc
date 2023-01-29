@@ -6,7 +6,7 @@ public partial class Pistol : Weapon
 
 	public override string GetKilledByText()
 	{
-		var options = new string[6] { "smoked", "popped", "gunned down", "iced", "spun the block on", "poked" };
+		var options = new string[7] { "smoked", "popped", "gunned down", "iced", "spun the block on", "poked a hole in", "shot" };
 		return Game.Random.FromArray<string>( options );
 	}
 
