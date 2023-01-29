@@ -14,6 +14,11 @@ public partial class BBPlayer : BasePlayer
 	public BBPlayer LastPlayerAttacker { get; private set; }
 
 	/// <summary>
+	/// For when the LastPlayerAttacker becomes obstructed during death cam.
+	/// </summary>
+	private Vector3 _deathCamLookPosition;
+
+	/// <summary>
 	/// The clothing container is what dresses the citizen
 	/// </summary>
 	public ClothingContainer Clothing = new();
@@ -112,9 +117,17 @@ public partial class BBPlayer : BasePlayer
 	{
 		if ( LifeState == LifeState.Dead )
 		{
+			var tr = Trace.Ray( EyePosition, LastPlayerAttacker.EyePosition )
+				.WithoutTags( "player" )
+				.WithAnyTags( "solid" )
+				.Run();
+
+			if ( !tr.Hit )
+				_deathCamLookPosition = LastPlayerAttacker.EyePosition;
+
 			Camera.Position = EyePosition;
-			Camera.Rotation = Rotation.Slerp( Camera.Rotation, Rotation.LookAt( LastPlayerAttacker.EyePosition - Camera.Position ), Time.Delta * 5 );
-			Camera.FieldOfView = MathX.Lerp( Camera.FieldOfView, Screen.CreateVerticalFieldOfView( 32 ), Time.Delta * 2 );
+			Camera.Rotation = Rotation.Slerp( Camera.Rotation, Rotation.LookAt( _deathCamLookPosition - Camera.Position ), Time.Delta * 4f );
+			Camera.FieldOfView = MathX.Lerp( Camera.FieldOfView, Screen.CreateVerticalFieldOfView( 42 ), Time.Delta * 2 );
 
 			return;
 		}
