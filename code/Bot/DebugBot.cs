@@ -1,11 +1,10 @@
 ﻿#if DEBUG
-
 using Sandbox.Internal;
 using System.Linq;
 
 namespace OITC;
 
-public partial class GameBot : Bot
+public partial class DebugBot : Bot
 {
 	/// <summary>
 	/// The Player this bot controls.
@@ -20,11 +19,11 @@ public partial class GameBot : Bot
 	public bool WishAttack { get; set; }
 
 	public static bool Aimbot;
-	public static bool MimicHost;
+	public static bool Mimic;
 	public static bool Wander;
 
 	[ConVar.Replicated( "bot_debug" )]
-	public static bool Debug { get; set; }
+	public static bool DrawDebug { get; set; }
 
 	[ConCmd.Admin( "bot_aimbot", Help = "Locks the bot's aim to the player." )]
 	public static void ToggleBotAimbot()
@@ -35,7 +34,7 @@ public partial class GameBot : Bot
 	[ConCmd.Admin( "bot_mimic", Help = "Makes the bot mimic the host client's inputs." )]
 	public static void ToggleMimicHost()
 	{
-		MimicHost = !MimicHost;
+		Mimic = !Mimic;
 		Wander = false;
 	}
 
@@ -43,14 +42,14 @@ public partial class GameBot : Bot
 	public static void ToggleWander()
 	{
 		Wander = !Wander;
-		MimicHost = false;
+		Mimic = false;
 	}
 
 	[ConCmd.Admin( "bot_zombie", Help = "Resets bot to default settings." )]
 	public static void DoBotZombie()
 	{
 		Wander = false;
-		MimicHost = false;
+		Mimic = false;
 		Aimbot = false;
 	}
 
@@ -90,7 +89,7 @@ public partial class GameBot : Bot
 		if ( pawn is not BBPlayer ply )
 			return;
 
-		var b = new GameBot();
+		var b = new DebugBot();
 		b.Target = ply;
 	}
 
@@ -99,7 +98,7 @@ public partial class GameBot : Bot
 	{
 		foreach ( var bot in Bot.All.ToArray() )
 		{
-			if ( bot is not GameBot b )
+			if ( bot is not DebugBot b )
 				continue;
 
 			b.WishAttack = true;
@@ -109,10 +108,10 @@ public partial class GameBot : Bot
 	public override void BuildInput()
 	{
 		Pawn ??= Client.Pawn as BBPlayer;
-		Input.SetButton( InputButton.PrimaryAttack, WishAttack );
-		WishAttack = false;
 
-		if ( Debug )
+
+
+		if ( DrawDebug )
 		{
 			DebugOverlay.Axis( Pawn.EyePosition, Pawn.EyeRotation, 16 );
 			DebugOverlay.Axis( Pawn.Position, Pawn.Rotation, 24 );
@@ -121,26 +120,27 @@ public partial class GameBot : Bot
 		if ( Wander )
 			Pawn.InputDirection = Vector3.Random * 2f;
 
-		if ( MimicHost )
+		if ( Mimic )
 		{
 			Input.CopyLastInput( Target.Client );
 
-			var inputs = from p in GlobalGameNamespace.TypeLibrary.GetPropertyDescriptions( Client.Pawn )
-						 where p.HasAttribute<ClientInputAttribute>()
-						 select p;
-
-			foreach ( PropertyDescription item in inputs )
+			foreach ( var item in from p in GlobalGameNamespace.TypeLibrary.GetPropertyDescriptions( Client.Pawn )
+								  where p.HasAttribute<ClientInputAttribute>()
+								  select p )
 				item.SetValue( Client.Pawn, item.GetValue( Target ) );
 
 		}
 
+		Input.SetButton( InputButton.PrimaryAttack, WishAttack );
+		WishAttack = false;
+
 		if ( Aimbot )
 		{
-			var forward = Pawn.EyePosition - Target.EyePosition;
-			var lookAt = Rotation.LookAt( forward );
-
+			var lookAt = Rotation.LookAt( Pawn.EyePosition - Target.EyePosition );
 			Pawn.ViewAngles = Rotation.From( -lookAt.Pitch(), lookAt.Yaw(), lookAt.Roll() ).Angles();
 		}
+
+
 	}
 }
 #endif
