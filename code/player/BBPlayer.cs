@@ -85,11 +85,7 @@ public partial class BBPlayer : BasePlayer
 		Inventory.Add( new Fists(), false );
 		Inventory.Add( new Pistol(), true );
 
-		//Just to make sure no one gets stuck with an empty pistol.
-		if ( PistolAmmo <= 0 )
-		{
-			SwitchToFists();
-		}
+		PistolAmmo = 1;
 
 		base.Respawn();
 	}

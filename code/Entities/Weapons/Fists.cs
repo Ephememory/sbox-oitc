@@ -17,30 +17,20 @@ public partial class Fists : Weapon
 		return false;
 	}
 
-	private async void AttackAsync( float delay )
-	{
-		//Async delay so we do attack logic at the right client-side anim frame
-		//this is more important than you might think.
-		await GameTask.DelaySeconds( delay );
-		Melee( 1000f, 90f );
-	}
-
 	public override void AttackPrimary()
 	{
-
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
 
 		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 		ShootEffects();
-		AttackAsync( 0.34f );
+		Melee( 1000f, 90f );
 	}
 
 	public override void AttackSecondary()
 	{
 		//Do absolutely nothing
 	}
-
 
 	/// <summary>
 	/// Custom ShootBullets function for melee.
@@ -50,31 +40,26 @@ public partial class Fists : Weapon
 	/// <returns></returns>
 	public bool Melee( float damage, float range = DefaultBulletRange )
 	{
-		//Because this is async, players can die before this is actually executed and be dead while it is.
-		//nullcheck the owner!
-		if ( Owner == null )
-			return false;
-
-		if ( Owner is not BBPlayer ply )
+		if ( !Owner.IsValid() || Owner is not BBPlayer ply )
 			return false;
 
 		var pos = ply.EyePosition;
 		var forward = ply.EyeRotation.Forward;
 		forward = forward.Normal;
 
-
 		foreach ( var tr in TraceBullet( pos, pos + forward * range, 15f ) )
 		{
-			if ( tr.Entity.IsValid() )
-			{
-				tr.Surface.DoBulletImpact( tr );
-			}
-			else
+			if ( !tr.Entity.IsValid() )
 			{
 				continue;
+
 			}
 
-			if ( !Game.IsServer ) continue;
+			tr.Surface.DoBulletImpact( tr );
+
+			if ( !Game.IsServer )
+				continue;
+
 			using ( Prediction.Off() )
 			{
 				var damageInfo = DamageInfo.FromBullet( tr.EndPosition, forward * 100 * 1, damage )
@@ -89,9 +74,7 @@ public partial class Fists : Weapon
 		}
 
 		if ( Game.IsServer )
-		{
 			PlaySound( "punch_miss" );
-		}
 
 		return false;
 	}
