@@ -25,14 +25,14 @@
 	<div class="pfp" style="background: url( avatar:@Client.SteamId ); border: 1px @color.Rgb"></div>
 	<label class="name" style="color:@(lightColor.Rgb)">@(Client.Name)</label>
 	<div class="score">
-		<div style="display: flex; flex-direction: column;">
+		<div>
 			<label style="color: white; font-size: 24px; align-self: center;">K</label>
-			<label class="name" style="color:white; font-size: 32px;">@Client.GetInt("kills")</label>
+			<label class="name" style="color:white; font-size: 32px; align-self: center;">@Client.GetInt("kills")</label>
 		</div>
-		<div style="width: 10px;"></div>
-		<div style="display: flex; flex-direction: column;">
+		<div style="width: 3%; background-color: white;"></div>
+		<div>
 			<label style="color:white; font-size: 24px; align-self: center;">D</label>
-			<label class="name" style="color:white; font-size: 32px;">@Client.GetInt("deaths")</label>
+			<label class="name" style="color:white; font-size: 32px; align-self: center;">@Client.GetInt("deaths")</label>
 		</div>
 	</div>
 </root>

@@ -21,20 +21,16 @@ Crosshair {
 .hudbox {
     position: absolute;
     bottom: 2%;
-
     background-color: rgba(black, 0.5);
     backdrop-filter: blur(12px);
-
     color: white;
     font-family: Roboto;
     font-size: 64px;
     font-weight: bolder;
-
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 11px;
-
     width: auto;
     height: 85px;
     overflow: hidden;
@@ -149,11 +145,10 @@ Scoreboard {
 
     ScoreboardEntry {
         display: flex;
-        // padding: 24px;
-        margin: 15px;
+        margin: 9px;
         flex-direction: row;
         width: auto;
-        height: 64px;
+        height: 72px;
 
         .pfp {
             width: 64px;
@@ -164,15 +159,29 @@ Scoreboard {
             font-family: Poppins;
             font-weight: 400;
             text-shadow: 1px 2px 3px black;
-            font-size: 42px;
+            font-size: 48px;
+            align-self: center;
         }
 
         .score {
             display: flex;
             flex-direction: row;
-            width: 15%;
+            justify-content: space-evenly;
+            width: 90px;
             margin-left: auto;
-            margin-right: 2px;
+            font-weight: bold;
+            backdrop-filter: sepia(70%);
+            border: 1px;
+            border-color: white;
+            border-radius: 2px;
+
+            div {
+                display: flex;
+                flex-direction: column;
+                width: 15px;
+                justify-content: center;
+                align-content: center;
+            }
         }
     }
 }
