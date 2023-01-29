@@ -15,7 +15,6 @@ public partial class KillfeedEntry
 
 		//lazy
 		Method.Style.FontStyle = FontStyle.Italic;
-		Method.Style.FontColor = Color.White;
 		Method.Style.Padding = Length.Pixels( 3 );
 
 		_ = RunAsync();

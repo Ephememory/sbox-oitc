@@ -15,24 +15,20 @@ partial class Killfeed : Panel
 
 	public Panel AddEntry( IClient killer, IClient victim, string method )
 	{
-		var e = Current.AddChild<KillfeedEntry>();
-
-		e.AddClass( method );
+		var entry = Current.AddChild<KillfeedEntry>();
 
 		if ( killer != null && killer.Pawn is BBPlayer k )
 		{
-			e.Killer.Text = killer.Name;
-			e.Killer.SetClass( "me", killer.Id == Game.LocalClient.SteamId);
-			e.Killer.Style.FontColor = Color.White;
+			entry.Killer.Text = killer.Name;
+			entry.Killer.SetClass( "me", killer.SteamId == Game.LocalClient.SteamId );
 		}
 
-		e.Method.Text = $"{method} ";
+		entry.Method.Text = $"{method} ";
 
 		if ( victim != null && victim.Pawn is BBPlayer v )
 		{
-			e.Victim.Text = victim.Name;
-			e.Victim.SetClass( "me", victim.Id == Game.LocalClient.SteamId);
-			e.Victim.Style.FontColor = Color.White;
+			entry.Victim.Text = victim.Name;
+			entry.Victim.SetClass( "me", victim.SteamId == Game.LocalClient.SteamId );
 		}
 
 		if ( killer != null && victim != null )
@@ -40,7 +36,7 @@ partial class Killfeed : Panel
 			Log.Info( $"{killer.Name} {method} {victim.Name}" );
 		}
 
-		return e;
+		return entry;
 	}
 
 }
