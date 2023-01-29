@@ -121,10 +121,8 @@ public partial class BBPlayer : BasePlayer
 		Rotation rotation;
 
 		// If we're a bot, spin us around 180 degrees.
-		if ( Client.IsBot )
-			rotation = ViewAngles.WithYaw( ViewAngles.yaw + 180f ).ToRotation();
-		else
-			rotation = ViewAngles.ToRotation();
+
+		rotation = ViewAngles.ToRotation();
 
 		var idealRotation = Rotation.LookAt( rotation.Forward.WithZ( 0 ), Vector3.Up );
 		Rotation = Rotation.Slerp( Rotation, idealRotation, controller.WishVelocity.Length * Time.Delta * turnSpeed );
