@@ -21,10 +21,8 @@ Crosshair {
 .hudbox {
     position: absolute;
     bottom: 2%;
-    background-color: rgba(black, 0.5);
-    backdrop-filter: blur(12px);
+    background-color: rgba(black, 0.0);
     color: white;
-    font-family: Roboto;
     font-size: 64px;
     font-weight: bolder;
     display: flex;
@@ -38,7 +36,9 @@ Crosshair {
 }
 
 Ammo {
-    left: 1%;
+    flex-direction: row-reverse;
+    right: 2%;
+    bottom: 2%;
     opacity: 0.8;
 }
 

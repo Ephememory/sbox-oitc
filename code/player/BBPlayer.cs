@@ -1,18 +1,21 @@
+using Sandbox.UI;
+
 namespace OITC;
 
 public partial class BBPlayer : BasePlayer
 {
-	[ConVar.Replicated]
-	public static int oitc_max_ammo_held { get; set; } = 7;
+	[ConVar.Replicated( "oitc_max_ammo" )]
+	public static int MaxAmmo { get; set; } = 2;
 
-	[Net]
+	[Net, Change( nameof( OnChangePistolAmmo ) )]
 	public int PistolAmmo { get; private set; } = 1;
 
-	private DamageInfo lastDamage;
+	public DamageInfo LastDamage { get; private set; }
 
 	[Net]
 	public BBPlayer LastPlayerAttacker { get; private set; }
 
+	// TODO: Move DeathCam to an ephemeral component.
 	/// <summary>
 	/// For when the LastPlayerAttacker becomes obstructed during death cam.
 	/// </summary>
@@ -89,8 +92,6 @@ public partial class BBPlayer : BasePlayer
 
 		//Clothing.DressEntity( this );
 		Inventory = new Inventory( this );
-
-		Inventory.Add( new Fists(), false );
 		Inventory.Add( new Pistol(), true );
 
 		PistolAmmo = 1;
@@ -200,7 +201,7 @@ public partial class BBPlayer : BasePlayer
 
 	public override void TakeDamage( DamageInfo info )
 	{
-		lastDamage = info;
+		LastDamage = info;
 
 		if ( info.Attacker is BBPlayer player )
 			LastPlayerAttacker = player;
@@ -213,21 +214,16 @@ public partial class BBPlayer : BasePlayer
 	{
 		Game.AssertServer();
 
-		if ( PistolAmmo > oitc_max_ammo_held ) return;
-		if ( PistolAmmo + amt > oitc_max_ammo_held )
+		if ( PistolAmmo > MaxAmmo )
+			return;
+
+		if ( PistolAmmo + amt > MaxAmmo )
 		{
-			PistolAmmo = oitc_max_ammo_held;
+			PistolAmmo = MaxAmmo;
 		}
 		else
 		{
 			PistolAmmo += amt;
-		}
-
-		//If we are being rewarded ammo and we currently have out fists out
-		//by force, switch back to pistol.
-		if ( Inventory.Active is Fists )
-		{
-			SwitchToPistol();
 		}
 	}
 
@@ -256,6 +252,15 @@ public partial class BBPlayer : BasePlayer
 	public void PlayClientSound( string snd )
 	{
 		PlaySound( snd );
+	}
+
+	public void OnChangePistolAmmo( int oldValue, int newValue )
+	{
+		if ( Game.IsServer )
+			return;
+
+		Game.AssertClient();
+		Event.Run( "oitc.player_ammo_change", oldValue, newValue );
 	}
 
 }

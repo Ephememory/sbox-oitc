@@ -4,13 +4,16 @@ namespace OITC;
 partial class BBGame
 {
 	[ConVar.Replicated( "oitc_debug" )]
-	public static bool oitc_debug { get; set; } = false;
+	public static bool DebugMode { get; set; } = false;
 
-	[ConVar.Replicated]
-	public static int oitc_score_limit { get; set; } = 10;
+	[ConVar.Replicated( "oitc_score_limit" )]
+	public static int ScoreLimit { get; set; } = 10;
 
-	[ConVar.Replicated]
-	public static float oitc_time_limit { get; set; }
+	[ConVar.Replicated( "oitc_time_limit" )]
+	public static float TimeLimit { get; set; }
+
+	[ConVar.Server( "oitc_dev_only", Help = "Locks the server and prevents anyone else from connecting." )]
+	public static bool DevOnly { get; set; }
 
 	[ConCmd.Server( "oitc_restart" )]
 	public static void RestartGame()
@@ -36,7 +39,7 @@ partial class BBGame
 	public static void GiveAmmo()
 	{
 		Game.AssertServer();
-		(ConsoleSystem.Caller.Pawn as BBPlayer).AwardAmmo( 4 );
+		(ConsoleSystem.Caller.Pawn as BBPlayer).AwardAmmo( BBPlayer.MaxAmmo );
 	}
 
 	[ConCmd.Admin( "give_ammo_all" )]

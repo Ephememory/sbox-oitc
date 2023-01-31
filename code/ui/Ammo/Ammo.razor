@@ -1,0 +1,44 @@
+﻿@using Sandbox
+@using System.Collections.Generic
+@using Sandbox.UI
+
+@namespace OITC
+
+@inherits Panel
+
+@code
+{
+	public Ammo()
+	{
+		if (Game.LocalPawn is not BBPlayer player)
+			return;
+
+		for (int i = 0; i < player.PistolAmmo; i++)
+		{
+			AddChild<AmmoBullet>();
+		}
+	}
+
+	protected override int BuildHash()
+	{
+		if (Game.LocalPawn is not BBPlayer player)
+			return 0;
+
+		return System.HashCode.Combine(player.PistolAmmo);
+	}
+
+	[Event("oitc.player_ammo_change")]
+	private void HandlePlayerAmmoChanged(int oldValue, int newValue)
+	{
+		if (newValue > oldValue)
+		{
+			for (int i = oldValue; i < newValue; i++)
+				AddChild<AmmoBullet>();
+		}
+
+		if (newValue < oldValue)
+			GetChild(newValue).Delete();
+	}
+}
+
+<root class="hudbox"></root>

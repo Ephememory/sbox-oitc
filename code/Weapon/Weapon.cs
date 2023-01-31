@@ -4,7 +4,7 @@ public partial class Weapon : ModelEntity, IUse
 {
 	public const float DefaultBulletRange = 64000f;
 
-	public virtual string GetKilledByText() { return string.Empty; }
+	public virtual string GetKillMethod( DamageInfo t ) { return string.Empty; }
 
 	public virtual bool CanReload()
 	{

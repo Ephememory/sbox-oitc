@@ -17,6 +17,15 @@ partial class BBGame : GameManager
 		}
 	}
 
+	public override bool ShouldConnect( long playerId )
+	{
+#if DEBUG
+		if ( DevOnly )
+			return false;
+#endif
+		return base.ShouldConnect( playerId );
+	}
+
 	public override void ClientJoined( IClient cl )
 	{
 		NumPlayers++;
@@ -33,7 +42,7 @@ partial class BBGame : GameManager
 			Chat.AddChatEntry( To.Single( cl ), "OITC", "Enjoy your cookie.", 0 );
 		}
 
-		Chat.AddChatEntry(To.Everyone, "", $"{cl.Name} joined the game.", cl.SteamId.ToString() );
+		Chat.AddChatEntry( To.Everyone, "", $"{cl.Name} joined the game.", cl.SteamId.ToString() );
 
 		if ( Game.IsClient )
 			return;
@@ -65,11 +74,14 @@ partial class BBGame : GameManager
 
 		Log.Info( $"{client.Name} was killed" );
 
+		if ( pawn is not BBPlayer killed )
+			return;
+
 		if ( pawn.LastAttacker != null )
 		{
 			if ( pawn.LastAttacker.Client != null )
 			{
-				var killedByText = (pawn.LastAttackerWeapon as Weapon).GetKilledByText();
+				var killedByText = (pawn.LastAttackerWeapon as Weapon).GetKillMethod( killed.LastDamage );
 
 				if ( string.IsNullOrEmpty( killedByText ) )
 				{
@@ -88,29 +100,25 @@ partial class BBGame : GameManager
 			OnKilledClient( client, null, "died" );
 		}
 
-		if ( Game.IsClient ) return;
+		if ( Game.IsClient )
+			return;
+
 		var killer = pawn.LastAttacker;
 		var weapon = pawn.LastAttackerWeapon;
 
+		// Watch out for suicides.
 		if ( killer == null )
-			return; //Watch out for suicides!
-
-		if ( pawn is not BBPlayer killed )
 			return;
 
 		if ( killer is BBPlayer ply )
 		{
-			var amountToAward = weapon.GetType() == typeof( Fists ) ? 2 : 1;
-			ply.AwardAmmo( amountToAward );
+			ply.AwardAmmo( killed.LastDamage.HasTag( DamageTags.Blunt ) ? 2 : 1 );
 		}
 
 		if ( State.Tier != GameState.MidGame )
 			return;
 
-		var killerClient = killer.Client;
-		var killerKills = killerClient.GetValue<int>( "kills" );
-
-		if ( killerKills >= oitc_score_limit - 1 )
+		if ( killer.Client.GetValue<int>( "kills" ) >= ScoreLimit - 1 )
 		{
 			State.Tier = GameState.RoundOver;
 			State.Text = "Game over!";
