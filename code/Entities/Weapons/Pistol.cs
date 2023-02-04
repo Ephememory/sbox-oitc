@@ -1,10 +1,11 @@
+using Sandbox;
 using System.Collections.Generic;
 
 namespace OITC;
 
 public partial class Pistol : Weapon
 {
-	public override string ViewModelPath => "models/weapons/v_pistol.vmdl";
+	public override string ViewModelPath => "models/weapons/attachment_vm_pi_cpapa_receiver.vmdl";
 	public override float SecondaryRate => 0.9f;
 
 	private readonly List<string> _primaryFlavorText = new List<string> { "smoked", "popped", "gunned down", "iced", "spun the block on", "poked a hole in", "shot" };
@@ -24,7 +25,6 @@ public partial class Pistol : Weapon
 	public override void Spawn()
 	{
 		base.Spawn();
-		SetModel( "models/weapons/pistol/pistol.vmdl" );
 	}
 
 	public override bool CanReload()
@@ -49,6 +49,12 @@ public partial class Pistol : Weapon
 		ShootEffects();
 		PlaySound( "oitc_pistolsound" );
 		ShootBullet( 0, 1, 1000, 1 );
+	}
+
+	[Event.Tick.Client]
+	private void OnTick()
+	{
+		ViewModelEntity.GetAnimParameterBool( "fire" );
 	}
 
 	public override void AttackSecondary()
@@ -101,6 +107,8 @@ public partial class Pistol : Weapon
 				return true;
 			}
 		}
+
+		ViewModelEntity?.SetAnimParameter( "melee_miss", true );
 
 		if ( Game.IsServer )
 			PlaySound( "punch_miss" );
