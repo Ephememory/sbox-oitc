@@ -41,20 +41,16 @@ public partial class Pistol : Weapon
 			return;
 
 		if ( player.PistolAmmo <= 0 )
+		{
+			PlaySound( "sounds/deagle/deagle_empty.sound" );
 			return;
-
+		}
 
 		(Owner as AnimatedEntity)?.SetAnimParameter( "b_attack", true );
 		player.RemoveAmmo( 1 );
 		ShootEffects();
-		PlaySound( "oitc_pistolsound" );
+		PlaySound( "sounds/deagle/deagle_shoot.sound" );
 		ShootBullet( 0, 1, 1000, 1 );
-	}
-
-	[Event.Tick.Client]
-	private void OnTick()
-	{
-		ViewModelEntity.GetAnimParameterBool( "fire" );
 	}
 
 	public override void AttackSecondary()
@@ -80,12 +76,10 @@ public partial class Pistol : Weapon
 		foreach ( var tr in TraceBullet( pos, pos + forward * range, 15f ) )
 		{
 			if ( !tr.Entity.IsValid() )
-			{
 				continue;
 
-			}
-
 			tr.Surface.DoBulletImpact( tr );
+			ViewModelEntity?.SetAnimParameter( "melee_hit", true );
 
 			if ( !Game.IsServer )
 				continue;

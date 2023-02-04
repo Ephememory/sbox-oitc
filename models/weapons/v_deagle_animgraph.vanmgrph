@@ -15,12 +15,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Melee"
-					m_vecPosition = [ -480.0, 352.0 ]
+					m_vecPosition = [ -496.0, 304.0 ]
 					m_nNodeID = 
 					{
 						m_id = 12312516
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "melee_hit_01"
@@ -37,12 +37,12 @@
 				{
 					_class = "CCommentAnimNode"
 					m_sName = "Melee"
-					m_vecPosition = [ -496.0, 320.0 ]
+					m_vecPosition = [ -512.0, 272.0 ]
 					m_nNodeID = 
 					{
 						m_id = 84675219
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_commentText = ""
 					m_size = [ 384.0, 336.0 ]
@@ -58,12 +58,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -368.0, -144.0 ]
+					m_vecPosition = [ -448.0, -112.0 ]
 					m_nNodeID = 
 					{
 						m_id = 153274862
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "idle"
@@ -80,12 +80,12 @@
 				{
 					_class = "CRootAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 208.0, 144.0 ]
+					m_vecPosition = [ 304.0, 144.0 ]
 					m_nNodeID = 
 					{
 						m_id = 295079768
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_inputConnection = 
 					{
@@ -109,12 +109,12 @@
 				{
 					_class = "CChoiceAnimNode"
 					m_sName = "Fire"
-					m_vecPosition = [ -240.0, 48.0 ]
+					m_vecPosition = [ -400.0, 160.0 ]
 					m_nNodeID = 
 					{
 						m_id = 399877291
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_children = 
 					[
@@ -170,12 +170,12 @@
 				{
 					_class = "CStateMachineAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 0.0, 144.0 ]
+					m_vecPosition = [ 96.0, 144.0 ]
 					m_nNodeID = 
 					{
 						m_id = 400112238
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_states = 
 					[
@@ -201,7 +201,7 @@
 											}
 										},
 									]
-									m_blendDuration = 0.2
+									m_blendDuration = 0.0
 									m_destState = 
 									{
 										m_id = 1849463530
@@ -338,7 +338,7 @@
 							{
 								m_id = 1289507446
 							}
-							m_position = [ -336.0, 48.0 ]
+							m_position = [ -352.0, 32.0 ]
 							m_bIsStartState = false
 							m_bIsEndtState = false
 							m_bIsPassthrough = false
@@ -402,7 +402,7 @@
 							{
 								m_id = 1197545873
 							}
-							m_position = [ -176.0, -64.0 ]
+							m_position = [ -112.0, -64.0 ]
 							m_bIsStartState = false
 							m_bIsEndtState = false
 							m_bIsPassthrough = false
@@ -477,11 +477,11 @@
 										{
 											_class = "CFinishedCondition"
 											m_comparisonOp = 0
-											m_option = "FinishedConditionOption_OnFinished"
+											m_option = "FinishedConditionOption_OnAlmostFinished"
 											m_bIsFinished = true
 										},
 									]
-									m_blendDuration = 0.0
+									m_blendDuration = 0.1
 									m_destState = 
 									{
 										m_id = 1197545873
@@ -516,7 +516,7 @@
 							{
 								m_id = 1849463530
 							}
-							m_position = [ -32.0, 48.0 ]
+							m_position = [ -224.0, 48.0 ]
 							m_bIsStartState = false
 							m_bIsEndtState = false
 							m_bIsPassthrough = false
@@ -573,7 +573,7 @@
 							{
 								m_id = 856235547
 							}
-							m_position = [ -176.0, 144.0 ]
+							m_position = [ -192.0, 160.0 ]
 							m_bIsStartState = false
 							m_bIsEndtState = false
 							m_bIsPassthrough = false
@@ -630,7 +630,7 @@
 							{
 								m_id = 1892961640
 							}
-							m_position = [ -96.0, 144.0 ]
+							m_position = [ -112.0, 160.0 ]
 							m_bIsStartState = false
 							m_bIsEndtState = false
 							m_bIsPassthrough = false
@@ -651,12 +651,12 @@
 				{
 					_class = "CAddAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ 16.0, -128.0 ]
+					m_vecPosition = [ -240.0, 0.0 ]
 					m_nNodeID = 
 					{
 						m_id = 542563223
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_baseInput = 
 					{
@@ -673,7 +673,7 @@
 					{
 						m_nodeID = 
 						{
-							m_id = 4294967295
+							m_id = 1897970663
 						}
 						m_outputID = 
 						{
@@ -697,12 +697,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Melee"
-					m_vecPosition = [ -480.0, 448.0 ]
+					m_vecPosition = [ -496.0, 400.0 ]
 					m_nNodeID = 
 					{
 						m_id = 638255684
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "melee_hit_03"
@@ -719,12 +719,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Melee"
-					m_vecPosition = [ -480.0, 608.0 ]
+					m_vecPosition = [ -496.0, 560.0 ]
 					m_nNodeID = 
 					{
 						m_id = 666365632
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "melee_miss_03"
@@ -741,12 +741,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -448.0, 80.0 ]
+					m_vecPosition = [ -608.0, 192.0 ]
 					m_nNodeID = 
 					{
 						m_id = 897334016
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "fire_2"
@@ -763,12 +763,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Melee"
-					m_vecPosition = [ -480.0, 512.0 ]
+					m_vecPosition = [ -496.0, 464.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1387132858
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "melee_miss_01"
@@ -785,12 +785,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Melee"
-					m_vecPosition = [ -480.0, 400.0 ]
+					m_vecPosition = [ -496.0, 352.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1429782134
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "melee_hit_02"
@@ -807,12 +807,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -224.0, 176.0 ]
+					m_vecPosition = [ -224.0, 128.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1546646773
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "draw"
@@ -829,12 +829,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -448.0, 32.0 ]
+					m_vecPosition = [ -608.0, 144.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1669455047
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "fire"
@@ -851,12 +851,12 @@
 				{
 					_class = "CChoiceAnimNode"
 					m_sName = "Hit"
-					m_vecPosition = [ -272.0, 384.0 ]
+					m_vecPosition = [ -288.0, 336.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1679906108
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_children = 
 					[
@@ -928,12 +928,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Unnamed"
-					m_vecPosition = [ -432.0, -64.0 ]
+					m_vecPosition = [ -448.0, -48.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1897970663
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "a_fidget"
@@ -950,12 +950,12 @@
 				{
 					_class = "CSequenceAnimNode"
 					m_sName = "Melee"
-					m_vecPosition = [ -480.0, 560.0 ]
+					m_vecPosition = [ -496.0, 512.0 ]
 					m_nNodeID = 
 					{
 						m_id = 1990378051
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_tagSpans = [  ]
 					m_sequenceName = "melee_miss_02"
@@ -972,12 +972,12 @@
 				{
 					_class = "CChoiceAnimNode"
 					m_sName = "Miss"
-					m_vecPosition = [ -272.0, 544.0 ]
+					m_vecPosition = [ -288.0, 496.0 ]
 					m_nNodeID = 
 					{
 						m_id = 2017891959
 					}
-					m_networkMode = "ClientPredicted"
+					m_networkMode = "ClientSimulate"
 					m_sNote = ""
 					m_children = 
 					[
@@ -1055,7 +1055,7 @@
 					m_id = 1209225912
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = true
+				m_bNetwork = false
 				m_bUseMostRecentValue = false
 				m_bAutoReset = true
 				m_bPredicted = false
@@ -1069,26 +1069,11 @@
 					m_id = 1996171205
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = true
+				m_bNetwork = false
 				m_bUseMostRecentValue = false
-				m_bAutoReset = false
+				m_bAutoReset = true
 				m_bPredicted = false
 				m_bDefaultValue = false
-			},
-			{
-				_class = "CVectorAnimParameter"
-				m_name = "move_dir"
-				m_id = 
-				{
-					m_id = 1334856371
-				}
-				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = true
-				m_bUseMostRecentValue = false
-				m_bAutoReset = false
-				m_bPredicted = false
-				m_defaultValue = [ 0.0, 0.0, 0.0 ]
-				m_bInterpolate = false
 			},
 			{
 				_class = "CBoolAnimParameter"
@@ -1098,7 +1083,7 @@
 					m_id = 1491128348
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = true
+				m_bNetwork = false
 				m_bUseMostRecentValue = false
 				m_bAutoReset = true
 				m_bPredicted = false
@@ -1112,23 +1097,9 @@
 					m_id = 300374648
 				}
 				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = true
+				m_bNetwork = false
 				m_bUseMostRecentValue = false
 				m_bAutoReset = true
-				m_bPredicted = false
-				m_bDefaultValue = false
-			},
-			{
-				_class = "CBoolAnimParameter"
-				m_name = "walking"
-				m_id = 
-				{
-					m_id = 1036497615
-				}
-				m_previewButton = "ANIMPARAM_BUTTON_NONE"
-				m_bNetwork = true
-				m_bUseMostRecentValue = false
-				m_bAutoReset = false
 				m_bPredicted = false
 				m_bDefaultValue = false
 			},
