@@ -33,6 +33,14 @@
 								from = "weapon_vm_pi_decho_body2.vmat"
 								to = "models/weapons/materials/deagle/v_mw_deagle_body2.vmat"
 							},
+							{
+								from = "weapon_vm_pi_decho_decal.vmat"
+								to = "models/weapons/materials/deagle/decal/v_deagle_decal.vmat"
+							},
+							{
+								from = "weapon_vm_pi_decho_grip.vmat"
+								to = "models/weapons/materials/deagle/grip/v_deagle_grip.vmat"
+							},
 						]
 						use_global_default = false
 						global_default_material = ""
@@ -93,7 +101,39 @@
 					},
 					{
 						_class = "RenderMeshFile"
+						filename = "models/weapons/attachment_vm_pi_decho_grip_lod0.smd"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
 						filename = "models/weapons/attachment_vm_pi_decho_slide.smd"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						filename = "models/weapons/attachment_vm_pi_decho_slide_sight_on.smd"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 1.0
@@ -1878,6 +1918,27 @@
 						anim_markup_ordered = false
 						disable_compression = false
 						source_filename = "models/weapons/v_deagle_anims/reload_empty_xmaglrg_fast_2.smd"
+						start_frame = -1
+						end_frame = -1
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "a_empty2"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						source_filename = "models/weapons/v_deagle_anims/a_empty2.smd"
 						start_frame = -1
 						end_frame = -1
 						framerate = -1.0

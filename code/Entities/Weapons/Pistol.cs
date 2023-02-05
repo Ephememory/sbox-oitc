@@ -32,6 +32,17 @@ public partial class Pistol : Weapon
 		return false;
 	}
 
+	public override void Simulate( IClient owner )
+	{
+		base.Simulate( owner );
+
+		if ( Owner is not BBPlayer player )
+			return;
+
+
+		ViewModelEntity?.SetAnimParameter( "empty", player.PistolAmmo <= 0 ? 1f : 0f );
+	}
+
 	public override void AttackPrimary()
 	{
 		base.AttackPrimary();
