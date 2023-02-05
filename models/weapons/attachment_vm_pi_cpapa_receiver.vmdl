@@ -1926,7 +1926,7 @@
 					},
 					{
 						_class = "AnimFile"
-						name = "a_empty2"
+						name = "a_empty"
 						activity_name = ""
 						activity_weight = 1
 						weight_list_name = ""
@@ -1938,7 +1938,7 @@
 						hidden = false
 						anim_markup_ordered = false
 						disable_compression = false
-						source_filename = "models/weapons/v_deagle_anims/a_empty2.smd"
+						source_filename = "models/weapons/v_deagle_anims/a_empty.smd"
 						start_frame = -1
 						end_frame = -1
 						framerate = -1.0

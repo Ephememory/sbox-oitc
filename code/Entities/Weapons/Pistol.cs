@@ -39,8 +39,11 @@ public partial class Pistol : Weapon
 		if ( Owner is not BBPlayer player )
 			return;
 
+		if ( Input.Released( InputButton.Reload ) )
+			ViewModelEntity?.SetAnimParameter( "admire", true );
 
-		ViewModelEntity?.SetAnimParameter( "empty", player.PistolAmmo <= 0 ? 1f : 0f );
+		// :(
+		//ViewModelEntity?.SetAnimParameter( "empty", player.PistolAmmo <= 0 ? 1f : 0f );
 	}
 
 	public override void AttackPrimary()
