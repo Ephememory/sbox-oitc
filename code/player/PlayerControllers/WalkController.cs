@@ -90,13 +90,13 @@ public partial class WalkController : BasePlayerController
 	{
 		base.FrameSimulate();
 
-		var pl = Pawn as BBPlayer;
+		var pl = Pawn as Player;
 		EyeRotation = pl.ViewAngles.ToRotation();
 	}
 
 	public override void Simulate()
 	{
-		var pl = Pawn as BBPlayer;
+		var pl = Pawn as Player;
 
 		EyeLocalPosition = Vector3.Up * (EyeHeight * Pawn.Scale);
 		UpdateBBox();
@@ -541,7 +541,7 @@ public partial class WalkController : BasePlayerController
 
 	public virtual void CheckLadder()
 	{
-		var pl = Pawn as BBPlayer;
+		var pl = Pawn as Player;
 
 		var wishvel = new Vector3( pl.InputDirection.x.Clamp( -1f, 1f ), pl.InputDirection.y.Clamp( -1f, 1f ), 0 );
 		wishvel *= pl.ViewAngles.WithPitch( 0 ).ToRotation();

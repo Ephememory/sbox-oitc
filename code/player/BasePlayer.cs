@@ -33,6 +33,8 @@ public partial class BasePlayer : AnimatedEntity
 	[ClientInput] public Angles ViewAngles { get; set; }
 	public Angles OriginalViewAngles { get; private set; }
 
+	public TimeSince TimeSinceDeath { get; private set; }
+
 	/// <summary>
 	/// BBPlayer's inventory for entities that can be carried. See <see cref="BaseCarriable"/>.
 	/// </summary>
@@ -50,9 +52,6 @@ public partial class BasePlayer : AnimatedEntity
 		return Controller;
 	}
 
-
-	TimeSince timeSinceDied;
-
 	/// <summary>
 	/// Called every tick to simulate the player. This is called on the
 	/// client as well as the server (for prediction). So be careful!
@@ -66,7 +65,7 @@ public partial class BasePlayer : AnimatedEntity
 
 		if ( LifeState == LifeState.Dead )
 		{
-			if ( timeSinceDied > 3 && Game.IsServer )
+			if ( TimeSinceDeath > 3 && Game.IsServer )
 			{
 				Respawn();
 			}
@@ -114,7 +113,7 @@ public partial class BasePlayer : AnimatedEntity
 	{
 		GameManager.Current?.OnKilled( this );
 
-		timeSinceDied = 0;
+		TimeSinceDeath = 0;
 		LifeState = LifeState.Dead;
 		StopUsing();
 

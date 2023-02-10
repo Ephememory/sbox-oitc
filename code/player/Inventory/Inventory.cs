@@ -12,19 +12,19 @@ partial class Inventory : IInventory
 	{
 		get
 		{
-			return (Owner as BBPlayer)?.ActiveChild;
+			return (Owner as Player)?.ActiveChild;
 		}
 
 		set
 		{
-			if ( Owner is BBPlayer player )
+			if ( Owner is Player player )
 			{
 				player.ActiveChild = value;
 			}
 		}
 	}
 
-	public Inventory( BBPlayer player )
+	public Inventory( Player player )
 	{
 		Owner = player;
 	}

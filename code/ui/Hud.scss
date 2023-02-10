@@ -1,0 +1,23 @@
+﻿hud {
+    &.devcamera {
+        display: none;
+    }
+}
+
+.hudbox {
+    position: absolute;
+    bottom: 2%;
+    background-color: rgba(black, 0.0);
+    color: white;
+    font-size: 64px;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px;
+    width: auto;
+    height: 85px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+

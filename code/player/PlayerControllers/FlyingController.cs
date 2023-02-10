@@ -10,7 +10,7 @@ public class FlyingController : BasePlayerController
 
 	public override void Simulate()
 	{
-		var pl = Pawn as BBPlayer;
+		var pl = Pawn as Player;
 
 		Rotation = pl.ViewAngles.ToRotation();
 

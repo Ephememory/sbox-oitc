@@ -11,7 +11,7 @@ public static class PanelExtension
 
 	public static void PositionAtCrosshair( this Panel panel, Entity player )
 	{
-		if ( !player.IsValid() || player is not BBPlayer ply )
+		if ( !player.IsValid() || player is not Player ply )
 			return;
 
 		var EyePosition = ply.EyePosition;

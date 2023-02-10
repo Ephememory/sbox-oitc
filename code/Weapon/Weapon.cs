@@ -142,7 +142,7 @@ public partial class Weapon : ModelEntity, IUse
 	{
 		if ( Owner != null ) return false;
 
-		var player = user as BBPlayer;
+		var player = user as Player;
 		if ( Owner != null ) return false;
 
 		if ( player.Inventory is Inventory inventory )
@@ -215,7 +215,7 @@ public partial class Weapon : ModelEntity, IUse
 	/// </summary>
 	public virtual void ShootBullet( float spread, float force, float damage, float bulletSize, float range = DefaultBulletRange )
 	{
-		if ( Owner is not BBPlayer ply )
+		if ( base.Owner is not Player ply )
 			return;
 
 		ShootBullet( ply.EyePosition, ply.EyeRotation.Forward, spread, force, damage, bulletSize, range );
@@ -226,7 +226,7 @@ public partial class Weapon : ModelEntity, IUse
 	/// </summary>
 	public virtual void ShootBullets( int numBullets, float spread, float force, float damage, float bulletSize )
 	{
-		if ( Owner is not BBPlayer ply )
+		if ( base.Owner is not Player ply )
 			return;
 
 		var pos = ply.EyePosition;

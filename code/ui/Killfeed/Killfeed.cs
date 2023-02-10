@@ -17,7 +17,7 @@ partial class Killfeed : Panel
 	{
 		var entry = Current.AddChild<KillfeedEntry>();
 
-		if ( killer != null && killer.Pawn is BBPlayer k )
+		if ( killer != null && killer.Pawn is Player k )
 		{
 			entry.Killer.Text = killer.Name;
 			entry.Killer.SetClass( "me", killer.SteamId == Game.LocalClient.SteamId );
@@ -25,7 +25,7 @@ partial class Killfeed : Panel
 
 		entry.Method.Text = $"{method} ";
 
-		if ( victim != null && victim.Pawn is BBPlayer v )
+		if ( victim != null && victim.Pawn is Player v )
 		{
 			entry.Victim.Text = victim.Name;
 			entry.Victim.SetClass( "me", victim.SteamId == Game.LocalClient.SteamId );

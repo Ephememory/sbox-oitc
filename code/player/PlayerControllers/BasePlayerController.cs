@@ -58,7 +58,7 @@ public abstract class BasePlayerController : PawnController
 	{
 		base.FrameSimulate();
 
-		var pl = Pawn as BBPlayer;
+		var pl = Pawn as Player;
 		EyeRotation = pl.ViewAngles.ToRotation();
 	}
 }

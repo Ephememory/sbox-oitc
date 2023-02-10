@@ -1,10 +1,11 @@
 ﻿@using System;
 @using Sandbox;
 @using Sandbox.UI;
-@using System.Collections.Generic;
 
 @namespace OITC
+
 @inherits WorldPanel
+@attribute [StyleSheet("/ui/Nameplate/Nameplate.scss")]
 
 @code
 {
@@ -13,9 +14,16 @@
 
 	private Panel _avatar { get; set; }
 
+	public Nameplate(string name)
+	{
+		Name = name;
+		var width = Name.Length * 115;
+		PanelBounds = new Rect(-width / 2, -100, width, 250);
+	}
+
 	protected override int BuildHash()
 	{
-		return HashCode.Combine(SteamId);
+		return HashCode.Combine(SteamId, Name.FastHash());
 	}
 
 	public override void Tick()
@@ -25,36 +33,7 @@
 	}
 }
 
-<root>
+<root class="panel">
 	<panel @ref=_avatar class="avatar"></panel>
-	<label>@Name</label>
-	<style>
-		Nameplate {
-            background-color: rgb(89, 89, 101, 0.30);
-			border: 4px rgba(255, 255, 255, 0.03);
-            text-stroke: 1px rgb(50, 50, 50);
-			justify-content: center;
-			align-content: center;
-			transition: all 250ms ease-in-out;
-			transform:scale(1);
-
-			&:intro {
-				transform: scale(0);
-			}
-
-			&:outro {
-				transform: scale(0);
-			}
-
-			label {
-				align-self: center;
-				text-align: center;
-				color: red;
-				text-stroke: 9px black;
-				font-weight: 100;
-				font-size: 64px;
-			}
-		}
-	</style>
+	<label class="bold">@Name</label>
 </root>
-

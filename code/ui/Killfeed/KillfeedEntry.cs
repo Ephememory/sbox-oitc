@@ -7,22 +7,21 @@ namespace OITC;
 
 public partial class KillfeedEntry
 {
+	private RealTimeSince _created { get; set; }
+
 	public KillfeedEntry()
 	{
 		Killer = Add.Label( "", "left" );
 		Method = Add.Label( "", "method" );
 		Victim = Add.Label( "", "right" );
 
-		//lazy
-		Method.Style.FontStyle = FontStyle.Italic;
-		Method.Style.Padding = Length.Pixels( 3 );
-
-		_ = RunAsync();
+		_created = 0;
 	}
 
-	async Task RunAsync()
+	public override void Tick()
 	{
-		await Task.Delay( 10000 );
-		Delete();
+		base.Tick();
+		if ( _created >= 7f )
+			Delete();
 	}
 }

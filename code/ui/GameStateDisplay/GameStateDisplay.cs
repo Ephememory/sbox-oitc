@@ -2,12 +2,12 @@
 using Sandbox.UI;
 using System;
 
-public partial class HudGameState : Panel
+public partial class GameStateDisplay : Panel
 {
 	public static Action OnStateChanged;
 	public static Action OnNumPlayersFulfilled;
 
-	public HudGameState()
+	public GameStateDisplay()
 	{
 		OnNumPlayersFulfilled += () =>
 		{

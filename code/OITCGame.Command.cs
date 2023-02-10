@@ -1,7 +1,7 @@
 
 namespace OITC;
 
-partial class BBGame
+partial class OITCGame
 {
 	[ConVar.Replicated( "oitc_debug" )]
 	public static bool DebugMode { get; set; } = false;
@@ -22,10 +22,10 @@ partial class BBGame
 
 		foreach ( var c in Game.Clients )
 		{
-			var player = (c.Pawn as BBPlayer);
-			//this is chtupid tbh
-			player.RemoveAmmo( player.PistolAmmo );
-			player.AwardAmmo( 1 );
+			if ( c.Pawn is not Player player )
+				continue;
+
+			player.SetAmmo( 1 );
 			player.Respawn();
 			c.SetValue( "kills", 0 );
 			c.SetValue( "deaths", 0 );
@@ -35,35 +35,30 @@ partial class BBGame
 		Current.State.Tier = GameState.MidGame;
 	}
 
-	[ConCmd.Admin( "give_ammo" )]
-	public static void GiveAmmo()
+	[ConCmd.Admin( "set_ammo" )]
+	public static void SetAmmo()
 	{
 		Game.AssertServer();
-		(ConsoleSystem.Caller.Pawn as BBPlayer).AwardAmmo( BBPlayer.MaxAmmo );
+		(ConsoleSystem.Caller.Pawn as Player).SetAmmo( Player.MaxAmmo );
 	}
 
-	[ConCmd.Admin( "give_ammo_all" )]
-	public static void GiveAmmoAll()
+	[ConCmd.Admin( "set_ammo_ammo_all" )]
+	public static void SetAmmoAll()
 	{
 		Game.AssertServer();
 		foreach ( var c in Game.Clients )
 		{
-			var player = (c.Pawn as BBPlayer);
-			player.AwardAmmo( 4 );
-		}
-	}
+			if ( c.Pawn is not Player player )
+				continue;
 
-	[ConCmd.Admin( "oitc_cookie" )]
-	public static void CookieFlashlight()
-	{
-		Game.AssertServer();
-		(Sandbox.ConsoleSystem.Caller.Pawn as BBPlayer).SetCookieFlashlightCookie();
+			player.AwardAmmo( Player.MaxAmmo );
+		}
 	}
 
 	[ConCmd.Admin( "kill" )]
 	public static void Kill()
 	{
-		if ( ConsoleSystem.Caller.Pawn is not BBPlayer ply )
+		if ( ConsoleSystem.Caller.Pawn is not Player ply )
 			return;
 
 		ply.TakeDamage( DamageInfo.Generic( 10000 ) );

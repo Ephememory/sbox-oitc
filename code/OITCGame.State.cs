@@ -9,7 +9,7 @@ public enum GameState : byte
 	RoundOver
 }
 
-partial class BBGame
+partial class OITCGame
 {
 	public int NumPlayers = 0;
 

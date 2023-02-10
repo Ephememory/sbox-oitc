@@ -2,14 +2,14 @@ global using Sandbox;
 
 namespace OITC;
 
-partial class BBGame : GameManager
+partial class OITCGame : GameManager
 {
 	[Net]
 	public GameStateInfo State { get; private set; }
 
-	public static new BBGame Current => GameManager.Current as BBGame;
+	public static new OITCGame Current => GameManager.Current as OITCGame;
 
-	public BBGame()
+	public OITCGame()
 	{
 		if ( Game.IsClient )
 		{
@@ -29,18 +29,11 @@ partial class BBGame : GameManager
 	public override void ClientJoined( IClient cl )
 	{
 		NumPlayers++;
-		var player = new BBPlayer( cl );
+		var player = new Player( cl );
 		cl.Pawn = player;
 		player.Respawn();
 
 		base.ClientJoined( cl );
-
-		// Randomly gives you the cookie cookie.
-		if ( Game.Random.Int( 1, 420 ) == 69 )
-		{
-			player.SetCookieFlashlightCookie();
-			Chat.AddChatEntry( To.Single( cl ), "OITC", "Enjoy your cookie.", 0 );
-		}
 
 		Chat.AddChatEntry( To.Everyone, "", $"{cl.Name} joined the game.", cl.SteamId.ToString() );
 
@@ -74,7 +67,7 @@ partial class BBGame : GameManager
 
 		Log.Info( $"{client.Name} was killed" );
 
-		if ( pawn is not BBPlayer killed )
+		if ( pawn is not Player killed )
 			return;
 
 		if ( pawn.LastAttacker != null )
@@ -110,7 +103,7 @@ partial class BBGame : GameManager
 		if ( killer == null )
 			return;
 
-		if ( killer is BBPlayer ply )
+		if ( killer is Player ply )
 		{
 			ply.AwardAmmo( killed.LastDamage.HasTag( DamageTags.Blunt ) ? 2 : 1 );
 		}
@@ -153,7 +146,7 @@ partial class BBGame : GameManager
 	private void NumPlayerFulfilled()
 	{
 		Game.AssertClient();
-		HudGameState.OnNumPlayersFulfilled?.Invoke();
+		GameStateDisplay.OnNumPlayersFulfilled?.Invoke();
 	}
 
 }

@@ -27,7 +27,7 @@ public class PawnController : BaseNetworkable
 		Rotation = entity.Rotation;
 		Velocity = entity.Velocity;
 
-		if ( entity is BBPlayer player )
+		if ( entity is Player player )
 		{
 			EyeRotation = player.EyeRotation;
 			EyeLocalPosition = player.EyeLocalPosition;
@@ -65,7 +65,7 @@ public class PawnController : BaseNetworkable
 		target.GroundEntity = GroundEntity;
 		target.BaseVelocity = BaseVelocity;
 
-		if ( target is BBPlayer player )
+		if ( target is Player player )
 		{
 			player.EyeLocalPosition = EyeLocalPosition;
 			player.EyeRotation = EyeRotation;

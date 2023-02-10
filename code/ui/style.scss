@@ -1,0 +1,27 @@
+$background: #07000099;
+$enemy: #ffffff;
+$curve: 5px;
+$font: Poppins;
+
+.panel {
+    background-color: $background;
+    border: 2px rgba(29, 27, 27, 0.068);
+    border-radius: $curve;
+    font-family: $font;
+    width: auto;
+
+    &.blur {
+        backdrop-filter: blur(2px);
+    }
+}
+
+label {
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .bold {
+        font-weight: bold;
+    }
+}

@@ -2,7 +2,7 @@ using Sandbox.UI;
 
 namespace OITC;
 
-public partial class BBPlayer : BasePlayer
+public partial class Player : BasePlayer
 {
 	[ConVar.Replicated( "oitc_max_ammo" )]
 	public static int MaxAmmo { get; set; } = 2;
@@ -13,7 +13,7 @@ public partial class BBPlayer : BasePlayer
 	public DamageInfo LastDamage { get; private set; }
 
 	[Net]
-	public BBPlayer LastPlayerAttacker { get; private set; }
+	public Player LastPlayerAttacker { get; private set; }
 
 	// TODO: Move DeathCam to an ephemeral component.
 	/// <summary>
@@ -26,7 +26,7 @@ public partial class BBPlayer : BasePlayer
 	/// </summary>
 	public ClothingContainer Clothing = new();
 
-	public BBPlayer()
+	public Player()
 	{
 		Inventory = new Inventory( this );
 	}
@@ -34,7 +34,7 @@ public partial class BBPlayer : BasePlayer
 	/// <summary>
 	/// Initialize using this client
 	/// </summary>
-	public BBPlayer( IClient cl ) : this()
+	public Player( IClient cl ) : this()
 	{
 		// Load clothing from client data
 		Clothing.LoadFromClient( cl );
@@ -43,42 +43,7 @@ public partial class BBPlayer : BasePlayer
 	public override void Spawn()
 	{
 		base.Spawn();
-
-		SetModel( "models/humans/male.vmdl" );
-
-		var useLightSkinTone = Game.Random.Int( 0, 1 ) == 1;
-		if ( useLightSkinTone )
-			SetMaterialGroup( "skin1" );
-
-		var head = new AnimatedEntity();
-		head.Model = Model.Load( useLightSkinTone ? "models/humans/heads/frank/frank.vmdl" : "models/humans/heads/adam/adam.vmdl" );
-		head.EnableHideInFirstPerson = true;
-		head.EnableShadowInFirstPerson = true;
-		head.SetParent( this, true );
-
-		FlashlightPosOffset = 30f;
-		FlashlightEntity = new SpotLightEntity
-		{
-			Enabled = false,
-			DynamicShadows = true,
-			Range = 3200f,
-			Falloff = 0.3f,
-			LinearAttenuation = 0.3f,
-			Brightness = 5f,
-			Color = Color.FromBytes( 200, 200, 200, 230 ),
-			InnerConeAngle = 9,
-			OuterConeAngle = 32,
-			FogStrength = 1.0f,
-			Owner = this,
-			EnableViewmodelRendering = true,
-			LightCookie = Texture.Load( "materials/effects/lightcookie.vtex" )
-		};
-	}
-
-	public void SetCookieFlashlightCookie()
-	{
-		Game.AssertServer();
-		FlashlightEntity.LightCookie = Texture.Load( "textures/cookie.vtex" );
+		SetModel( "models/citizen/citizen.vmdl" );
 	}
 
 	public override void Respawn()
@@ -90,12 +55,11 @@ public partial class BBPlayer : BasePlayer
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
-		//Clothing.DressEntity( this );
+		Clothing.DressEntity( this );
 		Inventory = new Inventory( this );
 		Inventory.Add( new Pistol(), true );
 
 		PistolAmmo = 1;
-
 		base.Respawn();
 	}
 
@@ -109,9 +73,6 @@ public partial class BBPlayer : BasePlayer
 		TickPlayerUse();
 		SimulateActiveChild( cl, ActiveChild );
 		SimulateAnimation( (WalkController)Controller );
-
-		FlashlightSimulate();
-
 	}
 
 	public override void FrameSimulate( IClient cl )
@@ -203,13 +164,12 @@ public partial class BBPlayer : BasePlayer
 	{
 		LastDamage = info;
 
-		if ( info.Attacker is BBPlayer player )
+		if ( info.Attacker is Player player )
 			LastPlayerAttacker = player;
 
 		base.TakeDamage( info );
 	}
 
-	//could use setter/getters but this seems more clear.
 	public void AwardAmmo( int amt )
 	{
 		Game.AssertServer();
@@ -230,17 +190,18 @@ public partial class BBPlayer : BasePlayer
 	public void RemoveAmmo( int amtToRemove )
 	{
 		PistolAmmo -= amtToRemove;
-		if ( PistolAmmo <= 0 )
-		{
-			SwitchToFists();
-		}
-
 	}
 
-	//more human readable functions, considering the scope of this mode, its fine.
-	public void SwitchToFists()
+	public void SetAmmo( int value )
 	{
-		Inventory.SetActiveSlot( 0, false );
+		Game.AssertServer();
+		if ( value >= MaxAmmo )
+		{
+			PistolAmmo = MaxAmmo;
+			return;
+		}
+
+		PistolAmmo = value;
 	}
 
 	public void SwitchToPistol()

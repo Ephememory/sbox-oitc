@@ -36,7 +36,7 @@ public partial class Pistol : Weapon
 	{
 		base.Simulate( owner );
 
-		if ( Owner is not BBPlayer player )
+		if ( base.Owner is not Player player )
 			return;
 
 		if ( Input.Released( InputButton.Reload ) )
@@ -51,7 +51,7 @@ public partial class Pistol : Weapon
 		base.AttackPrimary();
 		TimeSincePrimaryAttack = 0;
 
-		if ( Owner is not BBPlayer player )
+		if ( base.Owner is not Player player )
 			return;
 
 		if ( player.PistolAmmo <= 0 )
@@ -80,7 +80,7 @@ public partial class Pistol : Weapon
 	/// <returns></returns>
 	public bool Melee( float damage, float range = DefaultBulletRange )
 	{
-		if ( !Owner.IsValid() || Owner is not BBPlayer ply )
+		if ( !base.Owner.IsValid() || base.Owner is not Player ply )
 			return false;
 
 		var pos = ply.EyePosition;

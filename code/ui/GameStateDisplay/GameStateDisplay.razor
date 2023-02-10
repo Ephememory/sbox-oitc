@@ -1,0 +1,25 @@
+﻿@using Sandbox
+@using Sandbox.UI
+
+@namespace OITC
+
+@inherits Panel
+@attribute [StyleSheet("/ui/GameStateDisplay/GameStateDisplay.scss")]
+
+@code
+{
+	protected override int BuildHash()
+	{
+		return System.HashCode.Combine(OITCGame.Current.State.Tier);
+	}
+}
+
+@{
+	SetClass( "toggled", OITCGame.Current.State.Tier == GameState.MidGame );
+}
+
+<root class="panel blur">
+	<label>
+		@OITCGame.Current.State.Text
+	</label>
+</root>

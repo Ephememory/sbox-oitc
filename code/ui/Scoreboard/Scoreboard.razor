@@ -1,10 +1,11 @@
 ﻿@using System;
 @using Sandbox;
 @using Sandbox.UI;
-@using System.Collections.Generic;
 
 @namespace OITC
+
 @inherits Panel
+@attribute [StyleSheet("/ui/Scoreboard/Scoreboard.scss")]
 
 @code
 {
@@ -21,7 +22,7 @@
 }
 
 <root>
-	<inner>
+	<inner class="panel blur">
 		@{
 			foreach (var client in Game.Clients)
 			{

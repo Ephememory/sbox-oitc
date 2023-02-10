@@ -5,12 +5,19 @@
 @namespace OITC
 
 @inherits Panel
+@attribute [StyleSheet("/ui/Ammo/Ammo.scss")]
 
 @code
 {
 	public Ammo()
 	{
-		if (Game.LocalPawn is not BBPlayer player)
+		if (Game.IsClient)
+			Init();
+	}
+
+	private void Init()
+	{
+		if (Game.LocalPawn is not Player player)
 			return;
 
 		for (int i = 0; i < player.PistolAmmo; i++)
@@ -21,7 +28,7 @@
 
 	protected override int BuildHash()
 	{
-		if (Game.LocalPawn is not BBPlayer player)
+		if (Game.LocalPawn is not Player player)
 			return 0;
 
 		return System.HashCode.Combine(player.PistolAmmo);

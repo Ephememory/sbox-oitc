@@ -3,6 +3,7 @@
 @namespace OITC
 
 @inherits Panel
+@attribute [StyleSheet("/ui/RestartTimer/RestartTimer.scss")]
 
 @code
 {
@@ -15,9 +16,12 @@
 }
 
 @{
-	SetClass("active", UntilRestart > 0.5f);
+	if (UntilRestart <= 0.1f)
+		UntilRestart = 0.0f;
+
+	SetClass("active", UntilRestart > 0.7f);
 }
 
-<root>
+<root class="panel blur">
 	<label id="countdown">@UntilRestart.Relative.ToString("0.#")</label>
 </root>

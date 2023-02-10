@@ -1,5 +1,7 @@
 ﻿#if DEBUG
+using Editor;
 using Sandbox.Internal;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OITC;
@@ -9,12 +11,12 @@ public partial class DebugBot : Bot
 	/// <summary>
 	/// The Player this bot controls.
 	/// </summary>
-	public BBPlayer Pawn;
+	public Player Pawn;
 
 	/// <summary>
 	/// The host Player.
 	/// </summary>
-	public BBPlayer Target;
+	public Player Target;
 
 	public bool WishAttack { get; set; }
 
@@ -86,7 +88,7 @@ public partial class DebugBot : Bot
 	public static void AddBot()
 	{
 		var pawn = ConsoleSystem.Caller.Pawn;
-		if ( pawn is not BBPlayer ply )
+		if ( pawn is not Player ply )
 			return;
 
 		var b = new DebugBot();
@@ -105,11 +107,92 @@ public partial class DebugBot : Bot
 		}
 	}
 
+	[ConCmd.Admin( "bot_got" )]
+	public static void BotGod()
+	{
+		foreach ( var bot in Bot.All.ToArray() )
+		{
+			if ( bot is not DebugBot b )
+				continue;
+
+			b.Pawn.Health *= 1000;
+		}
+	}
+
+	[ConCmd.Admin( "bot_tele" )]
+	public static void BotTeleport()
+	{
+		if ( ConsoleSystem.Caller.Pawn is not Player player )
+			return;
+
+		foreach ( var bot in Bot.All.ToArray() )
+		{
+			player.Position = bot.Client.Position;
+		}
+	}
+
+	internal static List<string> _defaultNames = new List<string>
+	{
+		"IDentifyYou",
+		"legendary_gamer",
+		"ImmortalSoul",
+		"I Am A Myth",
+		"I_am_a_rider",
+		"i_am_a_guardian",
+		"gangsOFbeast",
+		"deadly_gamer",
+		"sharkLord",
+		"I_AM_THE_DANGER",
+		"UnicornHunter",
+		"BattleKing",
+		"Dark-Lord",
+		"BillieJean",
+		"YumtheBOSS",
+		"TheGodFather",
+		"A-Living-Zombie",
+		"LordLucifer",
+		"Myth1c",
+		"CrazyGamer",
+		"Shadow Dagger",
+		"Beg-for-my-mercy",
+		"Shoot2kill",
+		"AggressiveKiller",
+		"ObjectToHonor",
+		"IamTheDanger",
+		"Incredible Hulk",
+		"Can’tTouchThis",
+		"MasterOftheALL",
+		"Perfect Player",
+		"king_of_epic_fails",
+		"The Executer",
+		"TalkLessWinMore",
+		"RIPPER",
+		"God of the wars",
+		"SniperGotYou",
+		"Bomb Attacker",
+		"Watch your back",
+		"MasterOFDisaster",
+		"Dominatrix",
+	};
+
+	internal static List<string> _shortNames = new List<string>
+	{
+		"Al",
+		"D",
+		"Hex",
+		"Nick",
+		"Timmy",
+		"Op"
+	};
+
+	static DebugBot()
+	{
+		SetDefaultNames( _shortNames );
+	}
+
 	public override void BuildInput()
 	{
-		Pawn ??= Client.Pawn as BBPlayer;
-
-
+		Pawn ??= (Client.Pawn as Player);
 
 		if ( DrawDebug )
 		{

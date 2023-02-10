@@ -1,0 +1,25 @@
+@import "/UI/style.scss";
+
+Nameplate {
+    text-stroke: 1px rgb(50, 50, 50);
+    justify-content: center;
+    align-items: center;
+    transition: all 250ms ease-in-out;
+    transform: scale(1);
+    color: $enemy;
+
+    &:intro {
+        transform: scale(0);
+    }
+
+    &:outro {
+        transform: scale(0);
+    }
+
+    label {
+        align-self: center;
+        text-align: center;
+        text-stroke: 9px black;
+        font-size: 64px;
+    }
+}

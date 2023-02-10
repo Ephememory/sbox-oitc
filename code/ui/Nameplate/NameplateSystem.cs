@@ -8,7 +8,7 @@ using System.Xml;
 /// When a player is within radius of the camera we add this to their entity.
 /// We remove it again when they go out of range.
 /// </summary>
-internal class NameTagComponent : EntityComponent<BBPlayer>
+internal class NameTagComponent : EntityComponent<OITC.Player>
 {
 	Nameplate NameTag;
 
@@ -17,10 +17,8 @@ internal class NameTagComponent : EntityComponent<BBPlayer>
 		var steamid = Entity.Client.SteamId;
 		var name = Entity.Client.Name;
 
-		NameTag = new Nameplate();
-		NameTag.Name = name;
+		NameTag = new Nameplate( name );
 		NameTag.SteamId = steamid;
-		NameTag.PanelBounds = new Rect( -500, -100, 1000, 200 );
 	}
 
 	protected override void OnDeactivate()
@@ -36,6 +34,7 @@ internal class NameTagComponent : EntityComponent<BBPlayer>
 	public void FrameUpdate()
 	{
 		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
+		tx.Position += Vector3.Up * 8f;
 		tx.Rotation = Rotation.LookAt( -Camera.Rotation.Forward );
 		NameTag.Transform = tx;
 	}
@@ -46,8 +45,8 @@ internal class NameTagComponent : EntityComponent<BBPlayer>
 	[Event.Client.Frame]
 	public static void SystemUpdate()
 	{
-		var localPawn = Game.LocalPawn as BBPlayer;
-		foreach ( var player in Sandbox.Entity.All.OfType<BBPlayer>() )
+		var localPawn = Game.LocalPawn as OITC.Player;
+		foreach ( var player in Sandbox.Entity.All.OfType<OITC.Player>() )
 		{
 			if ( player.IsLocalPawn && player.IsFirstPersonMode )
 			{
@@ -58,7 +57,7 @@ internal class NameTagComponent : EntityComponent<BBPlayer>
 
 			// If our local pawn is dead we are in the death cam, keep the nameplates on
 			// so we have a better chance of seeing who killed us in case we miss the KillFeed entry.
-			var shouldRemove = player.Position.Distance( Camera.Position ) > 600 && !(localPawn.LifeState == LifeState.Dead);
+			var shouldRemove = player.Position.Distance( Camera.Position ) > 1024 && !(localPawn.LifeState == LifeState.Dead);
 			shouldRemove = shouldRemove || player.LifeState != LifeState.Alive;
 			shouldRemove = shouldRemove || player.IsDormant;
 
