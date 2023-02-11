@@ -4,15 +4,20 @@ $curve: 6px;
 $font: Poppins;
 
 .box {
-    background-color: $background;
-    border: 2px rgba(29, 27, 27, 0.068);
-    border-radius: $curve;
     font-family: $font;
-    width: auto;
 
     &.blur {
         backdrop-filter: blur(2px);
     }
+
+    &.dark {
+        background-color: $background;
+    }
+}
+
+.rounded-top {
+    border-top-left-radius: $curve;
+    border-top-right-radius: $curve;
 }
 
 label {
@@ -22,6 +27,11 @@ label {
     text-align: center;
 
     .bold {
+        font-weight: bold;
+    }
+
+    &.header {
+        font-size: 64px;
         font-weight: bold;
     }
 }

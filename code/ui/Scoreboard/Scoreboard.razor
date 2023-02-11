@@ -18,17 +18,21 @@
 	{
 		base.Tick();
 		SetClass("active", Input.Down(InputButton.Score));
+		SetClass("active", true);
 	}
 }
 
 <root>
-	<inner class="box blur">
-		@{
-			foreach (var client in Game.Clients)
-			{
-				<ScoreboardEntry Client=@client>
-				</ScoreboardEntry>
+	<div class="container box rounded-top">
+		<label class="header">One In The Chamber</label>
+		<div class="inner">
+			@{
+				foreach (var client in Game.Clients)
+				{
+					<ScoreboardEntry Client=@client>
+					</ScoreboardEntry>
+				}
 			}
-		}
-	</inner>
+		</div>
+	</div>
 </root>
