@@ -1,12 +1,17 @@
 @import "/UI/style.scss";
 
 Nameplate {
+    display: flex;
+    flex-direction: row;
     text-stroke: 1px rgb(50, 50, 50);
     justify-content: center;
     align-items: center;
     transition: all 250ms ease-in-out;
     transform: scale(1);
     color: $enemy;
+    font-weight: 700;
+    margin: 2px;
+    padding: 1px;
 
     &:intro {
         transform: scale(0);

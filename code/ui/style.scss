@@ -1,6 +1,6 @@
 $background: #07000099;
 $enemy: #ffffff;
-$curve: 5px;
+$curve: 6px;
 $font: Poppins;
 
 .panel {
@@ -24,4 +24,8 @@ label {
     .bold {
         font-weight: bold;
     }
+}
+
+.pfp {
+    border-radius: 100px;
 }

@@ -1,19 +1,20 @@
 @import "ui/style.scss";
 
 KillfeedEntry {
+    background-color: red;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     position: relative;
-    padding-right: 7px;
-    padding-left: 7px;
     width: auto;
     height: auto;
-    min-height: 1%;
+    min-height: 7px;
     opacity: 1;
-    margin-right: 12px;
-    margin-top: 2px;
     transition: transform 0.2s ease-in;
     text-stroke: 1px rgb(50, 50, 50);
+    flex-shrink: 0;
+    margin-bottom: 5px;
 
     label {
         font-style: italic;

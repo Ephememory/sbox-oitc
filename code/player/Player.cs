@@ -174,10 +174,12 @@ public partial class Player : BasePlayer
 	{
 		Game.AssertServer();
 
-		if ( PistolAmmo > MaxAmmo )
+		if ( PistolAmmo >= MaxAmmo )
 			return;
 
-		if ( PistolAmmo + amt > MaxAmmo )
+		var result = PistolAmmo + amt;
+
+		if ( result > MaxAmmo )
 		{
 			PistolAmmo = MaxAmmo;
 		}

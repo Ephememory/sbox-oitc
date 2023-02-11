@@ -12,28 +12,23 @@
 	public long SteamId { get; set; }
 	public string Name { get; set; }
 
-	private Panel _avatar { get; set; }
-
 	public Nameplate(string name)
 	{
 		Name = name;
-		var width = Name.Length * 115;
-		PanelBounds = new Rect(-width / 2, -100, width, 250);
+		var width = Name.Length * 150;
+		if (Name.Length <= 3)
+			width *= 2;
+
+		PanelBounds = new Rect(-width / 2, -100, width, 230);
 	}
 
 	protected override int BuildHash()
 	{
 		return HashCode.Combine(SteamId, Name.FastHash());
 	}
-
-	public override void Tick()
-	{
-		base.Tick();
-		_avatar.Style.SetBackgroundImage($"avatar:{SteamId}");
-	}
 }
 
 <root class="panel">
-	<panel @ref=_avatar class="avatar"></panel>
+	<img class="pfp" src="avatar:@SteamId" />
 	<label class="bold">@Name</label>
 </root>

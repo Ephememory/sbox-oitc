@@ -9,7 +9,8 @@ partial class Killfeed : Panel
 
 	public Killfeed()
 	{
-		if ( !Game.IsClient ) return;
+		if ( !Game.IsClient )
+			return;
 		Current = this;
 	}
 
@@ -23,7 +24,7 @@ partial class Killfeed : Panel
 			entry.Killer.SetClass( "me", killer.SteamId == Game.LocalClient.SteamId );
 		}
 
-		entry.Method.Text = $"{method} ";
+		entry.Method.Text = $"{method}";
 
 		if ( victim != null && victim.Pawn is Player v )
 		{

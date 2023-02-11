@@ -21,7 +21,7 @@ public partial class KillfeedEntry
 	public override void Tick()
 	{
 		base.Tick();
-		if ( _created >= 7f )
+		if ( _created >= 6f )
 			Delete();
 	}
 }
