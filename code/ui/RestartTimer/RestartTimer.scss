@@ -1,24 +1,18 @@
 @import "ui/style.scss";
 
 RestartTimer {
+    top: 25%;
     opacity: 0;
     position: absolute;
+    min-width: 190px;
     color: rgba(255, 255, 255, 0.966);
-    left: 50%;
-    top: 35%;
-    width: 200px;
-    height: 100px;
-    padding: 6px;
     margin-left: -100px;
     font-family: Poppins;
     font-size: 64px;
-    font-weight: normal;
-    align-items: center;
-    justify-content: center;
+    font-weight: bold;
     transition: all 500ms ease-in;
-
+    justify-content: center;
     &.active {
         opacity: 1;
-        background-color: rgba(0, 0, 0, 0.562);
     }
 }

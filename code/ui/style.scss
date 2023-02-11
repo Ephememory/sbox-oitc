@@ -3,7 +3,7 @@ $enemy: #ffffff;
 $curve: 6px;
 $font: Poppins;
 
-.panel {
+.box {
     background-color: $background;
     border: 2px rgba(29, 27, 27, 0.068);
     border-radius: $curve;
@@ -28,4 +28,10 @@ label {
 
 .pfp {
     border-radius: 100px;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,5 +1,5 @@
-﻿@using Sandbox.UI
-
+﻿@using System
+@using Sandbox.UI
 @namespace OITC
 
 @inherits Panel
@@ -16,12 +16,9 @@
 }
 
 @{
-	if (UntilRestart <= 0.1f)
-		UntilRestart = 0.0f;
-
 	SetClass("active", UntilRestart > 0.7f);
 }
 
-<root class="panel blur">
-	<label id="countdown">@UntilRestart.Relative.ToString("0.#")</label>
+<root class="box blur">
+	<label id="countdown" text=@MathF.Abs(UntilRestart.Relative).ToString("0")></label>
 </root>

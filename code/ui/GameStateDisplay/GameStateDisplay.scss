@@ -3,14 +3,10 @@
 GameStateDisplay {
     position: absolute;
     color: rgba(255, 255, 255, 0.89);
-    left: 50%;
-    top: 25%;
-    width: 300px;
-    margin-left: -150px;
-    height: 4%;
-    padding: 6px;
     font-size: 34px;
-    font-weight: normal;
+    padding: 12px;
+    top: 15%;
+    font-weight: bold;
     align-items: center;
     justify-content: center;
     transition: all 500ms ease-in;

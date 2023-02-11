@@ -114,7 +114,7 @@ partial class OITCGame : GameManager
 		if ( killer.Client.GetValue<int>( "kills" ) >= ScoreLimit - 1 )
 		{
 			State.Tier = GameState.RoundOver;
-			State.Text = "Game over!";
+			State.Text = "GAME OVER!";
 			EndRound();
 		}
 

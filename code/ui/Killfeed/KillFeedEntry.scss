@@ -8,19 +8,18 @@ KillfeedEntry {
     align-items: center;
     position: relative;
     width: auto;
-    height: auto;
-    min-height: 7px;
+    height: 32px;
+    min-height: 2px;
     opacity: 1;
     transition: transform 0.2s ease-in;
     text-stroke: 1px rgb(50, 50, 50);
-    flex-shrink: 0;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 
     label {
         font-style: italic;
         padding: 7px;
 
-        &.left {
+        &.killer {
             color: red;
         }
 

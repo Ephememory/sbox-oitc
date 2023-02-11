@@ -31,7 +31,7 @@ partial class OITCGame
 			c.SetValue( "deaths", 0 );
 		}
 
-		Current.State.Text = "Fight!";
+		Current.State.Text = "FIGHT!";
 		Current.State.Tier = GameState.MidGame;
 	}
 
