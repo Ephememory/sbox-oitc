@@ -7,7 +7,7 @@ partial class OITCGame
 	public static bool DebugMode { get; set; } = false;
 
 	[ConVar.Replicated( "oitc_score_limit" )]
-	public static int ScoreLimit { get; set; } = 10;
+	public static int ScoreLimit { get; set; } = 15;
 
 	[ConVar.Replicated( "oitc_time_limit" )]
 	public static float TimeLimit { get; set; }
