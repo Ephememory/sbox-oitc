@@ -187,7 +187,7 @@ public partial class DebugBot : Bot
 
 	static DebugBot()
 	{
-		SetDefaultNames( _shortNames );
+		SetDefaultNames( _defaultNames );
 	}
 
 	public override void BuildInput()

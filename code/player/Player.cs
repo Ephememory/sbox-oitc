@@ -222,7 +222,9 @@ public partial class Player : BasePlayer
 		if ( Game.IsServer )
 			return;
 
-		Game.AssertClient();
+		if ( !IsLocalPawn )
+			return;
+
 		Event.Run( "oitc.player_ammo_change", oldValue, newValue );
 	}
 

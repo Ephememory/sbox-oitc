@@ -35,7 +35,7 @@ internal class NameTagComponent : EntityComponent<OITC.Player>
 	{
 		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
 		tx.Position += Vector3.Up * 8f;
-		tx.Rotation = Rotation.LookAt( -Camera.Rotation.Forward );
+		tx.Rotation = Rotation.LookAt( -Camera.Rotation.Forward, Vector3.Up );
 		NameTag.Transform = tx;
 	}
 

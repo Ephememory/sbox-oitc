@@ -15,10 +15,7 @@
 	public Nameplate(string name)
 	{
 		Name = name;
-		var width = Name.Length * 150;
-		if (Name.Length <= 3)
-			width *= 2;
-
+		var width = 1100;
 		PanelBounds = new Rect(-width / 2, -100, width, 230);
 	}
 
@@ -30,5 +27,5 @@
 
 <root class="box dark">
 	<img class="pfp" src="avatar:@SteamId" />
-	<label class="bold">@Name</label>
+	<label class="bold">@Name.Truncate(14, "...")</label>
 </root>

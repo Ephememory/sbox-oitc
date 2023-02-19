@@ -1,9 +1,11 @@
 @import "ui/style.scss";
 
 Killfeed {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
     position: absolute;
-    right: 1%;
-    top: 1%;
+    padding: 2px;
+    right: 0;
+    top: 0;
     width: 650px;
     height: 200px;
     font-size: 17px;

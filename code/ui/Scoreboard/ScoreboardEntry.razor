@@ -1,0 +1,31 @@
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace OITC
+@inherits Panel
+
+@code
+{
+    public IClient Client { get; set; }
+
+    protected override int BuildHash()
+    {
+        return HashCode
+        .Combine(Client.GetInt("kills"), Client.GetInt("deaths"), Client.Name.FastHash());
+    }
+}
+
+@{
+
+}
+
+<root>
+    <img class="pfp" src="avatar:@Client.SteamId" ;></img>
+    <label class=" name">@(Client.Name)</label>
+    <div class="score">
+        <label class="name" text=@Client.GetInt("kills")></label>
+        <div style="width: 1%; background-color: white;"></div>
+        <label class="name" text=@Client.GetInt("deaths")></label>
+    </div>
+</root>

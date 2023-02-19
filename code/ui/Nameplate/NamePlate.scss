@@ -1,6 +1,8 @@
 @import "/UI/style.scss";
 
 Nameplate {
+    width: 100px;
+    height: 100px;
     display: flex;
     flex-direction: row;
     text-stroke: 1px rgb(50, 50, 50);
@@ -25,6 +27,6 @@ Nameplate {
         align-self: center;
         text-align: center;
         text-stroke: 9px black;
-        font-size: 64px;
+        font-size: 54px;
     }
 }
