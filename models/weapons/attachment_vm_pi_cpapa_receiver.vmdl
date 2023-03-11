@@ -27,7 +27,7 @@
 							},
 							{
 								from = "weapon_vm_pi_decho_body.vmat"
-								to = "models/weapons/materials/deagle/v_mw_deagle\'.vmat"
+								to = "models/weapons/materials/deagle/v_mw_deagle.vmat"
 							},
 							{
 								from = "weapon_vm_pi_decho_body2.vmat"

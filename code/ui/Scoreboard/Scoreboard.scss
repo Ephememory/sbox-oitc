@@ -71,15 +71,17 @@ Scoreboard {
         padding: 4px;
 
         .friend {
-            display: flex;
             flex-shrink: 1;
             font-family: MaterialIcons;
             font-size: 32px;
-            opacity: 0;
             color: green;
             text-stroke: 2px black;
+            flex-shrink: 1;
+            display: none;
+            opacity: 0;
 
             &.active {
+                display: flex;
                 opacity: 1;
             }
         }

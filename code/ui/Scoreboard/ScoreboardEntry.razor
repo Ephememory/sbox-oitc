@@ -24,13 +24,13 @@
 		Name.SetClass("me", Client.SteamId == Game.LocalClient.SteamId);
 		var highestScore = Game.Clients.OrderByDescending(x => x.GetKills()).First();
 		Name.SetClass("top", Client.SteamId == highestScore.SteamId);
-		Friend.SetClass("active", Client.IsFriend || Game.Random.Int(0, 6) == 2);
+		Friend.SetClass("active", Client.IsFriend);
 	}
 }
 
 <root>
-	<iconpanel @ref=Friend class="friend aligned-text" text="person"></iconpanel>
 	<img class="pfp" src="avatar:@Client.SteamId"/>
+	<iconpanel @ref=Friend class="friend aligned-text" text="person"></iconpanel>
 	<text @ref=Name class="aligned-text text">@(Client.Name)</text>
 	<div class="score">
 		<label class="aligned-text text" text=@Client.GetKills()></label>
