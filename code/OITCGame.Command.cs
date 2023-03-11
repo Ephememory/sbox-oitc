@@ -1,4 +1,6 @@
 
+using System.Linq;
+
 namespace OITC;
 
 partial class OITCGame
@@ -35,14 +37,14 @@ partial class OITCGame
 		Current.State.Tier = GameState.MidGame;
 	}
 
-	[ConCmd.Admin( "set_ammo" )]
+	[ConCmd.Admin( "give_ammo" )]
 	public static void SetAmmo()
 	{
 		Game.AssertServer();
 		(ConsoleSystem.Caller.Pawn as Player).SetAmmo( Player.MaxAmmo );
 	}
 
-	[ConCmd.Admin( "set_ammo_ammo_all" )]
+	[ConCmd.Admin( "give_ammo_all" )]
 	public static void SetAmmoAll()
 	{
 		Game.AssertServer();

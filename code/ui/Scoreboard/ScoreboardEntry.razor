@@ -1,31 +1,40 @@
 @using System;
+@using System.Linq;
 @using Sandbox;
 @using Sandbox.UI;
+@using Sandbox.UI.Construct;
 
 @namespace OITC
 @inherits Panel
 
 @code
 {
-    public IClient Client { get; set; }
+	public IClient Client { get; set; }
+	Label Name { get; set; }
+	IconPanel Friend { get; set; }
 
-    protected override int BuildHash()
-    {
-        return HashCode
-        .Combine(Client.GetInt("kills"), Client.GetInt("deaths"), Client.Name.FastHash());
-    }
-}
+	protected override int BuildHash()
+	{
+		return HashCode
+		.Combine(Client.GetKills(), Client.GetDeaths(), Client.Name.FastHash());
+	}
 
-@{
-
+	protected override void OnAfterTreeRender(bool firstTime)
+	{
+		Name.SetClass("me", Client.SteamId == Game.LocalClient.SteamId);
+		var highestScore = Game.Clients.OrderByDescending(x => x.GetKills()).First();
+		Name.SetClass("top", Client.SteamId == highestScore.SteamId);
+		Friend.SetClass("active", Client.IsFriend || Game.Random.Int(0, 6) == 2);
+	}
 }
 
 <root>
-    <img class="pfp" src="avatar:@Client.SteamId" ;></img>
-    <label class=" name">@(Client.Name)</label>
-    <div class="score">
-        <label class="name" text=@Client.GetInt("kills")></label>
-        <div style="width: 1%; background-color: white;"></div>
-        <label class="name" text=@Client.GetInt("deaths")></label>
-    </div>
+	<iconpanel @ref=Friend class="friend aligned-text" text="person"></iconpanel>
+	<img class="pfp" src="avatar:@Client.SteamId"/>
+	<text @ref=Name class="aligned-text text">@(Client.Name)</text>
+	<div class="score">
+		<label class="aligned-text text" text=@Client.GetKills()></label>
+		<div style="width: 1%;"></div>
+		<label class="aligned-text text" text=@Client.GetDeaths()></label>
+	</div>
 </root>

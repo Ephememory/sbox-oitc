@@ -1,4 +1,6 @@
 @using System;
+@using System.Linq;
+@using System.Collections.Generic;
 @using Sandbox;
 @using Sandbox.UI;
 
@@ -11,14 +13,21 @@
 {
 	protected override int BuildHash()
 	{
-		return HashCode.Combine(Game.Clients.Count);
+		var result = 0;
+
+		foreach (var client in Game.Clients)
+		{
+			if (client.Pawn is not OITC.Player pl)
+				continue;
+			result = HashCode.Combine(result, client.Ping);
+		}
+		return result;
 	}
 
 	public override void Tick()
 	{
 		base.Tick();
 		SetClass("active", Input.Down(InputButton.Score));
-		SetClass("active", true);
 	}
 }
 
@@ -26,19 +35,20 @@
 	<div class="container box">
 		<div id="header-container" style="display: flex; flex-direction: row; gap: 20px; flex-shrink: 0;">
 			<img src="ui/thumbnail_2023.jpg" width="128" height="128"
-				style="width: 128px; height: 128px; border-radius: 100px;" />
-			<label class="header">One In The Chamber</label>
+				 style="width: 128px; height: 128px; border-radius: 100px;" />
+			<label class="aligned-text header">One In The Chamber</label>
 		</div>
 		<div id="table-container">
 			<div style="flex-grow: 1;"></div>
-			<label class="score-element" text="Kills">
+			<label class="aligned-text score-element" text="Kills">
 			</label>
-			<label class="score-element" text="Deaths">
+			<label class="aligned-text score-element" text="Deaths">
 			</label>
 		</div>
 		<div class="inner">
 			@{
-				foreach (var client in Game.Clients)
+				// Panel.SortChildren doesn't work for some reason, use Linq.
+				foreach (var client in Game.Clients.OrderBy(x => x.GetKills()).Reverse())
 				{
 					<ScoreboardEntry Client=@client>
 					</ScoreboardEntry>

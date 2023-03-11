@@ -20,8 +20,7 @@ $font: Poppins;
     border-top-right-radius: $curve;
 }
 
-label {
-    color: white;
+.aligned-text {
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -44,4 +43,8 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+div {
+    color: white;
 }

@@ -23,7 +23,7 @@ Scoreboard {
     }
 
     .container {
-        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.521), rgba(0, 0, 0, 0.02));
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
         display: flex;
         flex-direction: column;
         padding: 8px;
@@ -48,8 +48,11 @@ Scoreboard {
         display: flex;
         flex-direction: column;
         overflow: scroll;
+        pointer-events: all;
         flex-shrink: 0;
         padding: 2px;
+        height: 550px;
+
         scoreboardentry:nth-child(even) {
             background-color: rgba(151, 151, 151, 0.212);
         }
@@ -67,19 +70,46 @@ Scoreboard {
         flex-shrink: 0;
         padding: 4px;
 
+        .friend {
+            display: flex;
+            flex-shrink: 1;
+            font-family: MaterialIcons;
+            font-size: 32px;
+            opacity: 0;
+            color: green;
+            text-stroke: 2px black;
+
+            &.active {
+                opacity: 1;
+            }
+        }
+
         .pfp {
             align-self: center;
             width: 32px;
             height: 32px;
         }
 
-        .name {
+        .text {
             justify-content: flex-start;
             font-family: Poppins;
             font-weight: 400;
             text-shadow: 1px 2px 3px black;
             font-size: 24px;
             flex-grow: 1;
+            color: white;
+
+            &.me {
+                font-weight: bold;
+                color: rgb(89, 114, 232);
+            }
+
+            &.top {
+                font-size: 32px;
+                font-family: Arial;
+                font-weight: bold;
+                color: gold;
+            }
         }
 
         .score {
@@ -90,7 +120,7 @@ Scoreboard {
             width: 250px;
             border: 1px;
             border-color: white;
-            border-radius: 2px;
+            /*border-radius: 2px;*/
 
             label {
                 max-width: 64px;
