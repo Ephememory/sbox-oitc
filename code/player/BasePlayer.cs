@@ -1,4 +1,3 @@
-
 using System.ComponentModel;
 
 namespace OITC;
@@ -28,12 +27,26 @@ public partial class BasePlayer : AnimatedEntity
 	public PawnController DevController { get; set; }
 
 	[Net, Predicted] public Entity ActiveChild { get; set; }
+
+	/// <summary>
+	/// This isn't networked, but it's predicted. If it wasn't then when the prediction system
+	/// re-ran the commands LastActiveChild would be the value set in a future tick, so ActiveEnd
+	/// and ActiveStart would get called multiple times and out of order, causing all kinds of pain.
+	/// </summary>
+	[Predicted]
+	Entity LastActiveChild { get; set; }
+
 	[ClientInput] public Vector3 InputDirection { get; set; }
 	[ClientInput] public Entity ActiveChildInput { get; set; }
 	[ClientInput] public Angles ViewAngles { get; set; }
 	public Angles OriginalViewAngles { get; private set; }
-
 	public TimeSince TimeSinceDeath { get; private set; }
+	public TimeSince TimeSinceLastFootstep { get; private set; }
+
+	/// <summary>
+	/// A generic corpse entity
+	/// </summary>
+	public ModelEntity Corpse { get; set; }
 
 	/// <summary>
 	/// BBPlayer's inventory for entities that can be carried. See <see cref="BaseCarriable"/>.
@@ -41,15 +54,47 @@ public partial class BasePlayer : AnimatedEntity
 	public IInventory Inventory { get; protected set; }
 
 	/// <summary>
-	/// Return the controller to use. Remember any logic you use here needs to match
-	/// on both client and server. This is called as an accessor every tick.. so maybe
-	/// avoid creating new classes here or you're gonna be making a ton of garbage!
+	/// Position a player should be looking from in world space.
 	/// </summary>
-	public virtual PawnController GetActiveController()
+	[Browsable( false )]
+	public Vector3 EyePosition
 	{
-		if ( DevController != null ) return DevController;
+		get => Transform.PointToWorld( EyeLocalPosition );
+		set => EyeLocalPosition = Transform.PointToLocal( value );
+	}
 
-		return Controller;
+	/// <summary>
+	/// Position a player should be looking from in local to the entity coordinates.
+	/// </summary>
+	[Net, Predicted, Browsable( false )]
+	public Vector3 EyeLocalPosition { get; set; }
+
+	/// <summary>
+	/// Rotation of the entity's "eyes", i.e. rotation for the camera when this entity is used as the view entity.
+	/// </summary>
+	[Browsable( false )]
+	public Rotation EyeRotation
+	{
+		get => Transform.RotationToWorld( EyeLocalRotation );
+		set => EyeLocalRotation = Transform.RotationToLocal( value );
+	}
+
+	/// <summary>
+	/// Rotation of the entity's "eyes", i.e. rotation for the camera when this entity is used as the view entity. In local to the entity coordinates.
+	/// </summary>
+	[Net, Predicted, Browsable( false )]
+	public Rotation EyeLocalRotation { get; set; }
+
+	/// <summary>
+	/// Override the aim ray to use the player's eye position and rotation.
+	/// </summary>
+	public override Ray AimRay => new Ray( EyePosition, EyeRotation.Forward );
+
+	public override void Spawn()
+	{
+		EnableLagCompensation = true;
+		Tags.Add( "player" );
+		base.Spawn();
 	}
 
 	/// <summary>
@@ -77,7 +122,6 @@ public partial class BasePlayer : AnimatedEntity
 		controller?.Simulate( cl, this );
 	}
 
-
 	public override void FrameSimulate( IClient cl )
 	{
 		Camera.Rotation = ViewAngles.ToRotation();
@@ -85,25 +129,6 @@ public partial class BasePlayer : AnimatedEntity
 		Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
 		Camera.FirstPersonViewer = this;
 		Camera.Main.SetViewModelCamera( 90 );
-	}
-
-	/// <summary>
-	/// Applies flashbang-like ear ringing effect to the player.
-	/// </summary>
-	/// <param name="strength">Can be approximately treated as duration in seconds.</param>
-	[ClientRpc]
-	public void Deafen( float strength )
-	{
-		Audio.SetEffect( "flashbang", strength, velocity: 20.0f, fadeOut: 4.0f * strength );
-	}
-
-	public override void Spawn()
-	{
-		EnableLagCompensation = true;
-
-		Tags.Add( "player" );
-
-		base.Spawn();
 	}
 
 	/// <summary>
@@ -146,16 +171,20 @@ public partial class BasePlayer : AnimatedEntity
 	public virtual void CreateHull()
 	{
 		SetupPhysicsFromAABB( PhysicsMotionType.Keyframed, new Vector3( -16, -16, 0 ), new Vector3( 16, 16, 72 ) );
-
-		//var capsule = new Capsule( new Vector3( 0, 0, 16 ), new Vector3( 0, 0, 72 - 16 ), 32 );
-		//var phys = SetupPhysicsFromCapsule( PhysicsMotionType.Keyframed, capsule );
-
-
-		//	phys.GetBody(0).RemoveShadowController();
-
-		// TODO - investigate this? if we don't set movetype then the lerp is too much. Can we control lerp amount?
-		// if so we should expose that instead, that would be awesome.
 		EnableHitboxes = true;
+	}
+
+	/// <summary>
+	/// Return the controller to use. Remember any logic you use here needs to match
+	/// on both client and server. This is called as an accessor every tick.. so maybe
+	/// avoid creating new classes here or you're gonna be making a ton of garbage!
+	/// </summary>
+	public virtual PawnController GetActiveController()
+	{
+		if ( DevController != null )
+			return DevController;
+
+		return Controller;
 	}
 
 	/// <summary>
@@ -188,14 +217,6 @@ public partial class BasePlayer : AnimatedEntity
 	}
 
 	/// <summary>
-	/// A generic corpse entity
-	/// </summary>
-	public ModelEntity Corpse { get; set; }
-
-
-	TimeSince timeSinceLastFootstep = 0;
-
-	/// <summary>
 	/// A footstep has arrived!
 	/// </summary>
 	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
@@ -206,22 +227,20 @@ public partial class BasePlayer : AnimatedEntity
 		if ( !Game.IsClient )
 			return;
 
-		if ( timeSinceLastFootstep < 0.2f )
+		if ( TimeSinceLastFootstep < 0.2f )
 			return;
 
 		volume *= FootstepVolume();
 
-		timeSinceLastFootstep = 0;
-
-		//DebugOverlay.Box( 1, pos, -1, 1, Color.Red );
-		//DebugOverlay.Text( pos, $"{volume}", Color.White, 5 );
+		TimeSinceLastFootstep = 0;
 
 		var tr = Trace.Ray( pos, pos + Vector3.Down * 20 )
 			.Radius( 1 )
 			.Ignore( this )
 			.Run();
 
-		if ( !tr.Hit ) return;
+		if ( !tr.Hit )
+			return;
 
 		tr.Surface.DoFootstep( this, tr, foot, volume );
 	}
@@ -237,7 +256,8 @@ public partial class BasePlayer : AnimatedEntity
 
 	public override void StartTouch( Entity other )
 	{
-		if ( Game.IsClient ) return;
+		if ( Game.IsClient )
+			return;
 
 		if ( other is PickupTrigger )
 		{
@@ -247,14 +267,6 @@ public partial class BasePlayer : AnimatedEntity
 
 		Inventory?.Add( other, Inventory.Active == null );
 	}
-
-	/// <summary>
-	/// This isn't networked, but it's predicted. If it wasn't then when the prediction system
-	/// re-ran the commands LastActiveChild would be the value set in a future tick, so ActiveEnd
-	/// and ActiveStart would get called multiple times and out of order, causing all kinds of pain.
-	/// </summary>
-	[Predicted]
-	Entity LastActiveChild { get; set; }
 
 	/// <summary>
 	/// Simulated the active child. This is important because it calls ActiveEnd and ActiveStart.
@@ -303,20 +315,14 @@ public partial class BasePlayer : AnimatedEntity
 
 		this.ProceduralHitReaction( info );
 
-		//
-		// Add a score to the killer
-		//
 		if ( LifeState == LifeState.Dead && info.Attacker != null )
 		{
 			if ( info.Attacker.Client != null && info.Attacker != this )
 			{
 				info.Attacker.Client.AddInt( "kills" );
+				info.Attacker.Client.AddInt( "score" );
+				info.Attacker.Client.SetLastKillTick( Time.Tick );
 			}
-		}
-
-		if ( info.HasTag( "blast" ) )
-		{
-			Deafen( To.Single( Client ), info.Damage.LerpInverse( 0, 60 ) );
 		}
 	}
 
@@ -329,42 +335,4 @@ public partial class BasePlayer : AnimatedEntity
 	{
 		Inventory?.OnChildRemoved( child );
 	}
-
-	/// <summary>
-	/// Position a player should be looking from in world space.
-	/// </summary>
-	[Browsable( false )]
-	public Vector3 EyePosition
-	{
-		get => Transform.PointToWorld( EyeLocalPosition );
-		set => EyeLocalPosition = Transform.PointToLocal( value );
-	}
-
-	/// <summary>
-	/// Position a player should be looking from in local to the entity coordinates.
-	/// </summary>
-	[Net, Predicted, Browsable( false )]
-	public Vector3 EyeLocalPosition { get; set; }
-
-	/// <summary>
-	/// Rotation of the entity's "eyes", i.e. rotation for the camera when this entity is used as the view entity.
-	/// </summary>
-	[Browsable( false )]
-	public Rotation EyeRotation
-	{
-		get => Transform.RotationToWorld( EyeLocalRotation );
-		set => EyeLocalRotation = Transform.RotationToLocal( value );
-	}
-
-	/// <summary>
-	/// Rotation of the entity's "eyes", i.e. rotation for the camera when this entity is used as the view entity. In local to the entity coordinates.
-	/// </summary>
-	[Net, Predicted, Browsable( false )]
-	public Rotation EyeLocalRotation { get; set; }
-
-	/// <summary>
-	/// Override the aim ray to use the player's eye position and rotation.
-	/// </summary>
-	public override Ray AimRay => new Ray( EyePosition, EyeRotation.Forward );
-
 }

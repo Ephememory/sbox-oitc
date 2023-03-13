@@ -1,5 +1,3 @@
-using Sandbox.UI;
-
 namespace OITC;
 
 public partial class Player : BasePlayer
@@ -204,11 +202,6 @@ public partial class Player : BasePlayer
 		}
 
 		PistolAmmo = value;
-	}
-
-	public void SwitchToPistol()
-	{
-		Inventory.SetActiveSlot( 1, false );
 	}
 
 	[ClientRpc]
