@@ -2,3 +2,11 @@
 
 @inherits Panel
 @attribute [StyleSheet("/ui/Crosshair/Crosshair.scss")]
+
+@code 
+{
+	public override void Tick()
+	{
+		SetClass("alive", Game.LocalPawn.LifeState == LifeState.Alive);		
+	}
+}
