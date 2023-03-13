@@ -7,7 +7,7 @@ Scoreboard {
     justify-content: center;
     align-items: center;
     width: 80%;
-    height: 50%;
+    height: 900px;
     opacity: 0;
     z-index: 1000;
     transition: opacity 250ms ease-in-out;
@@ -24,6 +24,7 @@ Scoreboard {
 
     .container {
         background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+        backdrop-filter: blur(50px);
         display: flex;
         flex-direction: column;
         padding: 8px;
@@ -38,8 +39,7 @@ Scoreboard {
 
     .score-element {
         font-size: 20px;
-        width: 125px;
-        padding: 4px;
+        width: 90px;
         font-weight: bold;
     }
 
@@ -49,9 +49,9 @@ Scoreboard {
         flex-direction: column;
         overflow: scroll;
         pointer-events: all;
-        flex-shrink: 0;
+        flex-shrink: 1;
         padding: 2px;
-        height: 550px;
+
 
         scoreboardentry:nth-child(even) {
             background-color: rgba(151, 151, 151, 0.212);
@@ -67,7 +67,7 @@ Scoreboard {
         flex-direction: row;
         width: 100%;
         height: 72px;
-        flex-shrink: 0;
+        flex-shrink: 1;
         padding: 4px;
 
         .friend {
@@ -90,6 +90,7 @@ Scoreboard {
             align-self: center;
             width: 32px;
             height: 32px;
+            flex-shrink: 2;
         }
 
         .text {
@@ -122,7 +123,6 @@ Scoreboard {
             width: 250px;
             border: 1px;
             border-color: white;
-            /*border-radius: 2px;*/
 
             label {
                 max-width: 64px;

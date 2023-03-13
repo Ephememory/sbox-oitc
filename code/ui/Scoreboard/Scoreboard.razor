@@ -13,15 +13,13 @@
 {
 	protected override int BuildHash()
 	{
-		var result = 0;
-
-		foreach (var client in Game.Clients)
+		int value = 0;
+		foreach(var c in Game.Clients)
 		{
-			if (client.Pawn is not OITC.Player pl)
-				continue;
-			result = HashCode.Combine(result, client.Ping);
+			// Overkill but robust.
+			value = HashCode.Combine(c.GetKills(), c.GetDeaths(), c.Name.FastHash(), c.Ping);			
 		}
-		return result;
+		return value;
 	}
 
 	public override void Tick()
@@ -36,21 +34,26 @@
 		<div id="header-container" style="display: flex; flex-direction: row; gap: 20px; flex-shrink: 0;">
 			<img src="ui/thumbnail_2023.jpg" width="128" height="128"
 				 style="width: 128px; height: 128px; border-radius: 100px;" />
-			<label class="aligned-text header">One In The Chamber</label>
+			<div style="display: flex; flex-direction: column;">
+				<label class="aligned-text header">One In The Chamber</label>
+				<label style="font-size: 16px;" text=@Game.Server.ServerTitle></label>
+				<label style="font-weight: bold;" text=@($"Players: {Game.Clients.Count} / {Game.Server.MaxPlayers}")></label>
+			</div>
 		</div>
 		<div id="table-container">
-			<div style="flex-grow: 1;"></div>
-			<label class="aligned-text score-element" text="Kills">
-			</label>
-			<label class="aligned-text score-element" text="Deaths">
-			</label>
+			<div id="table-spacer" style="flex-grow: 1;"></div>
+			<div style="flex-shrink: 1;">
+				<label class="aligned-text score-element" text="Kills"></label>
+				<label class="aligned-text score-element" text="Deaths"></label>
+				<label class="aligned-text score-element" text="Ping"></label>
+			</div>
 		</div>
 		<div class="inner">
 			@{
 				// Panel.SortChildren doesn't work for some reason, use Linq.
 				foreach (var client in Game.Clients.OrderBy(x => x.GetKills()).Reverse())
 				{
-					<ScoreboardEntry Client=@client>
+					<ScoreboardEntry EntryClient=@client>
 					</ScoreboardEntry>
 				}
 			}

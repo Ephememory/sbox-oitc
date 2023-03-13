@@ -9,32 +9,46 @@
 
 @code
 {
-	public IClient Client { get; set; }
+	public IClient EntryClient { get; set; }
 	Label Name { get; set; }
 	IconPanel Friend { get; set; }
 
 	protected override int BuildHash()
 	{
 		return HashCode
-		.Combine(Client.GetKills(), Client.GetDeaths(), Client.Name.FastHash());
+		.Combine(EntryClient.GetKills(), EntryClient.GetDeaths(), EntryClient.Name.FastHash(), EntryClient.Ping);
 	}
 
 	protected override void OnAfterTreeRender(bool firstTime)
 	{
-		Name.SetClass("me", Client.SteamId == Game.LocalClient.SteamId);
-		var highestScore = Game.Clients.OrderByDescending(x => x.GetKills()).First();
-		Name.SetClass("top", Client.SteamId == highestScore.SteamId);
-		Friend.SetClass("active", Client.IsFriend);
+		Name.SetClass("me", EntryClient.SteamId == Game.LocalClient.SteamId);
+
+		if (EntryClient.GetKills() > 0)
+		{
+			// TODO: Use last kill tick to sort when there are multiple players with the same 
+			// number of kills, all being top frag.
+			var topFrags = Game.Clients.OrderByDescending(x => x.GetKills());
+			var top = topFrags.First();
+			Name.SetClass("top", EntryClient.SteamId == top.SteamId);
+		}
+		else
+		{
+			Name.SetClass("top", false);
+		}
+
+		Friend.SetClass("active", EntryClient.IsFriend);
 	}
 }
 
 <root>
-	<img class="pfp" src="avatar:@Client.SteamId"/>
+	<img class="pfp" src="avatar:@EntryClient.SteamId" />
 	<iconpanel @ref=Friend class="friend aligned-text" text="person"></iconpanel>
-	<text @ref=Name class="aligned-text text">@(Client.Name)</text>
+	<text @ref=Name class="aligned-text text">@(EntryClient.Name)</text>
 	<div class="score">
-		<label class="aligned-text text" text=@Client.GetKills()></label>
+		<label class="aligned-text text" text=@EntryClient.GetKills()></label>
 		<div style="width: 1%;"></div>
-		<label class="aligned-text text" text=@Client.GetDeaths()></label>
+		<label class="aligned-text text" text=@EntryClient.GetDeaths()></label>
+		<div style="width: 1%;"></div>
+		<label class="aligned-text text" text=@Game.LocalClient.Ping></label>
 	</div>
 </root>
