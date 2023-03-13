@@ -10,15 +10,6 @@ public partial class Player : BasePlayer
 
 	public DamageInfo LastDamage { get; private set; }
 
-	[Net]
-	public Player LastPlayerAttacker { get; private set; }
-
-	// TODO: Move DeathCam to an ephemeral component.
-	/// <summary>
-	/// For when the LastPlayerAttacker becomes obstructed during death cam.
-	/// </summary>
-	private Vector3 _deathCamLookPosition;
-
 	/// <summary>
 	/// The clothing container is what dresses the citizen
 	/// </summary>
@@ -46,6 +37,8 @@ public partial class Player : BasePlayer
 
 	public override void Respawn()
 	{
+		Components.RemoveAny<DeathCamComponent>();
+
 		Controller = new WalkController();
 
 		EnableAllCollisions = true;
@@ -75,25 +68,9 @@ public partial class Player : BasePlayer
 
 	public override void FrameSimulate( IClient cl )
 	{
+		// Prevent player input camera movement when dead.
 		if ( LifeState == LifeState.Dead )
-		{
-			if ( !LastPlayerAttacker.IsValid() )
-				return;
-
-			var tr = Trace.Ray( EyePosition, LastPlayerAttacker.EyePosition )
-				.WithoutTags( "player" )
-				.WithAnyTags( "solid" )
-				.Run();
-
-			if ( !tr.Hit )
-				_deathCamLookPosition = LastPlayerAttacker.EyePosition;
-
-			Camera.Position = EyePosition;
-			Camera.Rotation = Rotation.Slerp( Camera.Rotation, Rotation.LookAt( _deathCamLookPosition - Camera.Position ), Time.Delta * 4f );
-			Camera.FieldOfView = MathX.Lerp( Camera.FieldOfView, Screen.CreateVerticalFieldOfView( 42 ), Time.Delta * 2 );
-
 			return;
-		}
 
 		base.FrameSimulate( cl );
 	}
@@ -151,6 +128,12 @@ public partial class Player : BasePlayer
 	{
 		base.OnKilled();
 
+		if ( Game.IsServer && LastAttacker is Player lastAttackingPlayer )
+			Components.Add( new DeathCamComponent
+			{
+				Killer = lastAttackingPlayer
+			} );
+
 		EnableDrawing = false;
 		EnableAllCollisions = false;
 		EnableDrawing = false;
@@ -161,10 +144,6 @@ public partial class Player : BasePlayer
 	public override void TakeDamage( DamageInfo info )
 	{
 		LastDamage = info;
-
-		if ( info.Attacker is Player player )
-			LastPlayerAttacker = player;
-
 		base.TakeDamage( info );
 	}
 
