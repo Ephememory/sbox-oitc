@@ -2,12 +2,14 @@ $background: #07000099;
 $enemy: #ffffff;
 $curve: 6px;
 $font: Poppins;
+$blur-amount: 2px;
+$light-text: rgba(255, 255, 255, 0.89);
 
 .box {
     font-family: $font;
 
     &.blur {
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(blur-amount);
     }
 
     &.dark {

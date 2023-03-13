@@ -1,0 +1,35 @@
+@import "ui/style.scss";
+
+HowToPlay {
+    background-color: $background;
+    backdrop-filter: blur(20px);
+    position: absolute;
+    font-size: 24px;
+    padding: 12px;
+    bottom: 2%;
+    font-family: Poppins;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 2000ms ease-out;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+
+
+    .element {
+        color: $light-text;
+        display: flex;
+        gap: 5px;
+        flex-direction: row;
+        padding: 5px;
+    }
+
+    .glyph {
+    }
+
+    &.active {
+        opacity: 1;
+    }
+}

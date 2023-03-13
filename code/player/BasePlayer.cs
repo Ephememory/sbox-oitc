@@ -41,6 +41,8 @@ public partial class BasePlayer : AnimatedEntity
 	[ClientInput] public Angles ViewAngles { get; set; }
 	public Angles OriginalViewAngles { get; private set; }
 	public TimeSince TimeSinceDeath { get; private set; }
+	[Net]
+	public TimeSince TimeSinceRespawn { get; private set; }
 	public TimeSince TimeSinceLastFootstep { get; private set; }
 
 	/// <summary>
@@ -94,6 +96,7 @@ public partial class BasePlayer : AnimatedEntity
 	{
 		EnableLagCompensation = true;
 		Tags.Add( "player" );
+		TimeSinceRespawn = 0;
 		base.Spawn();
 	}
 
@@ -161,6 +164,7 @@ public partial class BasePlayer : AnimatedEntity
 
 		GameManager.Current?.MoveToSpawnpoint( this );
 		ResetInterpolation();
+		TimeSinceRespawn = 0;
 	}
 
 	/// <summary>

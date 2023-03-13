@@ -118,7 +118,7 @@ partial class OITCGame : GameManager
 			OnKilledClient( client, null, "died" );
 			return;
 		}
-
+		
 		// Player died to enviornment/trigger.
 		// TODO: Probably should find a better method for determining this case.
 		if ( killed.LastAttacker.Client == null )

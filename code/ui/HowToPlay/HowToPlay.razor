@@ -1,0 +1,46 @@
+@using System
+@using Sandbox
+@using System.Collections.Generic
+@using Sandbox.UI
+
+@namespace OITC
+
+@inherits Panel
+@attribute [StyleSheet("/ui/HowToPlay/HowToPlay.scss")]
+
+@code
+{
+	public Image PrimaryAttackGlyph { get; set; }
+	public Image SecondaryAttackGlyph { get; set; }
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine(Time.Now);
+	}
+
+	public override void Tick()
+	{
+		if (Game.LocalPawn is not BasePlayer ply)
+			return;
+
+		SetClass("active", ply.TimeSinceRespawn <= 5);
+		PrimaryAttackGlyph.Texture = Input.GetGlyph(InputButton.PrimaryAttack, size: InputGlyphSize.Small, style: GlyphStyle.Light);
+		SecondaryAttackGlyph.Texture = Input.GetGlyph(InputButton.SecondaryAttack, size: InputGlyphSize.Small, style: GlyphStyle.Light);
+	}
+}
+
+<root
+	<div>
+		<div class="element">
+		<img @ref=PrimaryAttackGlyph class="glyph">
+		<label text=@($"Shoot")></label>
+		</div>
+
+		<div style="width: 10%;"></div>
+
+		<div class="element">
+		<img @ref=SecondaryAttackGlyph class="glyph">
+		<label text="Melee"></label>
+		</div>
+	</div>
+</root>
