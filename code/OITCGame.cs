@@ -1,4 +1,5 @@
 global using Sandbox;
+using Sandbox.Internal;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,11 @@ partial class OITCGame : GameManager
 	public GameStateInfo State { get; private set; }
 
 	public static new OITCGame Current => GameManager.Current as OITCGame;
+
+	/// <summary>
+	/// Game.Clients.Count is unreliable in certain contexts. Use this instead.
+	/// </summary>
+	public int NumPlayers = 0;
 
 	public OITCGame()
 	{
@@ -72,28 +78,7 @@ partial class OITCGame : GameManager
 		if ( pawn is not Player killed )
 			return;
 
-		if ( pawn.LastAttacker != null )
-		{
-			if ( pawn.LastAttacker.Client != null )
-			{
-				var killedByText = (pawn.LastAttackerWeapon as Weapon).GetKillMethod( killed.LastDamage );
-
-				if ( string.IsNullOrEmpty( killedByText ) )
-				{
-					killedByText = pawn.LastAttackerWeapon?.ClassName;
-				}
-
-				OnKilledClient( pawn.LastAttacker.Client, client, killedByText );
-			}
-			else
-			{
-				OnKilledClient( client, client, "killed" );
-			}
-		}
-		else
-		{
-			OnKilledClient( client, null, "died" );
-		}
+		DoPlayerKillfeed( killed );
 
 		if ( Game.IsClient )
 			return;
@@ -121,6 +106,34 @@ partial class OITCGame : GameManager
 		}
 
 		Log.Info( $"{client.Name} was killed by {killer.Client.NetworkIdent} with {weapon}" );
+	}
+
+	private void DoPlayerKillfeed( Player killed )
+	{
+		var client = killed.Client;
+
+		// Player suicided.
+		if ( killed.LastAttacker == null )
+		{
+			OnKilledClient( client, null, "died" );
+			return;
+		}
+
+		// Player died to enviornment/trigger.
+		// TODO: Probably should find a better method for determining this case.
+		if ( killed.LastAttacker.Client == null )
+		{
+			OnKilledClient( client, client, "killed" );
+			return;
+		}
+
+		var killedByText = (killed.LastAttackerWeapon as Weapon).GetKillMethod( killed.LastDamage );
+		if ( string.IsNullOrEmpty( killedByText ) )
+		{
+			killedByText = killed.LastAttackerWeapon?.ClassName ?? "killed";
+		}
+
+		OnKilledClient( killed.LastAttacker.Client, client, killedByText );
 	}
 
 	[ClientRpc]

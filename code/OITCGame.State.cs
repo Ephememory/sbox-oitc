@@ -11,8 +11,6 @@ public enum GameState : byte
 
 partial class OITCGame
 {
-	public int NumPlayers = 0;
-
 	public partial class GameStateInfo : BaseNetworkable
 	{
 		[Net] public ulong TopFragSteamId { get; set; }
