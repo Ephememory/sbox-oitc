@@ -3,10 +3,27 @@
 @inherits Panel
 @attribute [StyleSheet("/ui/Crosshair/Crosshair.scss")]
 
-@code 
+@code
 {
+	Panel Reticle { get; set; }
+
 	public override void Tick()
 	{
-		SetClass("alive", Game.LocalPawn.LifeState == LifeState.Alive);		
+		Reticle.SetClass("alive", Game.LocalPawn.LifeState == LifeState.Alive);
+
+		if (Game.LocalPawn is not OITC.Player ply)
+			return;
+
+		var tr = Trace.Ray(ply.AimRay.Position, ply.AimRay.Position + ply.AimRay.Forward * 1500f)
+		.Ignore(ply)
+		.UseHitboxes()
+		.WithTag("player")
+		.Run();
+
+		Reticle.SetClass("target-id", tr.Hit);
 	}
 }
+
+<root>
+	<div @ref=Reticle class="reticle"></div>
+</root>
