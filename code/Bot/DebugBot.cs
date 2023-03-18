@@ -1,11 +1,11 @@
-﻿#if DEBUG
-using Editor;
+﻿using Editor;
 using Sandbox.Internal;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace OITC;
 
+#if DEBUG
 public partial class DebugBot : Bot
 {
 	/// <summary>
@@ -189,9 +189,10 @@ public partial class DebugBot : Bot
 	{
 		SetDefaultNames( _defaultNames );
 	}
-
+	
 	public override void BuildInput()
 	{
+		base.BuildInput();
 		Pawn ??= (Client.Pawn as Player);
 
 		if ( DrawDebug )
@@ -222,8 +223,6 @@ public partial class DebugBot : Bot
 			var lookAt = Rotation.LookAt( Pawn.EyePosition - Target.EyePosition );
 			Pawn.ViewAngles = Rotation.From( -lookAt.Pitch(), lookAt.Yaw(), lookAt.Roll() ).Angles();
 		}
-
-
 	}
 }
 #endif
