@@ -1,0 +1,78 @@
+﻿@import "ui/style.scss";
+
+ScoreboardEntry {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 72px;
+  flex-shrink: 1;
+  padding: 4px;
+
+  .friend {
+    flex-shrink: 1;
+    font-family: MaterialIcons;
+    font-size: 32px;
+    color: green;
+    text-stroke: 2px black;
+    flex-shrink: 1;
+    display: none;
+    opacity: 0;
+
+    &.active {
+      display: flex;
+      opacity: 1;
+    }
+  }
+
+  .pfp {
+    align-self: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 2;
+  }
+
+  .text {
+    justify-content: flex-start;
+    font-family: Poppins;
+    font-weight: 400;
+    text-shadow: 1px 2px 3px black;
+    font-size: 24px;
+    flex-grow: 1;
+    color: white;
+
+    &.me {
+      font-weight: bold;
+      color: rgb(89, 114, 232);
+    }
+
+    &.top {
+      font-size: 32px;
+      font-family: Arial;
+      font-weight: bold;
+      color: gold;
+    }
+  }
+
+  .score {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-weight: bold;
+    width: 250px;
+    border: 1px;
+    border-color: white;
+
+    label {
+      max-width: 64px;
+    }
+
+    div {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      width: 15px;
+      justify-content: center;
+      align-content: center;
+    }
+  }
+}

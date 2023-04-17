@@ -34,7 +34,7 @@
 		return System.HashCode.Combine(player.PistolAmmo);
 	}
 
-	[Event("oitc.player_ammo_change")]
+	[Event(Events.OnPlayerAmmoChanged)]
 	private void HandlePlayerAmmoChanged(int oldValue, int newValue)
 	{
 		if (newValue > oldValue)

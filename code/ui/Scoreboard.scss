@@ -1,0 +1,64 @@
+@import "ui/style.scss";
+
+Scoreboard {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 900px;
+    opacity: 0;
+    z-index: 1000;
+    transition: opacity 250ms ease-in-out;
+    pointer-events: all;
+
+    &.active {
+        opacity: 1;
+        transition: opacity 250ms ease-in-out;
+    }
+
+    .label {
+        flex-shrink: 0;
+    }
+
+    .container {
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+        backdrop-filter: blur(16px);
+        display: flex;
+        flex-direction: column;
+        padding: 8px;
+        width: 70%;
+    }
+
+    #table-container {
+        font-family: Poppins;
+        height: 32px;
+        flex-shrink: 0;
+    }
+
+    .score-element {
+        font-size: 20px;
+        width: 90px;
+        font-weight: bold;
+    }
+
+    .inner {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: scroll;
+        pointer-events: all;
+        flex-shrink: 1;
+        padding: 2px;
+
+
+        scoreboardentry:nth-child(even) {
+            background-color: rgba(151, 151, 151, 0.212);
+        }
+
+        scoreboardentry:nth-child(odd) {
+            background-color: rgba(0, 0, 0, 0.205);
+        }
+    }
+}

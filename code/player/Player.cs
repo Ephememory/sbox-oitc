@@ -197,7 +197,7 @@ public partial class Player : BasePlayer
 		if ( !IsLocalPawn )
 			return;
 
-		Event.Run( "oitc.player_ammo_change", oldValue, newValue );
+		Event.Run( Events.OnPlayerAmmoChanged, oldValue, newValue );
 	}
 
 }

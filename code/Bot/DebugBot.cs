@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace OITC;
 
+#if DEBUG
 public partial class DebugBot : Bot
 {
 	/// <summary>
@@ -224,3 +225,4 @@ public partial class DebugBot : Bot
 		}
 	}
 }
+#endif

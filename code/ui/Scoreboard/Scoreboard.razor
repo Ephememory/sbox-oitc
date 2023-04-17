@@ -7,7 +7,7 @@
 @namespace OITC
 
 @inherits Panel
-@attribute [StyleSheet("/ui/Scoreboard/Scoreboard.scss")]
+@attribute [StyleSheet("/ui/Scoreboard.scss")]
 
 @code
 {
@@ -16,7 +16,6 @@
 		int value = 0;
 		foreach(var c in Game.Clients)
 		{
-			// Overkill but robust.
 			value = HashCode.Combine(c.GetKills(), c.GetDeaths(), c.Name.FastHash(), c.Ping);			
 		}
 		return value;
