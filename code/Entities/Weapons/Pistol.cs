@@ -6,6 +6,7 @@ namespace OITC;
 public partial class Pistol : Weapon
 {
 	public override string ViewModelPath => "models/weapons/attachment_vm_pi_cpapa_receiver.vmdl";
+	public override float PrimaryRate => 1.5f;
 	public override float SecondaryRate => 0.9f;
 
 	private readonly List<string> _primaryFlavorText = new List<string> { "smoked", "popped", "gunned down", "iced", "spun the block on", "poked a hole in", "shot" };
