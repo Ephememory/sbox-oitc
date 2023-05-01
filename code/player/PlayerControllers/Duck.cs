@@ -16,7 +16,7 @@ public class Duck : BaseNetworkable
 
 	public virtual void PreTick()
 	{
-		bool wants = Input.Down( InputButton.Duck );
+		bool wants = Input.Down( InputActions.Duck );
 
 		if ( wants != IsActive )
 		{

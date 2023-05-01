@@ -21,10 +21,10 @@ public class FlyingController : BasePlayerController
 
 		vel = vel.Normal * 2000;
 
-		if ( Input.Down( InputButton.Run ) )
+		if ( Input.Down( InputActions.Run ) )
 			vel *= 5.0f;
 
-		if ( Input.Down( InputButton.Duck ) )
+		if ( Input.Down( InputActions.Duck ) )
 			vel *= 0.2f;
 
 		Velocity += vel * Time.Delta;
@@ -36,7 +36,7 @@ public class FlyingController : BasePlayerController
 
 		Velocity = Velocity.Approach( 0, Velocity.Length * Time.Delta * 5.0f );
 
-		if ( Input.Down( InputButton.Jump ) )
+		if ( Input.Down( InputActions.Jump ) )
 			Velocity = Velocity.Approach( 0, Velocity.Length * Time.Delta * 5.0f );
 	}
 

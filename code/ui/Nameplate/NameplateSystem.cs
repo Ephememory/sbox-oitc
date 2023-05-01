@@ -30,7 +30,7 @@ internal class NameTagComponent : EntityComponent<OITC.Player>
 	/// <summary>
 	/// Called for every tag, while it's active
 	/// </summary>
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	public void FrameUpdate()
 	{
 		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
@@ -42,7 +42,7 @@ internal class NameTagComponent : EntityComponent<OITC.Player>
 	/// <summary>
 	/// Called once per frame to manage component creation/deletion
 	/// </summary>
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	public static void SystemUpdate()
 	{
 		var localPawn = Game.LocalPawn as OITC.Player;

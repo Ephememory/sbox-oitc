@@ -215,7 +215,7 @@ public partial class DebugBot : Bot
 
 		}
 
-		Input.SetButton( InputButton.PrimaryAttack, WishAttack );
+		Input.SetAction( InputActions.PrimaryAttack, WishAttack );
 		WishAttack = false;
 
 		if ( Aimbot )

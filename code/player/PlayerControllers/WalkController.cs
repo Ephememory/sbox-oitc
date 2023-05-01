@@ -161,7 +161,7 @@ public partial class WalkController : BasePlayerController
 
 		// if ( underwater ) do underwater movement
 
-		if ( AutoJump ? Input.Down( InputButton.Jump ) : Input.Pressed( InputButton.Jump ) )
+		if ( AutoJump ? Input.Down( InputActions.Jump ) : Input.Pressed( InputActions.Jump ) )
 		{
 			CheckJumpButton();
 		}
@@ -266,8 +266,8 @@ public partial class WalkController : BasePlayerController
 		var ws = Duck.GetWishSpeed();
 		if ( ws >= 0 ) return ws;
 
-		if ( Input.Down( InputButton.Run ) ) return SprintSpeed;
-		if ( Input.Down( InputButton.Walk ) ) return WalkSpeed;
+		if ( Input.Down( InputActions.Run ) ) return SprintSpeed;
+		if ( Input.Down( InputActions.Walk ) ) return WalkSpeed;
 
 		return DefaultSpeed;
 	}
@@ -549,7 +549,7 @@ public partial class WalkController : BasePlayerController
 
 		if ( IsTouchingLadder )
 		{
-			if ( Input.Pressed( InputButton.Jump ) )
+			if ( Input.Pressed( InputActions.Jump ) )
 			{
 				Velocity = LadderNormal * 100.0f;
 				IsTouchingLadder = false;

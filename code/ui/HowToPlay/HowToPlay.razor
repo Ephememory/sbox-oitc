@@ -24,8 +24,8 @@
 			return;
 
 		SetClass("active", ply.TimeSinceRespawn <= 5);
-		PrimaryAttackGlyph.Texture = Input.GetGlyph(InputButton.PrimaryAttack, size: InputGlyphSize.Small, style: GlyphStyle.Light);
-		SecondaryAttackGlyph.Texture = Input.GetGlyph(InputButton.SecondaryAttack, size: InputGlyphSize.Small, style: GlyphStyle.Light);
+		PrimaryAttackGlyph.Texture = Input.GetGlyph(InputActions.PrimaryAttack, size: InputGlyphSize.Small, style: GlyphStyle.Light);
+		SecondaryAttackGlyph.Texture = Input.GetGlyph(InputActions.SecondaryAttack, size: InputGlyphSize.Small, style: GlyphStyle.Light);
 	}
 }
 

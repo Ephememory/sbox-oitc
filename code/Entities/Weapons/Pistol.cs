@@ -40,7 +40,7 @@ public partial class Pistol : Weapon
 		if ( base.Owner is not Player player )
 			return;
 
-		if ( Input.Released( InputButton.Reload ) )
+		if ( Input.Released( InputActions.Reload ) )
 			ViewModelEntity?.SetAnimParameter( "admire", true );
 
 		// :(

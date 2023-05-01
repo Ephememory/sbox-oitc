@@ -20,7 +20,7 @@ public class ViewModel : AnimatedEntity
 	public float YawInertia { get; private set; }
 	public float PitchInertia { get; private set; }
 
-	[Event.Client.PostCamera]
+	[GameEvent.Client.PostCamera]
 	public void PlaceViewmodel()
 	{
 		if ( !Game.LocalPawn.IsValid() )

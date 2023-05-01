@@ -11,7 +11,7 @@ internal partial class DeathCamComponent : EntityComponent<Player>
 	[Net] public Player Killer { get; set; }
 	private Vector3 LookAtPosition { get; set; }
 
-	[Event.Client.Frame]
+	[GameEvent.Client.Frame]
 	void Frame()
 	{
 		if ( Entity is not Player player || !Killer.IsValid() )

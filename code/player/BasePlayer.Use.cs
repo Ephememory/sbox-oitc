@@ -20,7 +20,7 @@ public partial class BasePlayer
 		// Turn prediction off
 		using ( Prediction.Off() )
 		{
-			if ( Input.Pressed( InputButton.Use ) )
+			if ( Input.Pressed( InputActions.Use ) )
 			{
 				Using = FindUsable();
 
@@ -31,7 +31,7 @@ public partial class BasePlayer
 				}
 			}
 
-			if ( !Input.Down( InputButton.Use ) )
+			if ( !Input.Down( InputActions.Use ) )
 			{
 				StopUsing();
 				return;
