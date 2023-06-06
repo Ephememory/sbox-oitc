@@ -45,14 +45,14 @@
 
     public override void Tick()
     {
-        var attch = Model.GetBoneWorldTransform("tag_sight_on2");
-        Scene.Camera.Position = Vector3.Lerp(Scene.Camera.Position, attch.Position + attch.Rotation.Up * 0.5f + attch.Rotation.Backward * 3.5f, RealTime.Delta * 2.5f);
-        @* Scene.Camera.Position = attch.Position + attch.Rotation.Up * 1.5f + attch.Rotation.Backward * 4.5f; *@
-        Light.Position = attch.Position + Vector3.Up * 3 + Vector3.Forward * 2;
-        Scene.Camera.Rotation = attch.Rotation;
-        Model.Update(RealTime.Delta / 9);
+        var bone = Model.GetBoneWorldTransform("tag_sight_on2");
+        var targetPos = bone.Position + bone.Rotation.Up * 0.5f + bone.Rotation.Backward * 3.5f;
+        Light.Position = bone.Position + Vector3.Up * 3 + Vector3.Forward * 2;
         Model.SetAnimParameter("admire", true);
+        Model.Update(RealTime.Delta / 9);
 
+        Scene.Camera.Position = Vector3.Forward * 5.3f + Vector3.Left * 2.5f + Vector3.Down * 1.2f;
+        Scene.Camera.Rotation = Rotation.Identity * new Angles(0, -70, 0).ToRotation();
         Thumbnail.SetTexture(Game.Menu.Package.Thumb);
     } 
 }
