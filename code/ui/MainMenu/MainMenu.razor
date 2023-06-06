@@ -1,0 +1,116 @@
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace OITC
+@inherits RootPanel
+@implements Sandbox.Menu.IGameMenuPanel
+
+<root>
+    <div class="title">
+        <img @ref=Thumbnail class="thumb" @SetTexture(Game.Menu.Package.Thumb)>
+        <div class="label">@Game.Menu.Package.Title.ToUpperInvariant()</div>
+    </div>
+
+    <div class="menu-list">
+        <div text="Find A Game">
+        </div>
+    </div>
+</root>
+
+
+@code {
+
+    ScenePanel Scene { get; set; }
+
+    SceneModel Model { get; set; }
+    Image Thumbnail { get; set; }
+    SceneLight Light { get; set; }
+
+    public MainMenu()
+    {
+        Scene = new();
+        Scene.World = new();
+        Scene.AddClass("scene");
+        AddChild(Scene);
+
+        Model = new SceneModel(Scene.World, "models/weapons/attachment_vm_pi_cpapa_receiver.vmdl", Transform.Zero.WithScale(0.5f));
+        Light = new SceneLight(Scene.World, Vector3.Up * 5, 300, Color.Red * 4);
+
+        Scene.Camera.FieldOfView = 70;
+        Scene.Camera.ZNear = 0.1f;
+        Scene.Camera.ZFar = 10000;
+        Scene.Camera.Ortho = false;
+    }
+
+    public override void Tick()
+    {
+        var attch = Model.GetBoneWorldTransform("tag_sight_on2");
+        Scene.Camera.Position = Vector3.Lerp(Scene.Camera.Position, attch.Position + attch.Rotation.Up * 0.5f + attch.Rotation.Backward * 3.5f, RealTime.Delta * 2.5f);
+        @* Scene.Camera.Position = attch.Position + attch.Rotation.Up * 1.5f + attch.Rotation.Backward * 4.5f; *@
+        Light.Position = attch.Position + Vector3.Up * 3 + Vector3.Forward * 2;
+        Scene.Camera.Rotation = attch.Rotation;
+        Model.Update(RealTime.Delta / 9);
+        Model.SetAnimParameter("admire", true);
+
+        Thumbnail.SetTexture(Game.Menu.Package.Thumb);
+    } 
+}
+
+<style>
+    MainMenu {
+        width: 100%;
+        height: 100%;
+
+        .bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            filter: blur(12px);
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            position: relative;
+            bottom: 35%;
+            width: 100%;
+            margin: auto;
+
+            background: linear-gradient(to right, red, black)
+            padding: 8px;
+
+            .thumb {
+                width: 85px;
+                height: 85px;
+                border-radius: 16px;
+                margin: 10px;
+            }
+
+            .label {
+                color: white;
+                font-weight: bolder;
+                font-size: 94;
+                font-family: Roboto;
+            }
+        }
+
+        .menu-list {
+
+        }
+
+    }
+</style>
+
