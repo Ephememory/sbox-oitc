@@ -87,13 +87,16 @@ partial class OITCGame : GameManager
 		var weapon = pawn.LastAttackerWeapon;
 
 		// Watch out for suicides.
-		if ( killer == null )
+		if ( killer == null || killer.Client == null )
+		{
+			Log.Info( $"{client.Name} made some mistakes." );
 			return;
+		}
 
 		if ( killer is Player ply )
-		{
 			ply.AwardAmmo( killed.LastDamage.HasTag( DamageTags.Blunt ) ? 2 : 1 );
-		}
+		else
+			return;
 
 		if ( State.Tier != GameState.MidGame )
 			return;
@@ -118,7 +121,7 @@ partial class OITCGame : GameManager
 			OnKilledClient( client, null, "died" );
 			return;
 		}
-		
+
 		// Player died to enviornment/trigger.
 		// TODO: Probably should find a better method for determining this case.
 		if ( killed.LastAttacker.Client == null )
