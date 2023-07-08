@@ -1,0 +1,88 @@
+@using System
+@using Sandbox;
+@using Sandbox.MenuSystem;
+@using Sandbox.UI;
+@attribute [StyleSheet]
+@inherits Sandbox.UI.NavHostPanel
+@implements Sandbox.Menu.IGameMenuPanel
+@namespace OITC.UI.GameMenu
+
+<root class="gamemainmenu">
+    <div class="navigator-canvas" slot="navigator-canvas"></div>
+</root>
+
+@code
+{
+    ScenePanel Scene { get; set; }
+
+    SceneModel Model { get; set; }
+    SceneLight Light { get; set; }
+
+    public GameMenu()
+    {
+        DefaultUrl = "/";
+
+        AddDestination("/", typeof(FrontPage));
+        AddDestination("/load", typeof(LoadGamePage));
+        AddDestination("/lobby", typeof(LobbyPage));
+        AddDestination("/lobby/map", typeof(LobbyMapPage));
+        AddDestination("/lobby/addons", typeof(LobbyAddonPage));
+        AddDestination("/active", typeof(ActivePage));
+        AddDestination("/active/map", typeof(ActiveMapPage));
+        AddDestination("/servers", typeof(ServerListPage));
+        AddDestination("/settings", typeof(SettingsPage));
+
+        if (Game.InGame) Navigate("/active");
+
+        BindClass( "ingame", () => Game.InGame );
+        BindClass("inlobby", () => Game.Menu.Lobby != null);
+
+        Scene = new();
+        Scene.World = new();
+        Scene.AddClass("scene");
+        AddChild(Scene);
+
+        Model = new SceneModel(Scene.World, "models/weapons/attachment_vm_pi_cpapa_receiver.vmdl", Transform.Zero.WithScale(0.5f));
+        Light = new SceneLight(Scene.World, Vector3.Up * 5, 300, Color.Red * 4);
+
+        Scene.Camera.FieldOfView = 70;
+        Scene.Camera.ZNear = 0.1f;
+        Scene.Camera.ZFar = 10000;
+        Scene.Camera.Ortho = false;
+    }
+
+    public override void Tick()
+    {
+        var bone = Model.GetBoneWorldTransform("tag_sight_on2");
+        var targetPos = bone.Position + bone.Rotation.Up * 0.5f + bone.Rotation.Backward * 3.5f;
+        Light.Position = bone.Position + Vector3.Up * 3 + Vector3.Forward * 2;
+        Model.SetAnimParameter("admire", true);
+        Model.Update(RealTime.Delta / 9);
+
+        Scene.Camera.Position = Vector3.Forward * 5.3f + Vector3.Left * 2.5f + Vector3.Down * 1.2f;
+        Scene.Camera.Rotation = Rotation.Identity * new Angles(0, -70, 0).ToRotation();
+    }
+
+	protected override void OnEvent( PanelEvent e )
+	{
+		if ( e.Name == "package.changed" )
+		{
+			StateHasChanged();
+			return;
+		}
+
+		base.OnEvent( e );
+	}
+
+    [GameEvent.Menu.ServerJoined]
+    public void OnServerJoined() => Navigate("/active");
+
+    [GameEvent.Menu.LobbyJoined]
+    public void OnLobbyJoined() => Navigate("/lobby");
+
+    [GameEvent.Menu.LobbyLeave]
+    public void OnLobbyLeave() => Navigate("/");
+
+    [GameEvent.Menu.ServerLeave]
+    public void OnServerLeave() => Navigate("/");
+}
