@@ -1,0 +1,26 @@
+
+.gamemainmenu frontpage {
+    margin: 100px 100px;
+    gap: 100px;
+
+    .game-title {
+        color: white;
+        font-weight: bolder;
+        font-size: 94px;
+        font-family: Roboto Mono;
+
+        .thumb {
+            width: 100px;
+            height: 100px;
+            margin-right: 32px;
+            align-self: center;
+            background-size: cover;
+        }
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+}

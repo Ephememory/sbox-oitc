@@ -1,7 +1,7 @@
 global using Sandbox;
-using Sandbox.Internal;
-using System.Collections.Generic;
-using System.Linq;
+global using Sandbox.UI.GameMenu;
+global using System.Linq;
+global using System.Threading.Tasks;
 
 namespace OITC;
 
