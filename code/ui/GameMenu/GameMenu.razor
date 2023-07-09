@@ -13,7 +13,7 @@
 
 @code
 {
-    ScenePanel Scene { get; set; }
+    public static ScenePanel Scene { get; set; }
 
     SceneModel Model { get; set; }
     SceneLight Light { get; set; }
@@ -63,19 +63,22 @@
         Scene.Camera.Rotation = Rotation.Identity * new Angles(0, -70, 0).ToRotation();
     }
 
-	protected override void OnEvent( PanelEvent e )
-	{
-		if ( e.Name == "package.changed" )
-		{
-			StateHasChanged();
-			return;
-		}
+    protected override void OnEvent( PanelEvent e )
+    {
+        if ( e.Name == "package.changed" )
+        {
+            StateHasChanged();
+            return;
+        }
 
-		base.OnEvent( e );
-	}
+        base.OnEvent( e );
+    }
 
     [GameEvent.Menu.ServerJoined]
-    public void OnServerJoined() => Navigate("/active");
+    public void OnServerJoined() 
+    {
+        Navigate("/active");
+    }
 
     [GameEvent.Menu.LobbyJoined]
     public void OnLobbyJoined() => Navigate("/lobby");

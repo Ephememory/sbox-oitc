@@ -6,9 +6,14 @@
 @attribute [StyleSheet]
 
 <root style="flex-direction: column;">
-
     <div class="game-title">
-        <div class="thumb" style="background-image: url(@Game.Menu.Package.Thumb)"></div>
+        <div style=
+            "background-image: url(@Game.Menu.Package.Thumb);
+            width: 100px;
+            height: 100px;
+            margin-right: 32px;
+            align-self: center;
+            background-size: cover;"></div>
         @Game.Menu.Package.Title.ToUpperInvariant()
     </div>
 
@@ -55,7 +60,10 @@
 
     async Task CreateNewLobby()
     {
-        await Game.Menu.CreateLobbyAsync( 64, "game", true );
+        var lobby = await Game.Menu.CreateLobbyAsync( 64, "game", true );
+        lobby.Title = "OITC Server :)";
+        lobby.Description = "Hop on One In The Chamber";
+
         // we will navigate to lobby when it's ready
     }
 
