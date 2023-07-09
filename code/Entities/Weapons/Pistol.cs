@@ -1,5 +1,7 @@
 using Sandbox;
+using Sandbox.Services;
 using System.Collections.Generic;
+using System.Transactions;
 
 namespace OITC;
 
@@ -67,6 +69,9 @@ public partial class Pistol : Weapon
 		ShootEffects();
 		PlaySound( "sounds/deagle/deagle_shoot.sound" );
 		ShootBullet( 0, 1, 1000, 1 );
+
+		if ( Game.IsClient )
+			Stats.Increment( GameStats.ShotsFired, 1 );
 	}
 
 	public override void AttackSecondary()
@@ -89,7 +94,7 @@ public partial class Pistol : Weapon
 		var forward = ply.EyeRotation.Forward;
 		forward = forward.Normal;
 
-		foreach ( var tr in TraceBullet( pos, pos + forward * range, 15f ) )
+		foreach ( var tr in DamageTrace( pos, pos + forward * range, 15f ) )
 		{
 			if ( !tr.Entity.IsValid() )
 				continue;
@@ -114,6 +119,10 @@ public partial class Pistol : Weapon
 
 				tr.Entity.TakeDamage( dmg );
 				PlaySound( "punch" );
+
+				if ( tr.Entity is Player _ && Game.IsClient )
+					Stats.Increment( GameStats.Beatdowns, 1 );
+
 				return true;
 			}
 		}

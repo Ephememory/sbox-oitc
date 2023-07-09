@@ -1,3 +1,5 @@
+using Sandbox.Services;
+
 namespace OITC;
 
 public partial class Weapon : ModelEntity, IUse
@@ -191,6 +193,8 @@ public partial class Weapon : ModelEntity, IUse
 		foreach ( var tr in TraceBullet( pos, pos + forward * range, bulletSize ) )
 		{
 			tr.Surface.DoBulletImpact( tr );
+			if ( Game.IsClient && tr.Entity is not Player _ )
+				Stats.Increment( GameStats.ShotsMissed, 1 );
 
 			if ( !Game.IsServer ) continue;
 			if ( !tr.Entity.IsValid() ) continue;

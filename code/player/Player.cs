@@ -199,5 +199,4 @@ public partial class Player : BasePlayer
 
 		Event.Run( Events.OnPlayerAmmoChanged, oldValue, newValue );
 	}
-
 }
