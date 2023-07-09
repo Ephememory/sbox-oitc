@@ -7,7 +7,7 @@
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
-  "Resources": "fonts/*",
+  "Resources": "fonts/*\nui/*.png",
   "MenuResources": "models/arms/materials/mp_arms_gorka_col1_light_skin.vmat\nmodels/arms/materials/mp_arms_gorka_col1_sleeves.vmat\nmodels/arms/mp_western_vm_arms_anims/crowb_gloves.vmat\nmodels/weapons/materials/deagle/v_mw_deagle.vmat\nmodels/weapons/materials/deagle/v_mw_deagle_body2.vmat\nmodels/weapons/materials/deagle/decal/v_deagle_decal.vmat\nmodels/weapons/materials/deagle/grip/v_deagle_grip.vmat\nmodels/weapons/attachment_vm_pi_cpapa_receiver.vmdl\nUI/GameMenu/*\nfonts/*",
   "HasCode": true,
   "CodePath": "code",

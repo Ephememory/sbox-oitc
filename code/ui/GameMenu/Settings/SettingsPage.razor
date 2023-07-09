@@ -31,7 +31,7 @@
                 <FormGroup>
                     <Label>@action.Name</Label>
                     <Control>
-                        <KeyBind Game="@Game.Menu" Action=@action class="glass with-padding with-grow with-click"></KeyBind>
+                        <Sandbox.UI.GameMenu.KeyBind Game="@Game.Menu" Action=@action class="glass with-padding with-grow with-click"></Sandbox.UI.GameMenu.KeyBind>
                     </Control>
                 </FormGroup>
             }
@@ -64,7 +64,7 @@
 
     public void CancelChanges()
     {
-        foreach (var kb in Descendants.OfType<KeyBind>())
+        foreach (var kb in Descendants.OfType<Sandbox.UI.GameMenu.KeyBind>())
         {
             kb.Cancel();
         }
@@ -77,7 +77,7 @@
 
     public void SaveChanges()
     {
-        foreach (var kb in Descendants.OfType<KeyBind>())
+        foreach (var kb in Descendants.OfType<Sandbox.UI.GameMenu.KeyBind>())
         {
             kb.Apply();
         }

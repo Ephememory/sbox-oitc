@@ -1,5 +1,4 @@
 global using Sandbox;
-global using Sandbox.UI.GameMenu;
 global using System.Linq;
 global using System.Threading.Tasks;
 

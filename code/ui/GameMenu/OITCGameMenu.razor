@@ -1,11 +1,11 @@
 @using System
 @using Sandbox;
-@using Sandbox.MenuSystem;
 @using Sandbox.UI;
-@attribute [StyleSheet]
+
 @inherits Sandbox.UI.NavHostPanel
 @implements Sandbox.Menu.IGameMenuPanel
 @namespace OITC.UI.GameMenu
+@attribute [StyleSheet]
 
 <root class="gamemainmenu">
     <div class="navigator-canvas" slot="navigator-canvas"></div>
@@ -18,19 +18,19 @@
     SceneModel Model { get; set; }
     SceneLight Light { get; set; }
 
-    public GameMenu()
+    public OITCGameMenu()
     {
         DefaultUrl = "/";
 
-        AddDestination("/", typeof(FrontPage));
-        AddDestination("/load", typeof(LoadGamePage));
-        AddDestination("/lobby", typeof(LobbyPage));
-        AddDestination("/lobby/map", typeof(LobbyMapPage));
-        AddDestination("/lobby/addons", typeof(LobbyAddonPage));
-        AddDestination("/active", typeof(ActivePage));
-        AddDestination("/active/map", typeof(ActiveMapPage));
-        AddDestination("/servers", typeof(ServerListPage));
-        AddDestination("/settings", typeof(SettingsPage));
+        AddDestination("/", typeof(OITC.UI.GameMenu.OITCFrontPage));
+        AddDestination("/load", typeof(OITC.UI.GameMenu.LoadGamePage));
+        AddDestination("/lobby", typeof(OITC.UI.GameMenu.LobbyPage));
+        AddDestination("/lobby/map", typeof(OITC.UI.GameMenu.LobbyMapPage));
+        AddDestination("/lobby/addons", typeof(OITC.UI.GameMenu.LobbyAddonPage));
+        AddDestination("/active", typeof(OITC.UI.GameMenu.ActivePage));
+        AddDestination("/active/map", typeof(OITC.UI.GameMenu.ActiveMapPage));
+        AddDestination("/servers", typeof(OITC.UI.GameMenu.ServerListPage));
+        AddDestination("/settings", typeof(OITC.UI.GameMenu.SettingsPage));
 
         if (Game.InGame) Navigate("/active");
 
@@ -49,6 +49,8 @@
         Scene.Camera.ZNear = 0.1f;
         Scene.Camera.ZFar = 10000;
         Scene.Camera.Ortho = false;
+
+        Scene.BindClass("ingame", () => Game.InGame);
     }
 
     public override void Tick()
@@ -78,6 +80,7 @@
     public void OnServerJoined() 
     {
         Navigate("/active");
+        Log.Info("navigating to active");
     }
 
     [GameEvent.Menu.LobbyJoined]

@@ -3,12 +3,10 @@
 @using Sandbox.MenuSystem;
 @using Sandbox.UI;
 @namespace OITC.UI.GameMenu
-@attribute [StyleSheet]
 
 <root style="flex-direction: column;">
     <div class="game-title">
-        <div style=
-            "background-image: url(@Game.Menu.Package.Thumb);
+        <div style="background-image: url(@Game.Menu.Package.Thumb);
             width: 100px;
             height: 100px;
             margin-right: 32px;
@@ -19,7 +17,7 @@
 
     <div class="controls">
 
-        @if ( Game.InGame )
+        @if (Game.InGame)
         {
             <a class="button" href="/active">Current Game</a>
             <a class="button" onclick=@LeaveGame>Leave Game</a>
@@ -55,12 +53,12 @@
 {
     void LoadSavedGame()
     {
-        this.Navigate( "/load" );
+        this.Navigate("/load");
     }
 
     async Task CreateNewLobby()
     {
-        var lobby = await Game.Menu.CreateLobbyAsync( 64, "game", true );
+        var lobby = await Game.Menu.CreateLobbyAsync(64, "game", true);
         lobby.Title = "OITC Server :)";
         lobby.Description = "Hop on One In The Chamber";
 
@@ -71,4 +69,28 @@
     {
         Game.Menu.LeaveServer("Leaving");
     }
+
 }
+
+<style>
+    OITCFrontPage {
+        margin: 100px 100px;
+        gap: 100px;
+        .game-title
+    {
+        right: 0;
+        font-family: Anybody;
+        font-weight: bold;
+        font-size: 100px;
+        background-image: linear-gradient(to right, rgba(0,0,0,0), red);
+        width: 150%;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    }
+</style>

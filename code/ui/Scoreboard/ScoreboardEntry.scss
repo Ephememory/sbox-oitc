@@ -26,9 +26,11 @@ ScoreboardEntry {
 
   .pfp {
     align-self: center;
-    width: 32px;
-    height: 32px;
+    width: 42px;
+    height: 42px;
     flex-shrink: 2;
+    align-content: center;
+    margin: 15px;
   }
 
   .text {
@@ -39,6 +41,7 @@ ScoreboardEntry {
     font-size: 24px;
     flex-grow: 1;
     color: white;
+    align-self: center;
 
     &.me {
       font-weight: bold;
