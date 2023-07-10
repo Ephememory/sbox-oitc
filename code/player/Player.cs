@@ -1,3 +1,5 @@
+using Sandbox.Services;
+
 namespace OITC;
 
 public partial class Player : BasePlayer
@@ -128,7 +130,7 @@ public partial class Player : BasePlayer
 	{
 		base.OnKilled();
 
-		if ( Game.IsServer && LastAttacker is Player lastAttackingPlayer )
+		if ( LastAttacker is Player lastAttackingPlayer )
 			Components.Add( new DeathCamComponent
 			{
 				Killer = lastAttackingPlayer

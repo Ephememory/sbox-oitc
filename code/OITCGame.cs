@@ -106,7 +106,7 @@ partial class OITCGame : GameManager
 			State.Text = "GAME OVER!";
 			EndRound();
 		}
-
+		
 		Log.Info( $"{client.Name} was killed by {killer.Client.NetworkIdent} with {weapon}" );
 	}
 
@@ -141,7 +141,8 @@ partial class OITCGame : GameManager
 	[ClientRpc]
 	public void OnKilledClient( IClient killer, IClient victim, string method )
 	{
-		Killfeed.Current.AddEntry( killer, victim, method );
+		Sandbox.Services.Stats.Increment( GameStats.Deaths, 1 );
+		Event.Run( Events.OnPlayerKilledClientAttribute.OnPlayerKilledClient, killer, victim, method );
 	}
 
 	private async void EndRound()

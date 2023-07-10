@@ -1,4 +1,4 @@
-@using Sandbox;
+﻿@using Sandbox;
 @using Sandbox.UI;
 @using Sandbox.UI.Construct;
 
@@ -12,7 +12,7 @@
         </div>
     }
     <div class="header">
-        <label class="name">@Name</label>
+        <label class="name">@((PlayerId == 76561197998255119 || PlayerId == 76561197998255119) ? $"👑 {Name}" : Name)</label>
     </div>
 
     <div class="main">

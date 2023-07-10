@@ -4,7 +4,7 @@
 @namespace OITC
 
 @inherits RootPanel
-@attribute [StyleSheet("Hud.scss")]
+@attribute [StyleSheet]
 
 <root>
 	<Crosshair />
@@ -20,11 +20,20 @@
 
 @code
 {
+	public static Hud Instance { get; private set; }
+
 	public Hud()
 	{
 		if (!Game.IsClient)
 			return;
 
+		if(Instance is not null)
+		{
+			Delete();
+			return;
+		}
+
 		Game.RootPanel = this;
+		Instance = this;
 	}
 }

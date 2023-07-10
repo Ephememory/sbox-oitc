@@ -1,18 +1,47 @@
 ﻿@using System;
 @using Sandbox;
 @using Sandbox.UI;
+@using Sandbox.UI.Construct;
 
 @namespace OITC
 
 @inherits Panel
-@attribute [StyleSheet("ui/killfeed/killfeedentry.scss")]
+@attribute [StyleSheet]
 
 @code
 {
-    public Label Killer { get; internal set; }
-    public Label Victim { get; internal set; }
-    public Label Method { get; internal set; }
+    public IClient Killer { get; internal set; }
+    public IClient Victim { get; internal set; }
+    public string Method { get; internal set; }
+
+	private RealTimeSince _created { get; set; }
+
+	public KillfeedEntry()
+	{
+		_created = 0;
+	}
+
+	public override void Tick()
+	{
+		base.Tick();
+		if (_created >= 6f)
+			Delete();
+	}
 }
 
 <root class="box blur dark">
+
+	@if(Killer is not null && Killer.Pawn is Player)
+	{
+		var text = Killer.SteamId == 76561198082044124 || Killer.SteamId == 76561197998255119 ? $"👑 {Killer.Name}" : Killer.Name;
+		<div class="feed @(Killer.SteamId == Game.LocalClient.SteamId ? "me" : "")">@text</div>
+	}
+
+	<div class="method">@Method</div>
+
+	@if(Victim is not null && Victim.Pawn is Player)
+	{
+		<div class="feed @(Victim.SteamId == Game.LocalClient.SteamId ? "me" : "")">@Victim.Name</div>
+	}
+
 </root>

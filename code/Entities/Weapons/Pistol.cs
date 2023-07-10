@@ -102,6 +102,9 @@ public partial class Pistol : Weapon
 			tr.Surface.DoBulletImpact( tr );
 			ViewModelEntity?.SetAnimParameter( "melee_hit", true );
 
+			if ( tr.Entity is Player _ && Game.IsClient )
+				Stats.Increment( GameStats.Beatdowns, 1 );
+
 			if ( !Game.IsServer )
 				continue;
 
@@ -119,9 +122,6 @@ public partial class Pistol : Weapon
 
 				tr.Entity.TakeDamage( dmg );
 				PlaySound( "punch" );
-
-				if ( tr.Entity is Player _ && Game.IsClient )
-					Stats.Increment( GameStats.Beatdowns, 1 );
 
 				return true;
 			}

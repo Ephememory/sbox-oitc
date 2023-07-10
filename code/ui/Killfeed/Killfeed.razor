@@ -5,11 +5,28 @@
 @namespace OITC
 
 @inherits Panel
-@attribute [StyleSheet("/ui/KillFeed/KillFeed.scss")]
+@attribute [StyleSheet]
 
 @code
 {
+    [Events.OnPlayerKilledClient]
+    void OnPlayerKilledClient(IClient killer, IClient victim, string method)
+    {
+        AddEntry(killer, victim, method);
+    }
 
+    public Panel AddEntry(IClient killer, IClient victim, string method)
+    {
+        var entry = AddChild<KillfeedEntry>();
+        entry.Killer = killer;
+        entry.Victim = victim;
+        entry.Method = method;
+
+        if (killer is not null && victim is not null)
+            Log.Info($"{killer.Name} {method} {victim.Name}");
+
+        return entry;
+    }
 }
 
 <root>

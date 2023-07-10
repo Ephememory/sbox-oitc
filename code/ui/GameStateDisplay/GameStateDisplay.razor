@@ -1,13 +1,25 @@
-﻿@using Sandbox
+﻿@using System;
+@using Sandbox
 @using Sandbox.UI
 
 @namespace OITC
 
 @inherits Panel
-@attribute [StyleSheet("/ui/GameStateDisplay/GameStateDisplay.scss")]
+@attribute [StyleSheet]
 
 @code
 {
+	public static Action OnStateChanged;
+	public static Action OnNumPlayersFulfilled;
+
+	public GameStateDisplay()
+	{
+		OnNumPlayersFulfilled += () =>
+		{
+			SetClass("toggled", true);
+		};
+	}
+
 	protected override int BuildHash()
 	{
 		return System.HashCode.Combine(OITCGame.Current.State.Tier);

@@ -47,7 +47,7 @@ public class FlyingController : BasePlayerController
 
 		var len = delta.Length;
 		var targetPos = Position + delta;
-		var tr = Trace.Ray( Position, targetPos ).WorldOnly().Size( Size ).Run();
+		var tr = Trace.Ray( Position, targetPos ).StaticOnly().Size( Size ).Run();
 
 		if ( tr.StartedSolid )
 		{
