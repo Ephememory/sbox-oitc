@@ -41,7 +41,8 @@
 
 	@if(Victim is not null && Victim.Pawn is Player)
 	{
-		<div class="feed @(Victim.SteamId == Game.LocalClient.SteamId ? "me" : "")">@Victim.Name</div>
+		var victimText = Victim.SteamId == 76561198082044124 || Victim.SteamId == 76561197998255119 ? $"👑 {Victim.Name}" : Victim.Name;
+		<div class="feed @(Victim.SteamId == Game.LocalClient.SteamId ? "me" : "")">@victimText</div>
 	}
 
 </root>
