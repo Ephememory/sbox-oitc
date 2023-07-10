@@ -14,7 +14,6 @@ partial class Weapon
 		bool underWater = Trace.TestPoint( start, "water" );
 
 		var trace = Trace.Ray( start, end )
-				.UseHitboxes()
 				.WithAnyTags( "solid", "player", "npc" )
 				.Ignore( this )
 				.Size( radius );
@@ -40,14 +39,10 @@ partial class Weapon
 		bool underWater = Trace.TestPoint( start, "water" );
 
 		var trace = Trace.Ray( start, end )
-				.UseHitboxes()
 				.WithAnyTags( "solid", "player", "npc" )
 				.Ignore( this )
 				.Size( radius );
 
-		//
-		// If we're not underwater then we can hit water
-		//
 		if ( !underWater )
 			trace = trace.WithAnyTags( "water" );
 
