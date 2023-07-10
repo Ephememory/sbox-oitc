@@ -28,5 +28,9 @@ Nameplate {
         text-align: center;
         text-stroke: 9px black;
         font-size: 54px;
+
+        &.creator {
+            color: gold;
+        }
     }
 }
