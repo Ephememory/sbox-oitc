@@ -45,7 +45,7 @@
 	<img class="pfp" src="avatar:@EntryClient.SteamId" />
 	<iconpanel @ref=Friend class="friend aligned-text" text="person"></iconpanel>
 	
-	<text @ref=Name>@((EntryClient.SteamId == 76561197998255119 || EntryClient.SteamId == 76561197998255119) ? $"👑 {EntryClient.Name}" : EntryClient.Name)</text>
+	<text @ref=Name>@((EntryClient.SteamId == OITCGame.SteamId) ? $"👑 {EntryClient.Name}" : EntryClient.Name)</text>
 
 	<div class="score">
 		<label class="aligned-text text" text=@EntryClient.GetKills()></label>

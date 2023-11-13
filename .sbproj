@@ -8,7 +8,7 @@
   "HasAssets": true,
   "AssetsPath": "",
   "Resources": "fonts/*\nui/*.png",
-  "MenuResources": "models/arms/materials/mp_arms_gorka_col1_light_skin.vmat\nmodels/arms/materials/mp_arms_gorka_col1_sleeves.vmat\nmodels/arms/mp_western_vm_arms_anims/crowb_gloves.vmat\nmodels/weapons/materials/deagle/v_mw_deagle.vmat\nmodels/weapons/materials/deagle/v_mw_deagle_body2.vmat\nmodels/weapons/materials/deagle/decal/v_deagle_decal.vmat\nmodels/weapons/materials/deagle/grip/v_deagle_grip.vmat\nmodels/weapons/attachment_vm_pi_cpapa_receiver.vmdl\nUI/GameMenu/*\nfonts/*",
+  "MenuResources": "models/arms/materials/mp_arms_gorka_col1_light_skin.vmat\nmodels/arms/materials/mp_arms_gorka_col1_sleeves.vmat\nmodels/arms/mp_western_vm_arms_anims/crowb_gloves.vmat\nmodels/weapons/materials/deagle/v_mw_deagle.vmat\nmodels/weapons/materials/deagle/v_mw_deagle_body2.vmat\nmodels/weapons/materials/deagle/decal/v_deagle_decal.vmat\nmodels/weapons/materials/deagle/grip/v_deagle_grip.vmat\nmodels/weapons/attachment_vm_pi_cpapa_receiver.vmdl\nUI/GameMenu/*\nfonts/*\nmodels/weapons/v_deagle_animgraph.vanmgrph",
   "HasCode": true,
   "CodePath": "code",
   "PackageReferences": [],
@@ -37,6 +37,7 @@
       "RootNamespace": "Sandbox",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
       "NoWarn": "1701;1702;1591;"
-    }
+    },
+    "TickRate": 50
   }
 }

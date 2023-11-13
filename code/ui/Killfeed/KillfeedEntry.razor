@@ -33,7 +33,7 @@
 
 	@if(Killer is not null && Killer.Pawn is Player)
 	{
-		var text = Killer.SteamId == 76561198082044124 || Killer.SteamId == 76561197998255119 ? $"👑 {Killer.Name}" : Killer.Name;
+		var text = Killer.SteamId == OITCGame.SteamId ? $"👑 {Killer.Name}" : Killer.Name;
 		<div class="feed @(Killer.SteamId == Game.LocalClient.SteamId ? "me" : "")">@text</div>
 	}
 
@@ -41,7 +41,7 @@
 
 	@if(Victim is not null && Victim.Pawn is Player)
 	{
-		var victimText = Victim.SteamId == 76561198082044124 || Victim.SteamId == 76561197998255119 ? $"👑 {Victim.Name}" : Victim.Name;
+		var victimText = Victim.SteamId == OITCGame.SteamId ? $"👑 {Victim.Name}" : Victim.Name;
 		<div class="feed @(Victim.SteamId == Game.LocalClient.SteamId ? "me" : "")">@victimText</div>
 	}
 

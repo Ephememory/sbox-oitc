@@ -16,6 +16,8 @@ partial class OITCGame : GameManager
 	/// </summary>
 	public int NumPlayers = 0;
 
+	public static long SteamId = 76561197998255119;
+
 	public OITCGame()
 	{
 		if ( Game.IsClient )
@@ -106,7 +108,7 @@ partial class OITCGame : GameManager
 			State.Text = "GAME OVER!";
 			EndRound();
 		}
-		
+
 		Log.Info( $"{client.Name} was killed by {killer.Client.NetworkIdent} with {weapon}" );
 	}
 

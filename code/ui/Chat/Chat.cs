@@ -1,4 +1,4 @@
-namespace Sandbox;
+namespace OITC;
 
 public partial class Chat
 {

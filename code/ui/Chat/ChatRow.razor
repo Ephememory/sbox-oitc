@@ -2,7 +2,7 @@
 @using Sandbox.UI;
 @using Sandbox.UI.Construct;
 
-@namespace Sandbox
+@namespace OITC
 
 <root>
     @if (PlayerId > 0)
@@ -12,7 +12,7 @@
         </div>
     }
     <div class="header">
-        <label class="name">@((PlayerId == 76561197998255119 || PlayerId == 76561197998255119) ? $"👑 {Name}" : Name)</label>
+        <label class="name">@((PlayerId == OITCGame.SteamId)) ? $"👑 {Name}" : Name)</label>
     </div>
 
     <div class="main">
