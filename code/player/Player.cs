@@ -130,11 +130,14 @@ public partial class Player : BasePlayer
 	{
 		base.OnKilled();
 
-		if ( LastAttacker is Player lastAttackingPlayer )
-			Components.Add( new DeathCamComponent
-			{
-				Killer = lastAttackingPlayer
-			} );
+		//if ( Game.IsClient && Game.LocalPawn == this )
+		//{
+		//	if ( LastAttacker is Player lastAttackingPlayer )
+		//		Components.Add( new DeathCamComponent
+		//		{
+		//			Killer = lastAttackingPlayer
+		//		} );
+		//}
 
 		EnableDrawing = false;
 		EnableAllCollisions = false;
